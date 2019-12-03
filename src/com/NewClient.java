@@ -2,12 +2,10 @@ package com;
 
 import java.util.ArrayList;
 
-import decorator.*;
-import product.DrinkTypes;
-import product.PastryTypes;
-import product.Pastry;
-import product.Product;
-import product.SizesSML;
+import com.decorator.toppings.drinktoppings.DrinkToppings;
+import com.decorator.toppings.drinktoppings.Milk;
+import com.decorator.toppings.drinktoppings.milk.HalfAndHalf;
+import com.factory.*;
 
 /** 
  * CECS 277 Fall 2019
@@ -22,43 +20,22 @@ import product.SizesSML;
  * Main implementation for the program
  * @author Tyler McDonald
  */
-public class Client {
+public class NewClient {
 
 	public static void main(String[] args) {
-		ArrayList<ToppingTypes> bubTea = new ArrayList<ToppingTypes>();
-//		vegtop.add(ToppingTypes.BellPeppers);
-//		vegtop.add(ToppingTypes.Mushrooms);
-		
-		ArrayList<ToppingTypes> meattop = new ArrayList<ToppingTypes>();
-//		meattop.add(ToppingTypes.Ham);
-//		meattop.add(ToppingTypes.Pepperoni);
-//		meattop.add(ToppingTypes.Sausage);
-		
+		ArrayList<DrinkToppings> bubTea = new ArrayList<>();
+		ArrayList<DrinkToppings> coffeeToppings = new ArrayList<>();
+
 		//CREATING THE FACTORIES
 		PastryFactory pastryMaker = new PastryFactory();
 		DrinkFactory drinkMaker = new DrinkFactory();
 			
 		System.out.println("\n\n---------------New Drink---------------");
-		Product t = pastryMaker.createProduct(PastryTypes.Croissant, bubTea, 2);
-//		System.out.println(veg.getDescription());
-//		System.out.println(String.format("Cost: $%.2f" , veg.getCost()));
-		
-		System.out.println("\n\n---------------New Drink2---------------");
-		Product tea = drinkMaker.createProduct(DrinkTypes.Tea, bubTea,SizesSML.L);
-//		System.out.println(soda.getDescription());
-//		System.out.println(String.format("Cost: $%.2f" , soda.getCost()));
-		
-		System.out.println("\n\n---------------New Pizza---------------");
-//		Product meat = pizzaMaker.createProduct(PastryTypes.Simple, meattop);
-//		System.out.println(meat.getDescription());
-//		System.out.println(String.format("Cost: $%.2f" , meat.getCost()));
-		
+		Product coffee = drinkMaker.createProduct(DrinkTypes.COFFEE, Drink.Size.MEDIUM);
+		//Product pastry = pastryMaker.createProduct(PastryTypes.CROISSANT, bubTea);
+		System.out.println(coffee.getDescription());
+		System.out.println(String.format("Cost: $%.2f" , coffee.getCost()));
 
-		System.out.println("\n\n---------------New Drink---------------");
-//		Product juice = drinkMaker.createProduct(DrinkTypes.Coffee, SizesSML.M);
-//		System.out.println(juice.getDescription());
-//		System.out.println(String.format("Cost: $%.2f" , juice.getCost()));
-		
 	}
 
 }

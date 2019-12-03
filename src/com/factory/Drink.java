@@ -6,6 +6,10 @@ public abstract class Drink implements Product {
     String description = "Unknown Drink";
     Size size;
 
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
     /**
      * Get the description of the drink.
      * @return the description

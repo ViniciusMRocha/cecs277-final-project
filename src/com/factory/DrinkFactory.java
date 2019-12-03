@@ -30,6 +30,7 @@ public class DrinkFactory implements ProductFactory {
                 break;
         }
 
+        p.setSize((Drink.Size)details);
 
         return p;
     }
