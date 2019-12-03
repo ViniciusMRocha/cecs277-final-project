@@ -1,16 +1,16 @@
 package com.frontend;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class TabbedPaneDemo extends JPanel {
+public class PointOfSaleGUI extends JPanel {
 
     private static JFrame orderFrame;
 
-    private TabbedPaneDemo() {
+    private PointOfSaleGUI() {
         super(new BorderLayout());
         JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -59,18 +59,14 @@ public class TabbedPaneDemo extends JPanel {
                 }
             }
         });
-        existingOrders.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if(existingOrders.getSelectedRow() == -1) {
-                    editButton.setEnabled(false);
-                    viewButton.setEnabled(false);
-                } else {
-                    editButton.setEnabled(true);
-                    viewButton.setEnabled(false);
-                    System.out.println("Row #" + existingOrders.getSelectedRow());
-                }
+        existingOrders.getSelectionModel().addListSelectionListener(e -> {
+            if(existingOrders.getSelectedRow() == -1) {
+                editButton.setEnabled(false);
+                viewButton.setEnabled(false);
+            } else {
+                editButton.setEnabled(true);
+                viewButton.setEnabled(false);
+                System.out.println("Row #" + existingOrders.getSelectedRow());
             }
         });
         JScrollPane scrollPane = new JScrollPane(existingOrders);
@@ -89,7 +85,7 @@ public class TabbedPaneDemo extends JPanel {
         //Create and set up the window.
         JFrame frame = new JFrame("Final Exam");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new TabbedPaneDemo(), BorderLayout.CENTER);
+        frame.add(new PointOfSaleGUI(), BorderLayout.CENTER);
         orderFrame = new JFrame("Order details");
         orderFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         orderFrame.add(new OrderDetailsWindow(), BorderLayout.CENTER);
