@@ -38,27 +38,19 @@ public enum HeatState {
 /**
  * A Croissant is a type of pastry.
  */
-class Croissant extends Pastry {
-    private boolean heated;
-
-    public Croissant(heat) {
-        name = "Croissant";
-        description = "A delicious, fresh croissant";
-        switch(heat) {
-            case HEATED:
-                heated = true;
-            case COLD:
-                heated = false;
-        }
-    }
-
-    public double getCost() {
-        if (heated) {
-            return 2.5
-        }
-        else {
-            return 2;
-        }
+private HeatState heatState;
+public Croissant(HeatState heatState) {
+    name = "Croissant";
+    description = "A delicious, fresh croissant!";
+    this.heatState = heatState;
+}
+public double getCost() {
+    switch(heatState) {
+        case HEATED:
+            return 2.50;
+        case COLD:
+        default:
+            return 2.00;
     }
 }
 /**
