@@ -29,17 +29,37 @@ public abstract class Pastry implements Product {
 }
 
 /**
+ * A enum that represents what size the Drink is.
+ */
+public enum HeatState {
+    HEATED("Heated"), COLD("Cold");
+}
+
+/**
  * A Croissant is a type of pastry.
  */
 class Croissant extends Pastry {
     private boolean heated;
 
-    public Croissant() {
+    public Croissant(heat) {
         name = "Croissant";
         description = "A delicious, fresh croissant";
+        switch(heat) {
+            case HEATED:
+                heated = true;
+            case COLD:
+                heated = false;
+        }
     }
 
-    public double getCost() { return 4; }
+    public double getCost() {
+        if (heated) {
+            return 2.5
+        }
+        else {
+            return 2;
+        }
+    }
 }
 /**
  * A Cookie is a type of pastry.
