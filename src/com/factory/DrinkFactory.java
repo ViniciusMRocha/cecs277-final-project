@@ -12,26 +12,21 @@ public class DrinkFactory implements ProductFactory {
 
     /**
      * The createProduct(Object, Object) method initializes a new Drink object given a set of parameters.
-     * @param type The type of Drink to be created.
-     * @param details An ArrayList that outlines any additional additions the drink will have
-     * @return The new Drink object.
+     * TODO: Properly document the uses for each object parameter, if applicable.
      */
     @Override
-    public Product createProduct(Object type, Object details) {
+    public Product createProduct(Object type, Object size, Object toppings, Object sweetness) {
         Drink p = null;
 
         switch((DrinkTypes)type) {
             case TEA:
-                p = new Tea();
+                p = new Tea((Drink.Size)size, (Tea.Sweetness)sweetness);
                 break;
 
             case COFFEE:
-                p = new Coffee();
+                p = new Coffee((Drink.Size)size);
                 break;
         }
-
-        p.setSize((Drink.Size)details);
-
         return p;
     }
 }

@@ -6,10 +6,6 @@ public abstract class Drink implements Product {
     String description = "Unknown Drink";
     Size size;
 
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
     /**
      * Get the description of the drink.
      * @return the description
@@ -28,7 +24,34 @@ public abstract class Drink implements Product {
      * A enum that represents what size the Drink is.
      */
     public enum Size {
-        SMALL, MEDIUM, LARGE
+        SMALL("Small"), MEDIUM("Medium"), LARGE("Large");
+
+        private String sizeName;
+
+        Size(String sizeName) {
+            this.sizeName = sizeName;
+        }
+
+        public String getSizeName() {
+            return sizeName;
+        }
+    }
+
+    /**
+     * An enum that defines the amount of sweetness the tea will have.
+     */
+    public enum Sweetness {
+        QUARTER_SWEET("A fourth sweet"), HALF_SWEET("Half sweet"), THREE_FOURTHS_SWEET("Three fourths sweet"), NO_SUGAR("No sugar");
+
+        private String description;
+
+        Sweetness(String description) {
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return description;
+        }
     }
 }
 
@@ -42,7 +65,9 @@ class Tea extends Drink {
     /**
      * Initializes Tea.
      */
-    public Tea() {
+    public Tea(Size size, Sweetness sweetness) {
+        this.size = size;
+        this.sweetness = sweetness;
         description = "A nice cuppa tea!";
         name = "Tea";
     }
@@ -68,16 +93,14 @@ class Tea extends Drink {
     }
 
     /**
-     * An enum that defines the amount of sweetness the tea will have.
+     * Gets description.
+     *
+     * TODO: Properly add descriptions based on toppings added!
+     * @return complete information about the product
      */
-    public enum Sweetness {
-        QUARTER_SWEET("A fourth sweet"), HALF_SWEET("Half sweet"), THREE_FOURTHS_SWEET("Three fourths sweet"), NO_SUGAR("No sugar");
-
-        private String description;
-
-        Sweetness(String description) {
-            this.description = description;
-        }
+    public String getDescription() {
+        return "Name: " + this.name + "\nDescription: " + this.description + "\nSweetness: " + this.sweetness.getDescription()
+                + "\nSize: " + this.size.getSizeName() + "\nCost: " + String.format("$%.2f" , this.getCost()) + "\n\n";
     }
 }
 
@@ -90,7 +113,8 @@ class Coffee extends Drink {
     /**
      * Creates a new Coffee drink,
      */
-    public Coffee() {
+    public Coffee(Size size) {
+        this.size = size;
         description = "Hot coffee!";
         name = "Coffee";
     }
@@ -113,4 +137,16 @@ class Coffee extends Drink {
                 return 0;
         }
     }
+
+    /**
+     * Gets description.
+     *
+     * TODO: Properly add descriptions based on toppings added!
+     * @return complete information about the product
+     */
+    public String getDescription() {
+        return "Name: " + this.name + "\nDescription: " + this.description + "\nSize: " + this.size.getSizeName()
+                + "\nCost: " + String.format("$%.2f" , this.getCost()) + "\n\n" ;
+    }
+
 }

@@ -17,6 +17,10 @@ public abstract class Pastry implements Product {
         return "Name: " + this.name + "\nToppings: " + this.description + "\nType: " + this.type + "\nQuantity:" + this.quantity;
     }
 
+    public String getName() {
+        return name;
+    }
+
     /**
      * An abstract method to determine the cost of different sub-types of pastry.
      * @return the cost

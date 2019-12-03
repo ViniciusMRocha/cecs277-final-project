@@ -14,7 +14,7 @@ package com.factory;
 		 * @return The new Pastry object.
 		 */
 		@Override
-	public Product createProduct(Object type, Object details) {
+	public Product createProduct(Object type, Object details, Object details2, Object details3) {
 		Pastry p = null;
 
 		switch ((PastryTypes) type) {
