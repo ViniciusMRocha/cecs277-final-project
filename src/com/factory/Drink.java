@@ -85,7 +85,7 @@ class Tea extends Drink {
                 return 2.00;
 
             case LARGE:
-                return 2.50;
+                return 3;
 
             default:
                 return 0;
@@ -125,13 +125,13 @@ class Coffee extends Drink {
     public double getCost() {
         switch (size) {
             case SMALL:
-                return 2.50;
+                return 2.00;
 
             case MEDIUM:
                 return 2.00;
 
             case LARGE:
-                return 3.50;
+                return 2.50;
 
             default:
                 return 0;
