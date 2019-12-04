@@ -57,7 +57,13 @@ public double getCost() {
  * A Cookie is a type of pastry.
  */
 class Cookie extends Pastry {
-    public Cookie() {
+    private int amountRegPrice = 0;
+    private int triosDiscounted = 0;
+    public Cookie(int numBought) {
+        if (numBought >= 3) {
+            amountRegPrice = numBought % 3;
+            triosDiscounted = numBought / 3;
+        }
         name = "Cookie";
         description = "A mouth-watering treat!";
     }
@@ -67,16 +73,29 @@ class Cookie extends Pastry {
      * @return the answer.
      */
     private boolean purchasedSetOfThree() {
-        return false;
+        if (amountDiscounted > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    public double getCost() { return 6; }
+    public double getCost() {
+        return amountRegPrice * 1.5 + triosDiscounted * 3;
+    }
 }
 /**
  * A Macaroon is a type of pastry.
  */
 class Macaroon extends Pastry {
-    public Macaroon()  {
+    private int amountRegPrice = 0;
+    private int halfDozDiscounted = 0;
+    public Macaroon(int numBought)  {
+        if (numBought >= 3) {
+            amountRegPrice = numBought % 6;
+            halfDozDiscounted = numBought / 6;
+        }
         name = "Macaroon";
         description = "This is a macaroon.";
     }
@@ -85,9 +104,16 @@ class Macaroon extends Pastry {
      * Whether or not a half dozen has been purchased.
      * @return the answer.
      */
-    private boolean purchasedHalfDozen() {
-        return false;
+    private boolean purchasedSetOfThree() {
+        if (halfDozDiscounted > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    public double getCost() { return 100;  }
+    public double getCost() {
+        return amountRegPrice * 2 + triosDiscounted * 9;
+    }
 }

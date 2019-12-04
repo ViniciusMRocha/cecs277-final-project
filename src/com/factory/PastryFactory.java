@@ -22,10 +22,10 @@ package com.factory;
 				p = new Croissant((Pastry.HeatState)details);
 				break;
 			case COOKIE:
-				p = new Cookie();
+				p = new Cookie((int)details);
 				break;
 			case MACAROON:
-				p = new Macaroon();
+				p = new Macaroon((int)details);
 				break;
 		}
 
