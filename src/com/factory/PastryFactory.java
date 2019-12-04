@@ -19,7 +19,7 @@ package com.factory;
 
 		switch ((PastryTypes) type) {
 			case CROISSANT:
-				p = new Croissant((Pastry.HeatState)details);
+				p = new Croissant((Croissant.HeatState) details);
 				break;
 			case COOKIE:
 				p = new Cookie((int)details);

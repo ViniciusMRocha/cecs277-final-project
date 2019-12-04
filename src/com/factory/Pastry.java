@@ -28,92 +28,98 @@ public abstract class Pastry implements Product {
     public abstract double getCost();
 }
 
-/**
- * A enum that represents what size the Drink is.
- */
-public enum HeatState {
-    HEATED("Heated"), COLD("Cold");
-}
+class Croissant extends Pastry {
+    /**
+     * A enum that represents what size the Drink is.
+     */
+    public enum HeatState {
+        HEATED("Heated"), COLD("Cold");
 
-/**
- * A Croissant is a type of pastry.
- */
-private HeatState heatState;
-public Croissant(HeatState heatState) {
-    name = "Croissant";
-    description = "A delicious, fresh croissant!";
-    this.heatState = heatState;
-}
-public double getCost() {
-    switch(heatState) {
-        case HEATED:
-            return 2.50;
-        case COLD:
-        default:
-            return 2.00;
+        private String name;
+
+        HeatState(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    /**
+     * A Croissant is a type of pastry.
+     */
+    private HeatState heatState;
+
+    Croissant(HeatState heatState) {
+        name = "Croissant";
+        description = "A delicious, fresh croissant!";
+        this.heatState = heatState;
+    }
+
+    public double getCost() {
+        switch (heatState) {
+            case HEATED:
+                return 2.50;
+            case COLD:
+            default:
+                return 2.00;
+        }
     }
 }
 /**
  * A Cookie is a type of pastry.
  */
 class Cookie extends Pastry {
-    private int amountRegPrice = 0;
-    private int triosDiscounted = 0;
-    public Cookie(int numBought) {
-        if (numBought >= 3) {
-            amountRegPrice = numBought % 3;
-            triosDiscounted = numBought / 3;
-        }
+
+    Cookie(int quantity) {
         name = "Cookie";
         description = "A mouth-watering treat!";
+        this.quantity = quantity;
     }
 
     /**
-     * Whether or not a set of three has been purchased.
-     * @return the answer.
+     * How many sets-of-three cookies have been purchased.
+     * @return the many sets of three purchased.
      */
-    private boolean purchasedSetOfThree() {
-        if (amountDiscounted > 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    private int setsOfThreePurchased(int quantity) {
+        return (int)(Math.floor(quantity / 3));
     }
 
     public double getCost() {
-        return amountRegPrice * 1.5 + triosDiscounted * 3;
+        double originalPrice = 3;
+        double specialPrice = (originalPrice / 2.0);
+
+        int cookiesInSetsOfThree = setsOfThreePurchased(quantity) * 3;
+        int remainingCookies = quantity % (cookiesInSetsOfThree);
+        return (remainingCookies * originalPrice) + (cookiesInSetsOfThree * specialPrice);
     }
 }
 /**
  * A Macaroon is a type of pastry.
  */
 class Macaroon extends Pastry {
-    private int amountRegPrice = 0;
-    private int halfDozDiscounted = 0;
-    public Macaroon(int numBought)  {
-        if (numBought >= 3) {
-            amountRegPrice = numBought % 6;
-            halfDozDiscounted = numBought / 6;
-        }
+
+    Macaroon(int quantity)  {
         name = "Macaroon";
         description = "This is a macaroon.";
+        this.quantity = quantity;
     }
 
     /**
-     * Whether or not a half dozen has been purchased.
-     * @return the answer.
+     * How many half-dozen macaroons have been purchased.
+     * @return how many half-dozens purchased.
      */
-    private boolean purchasedSetOfThree() {
-        if (halfDozDiscounted > 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    private int halfDozensPurchased(int quantity) {
+        return (int)(Math.floor(quantity / 12));
     }
 
     public double getCost() {
-        return amountRegPrice * 2 + triosDiscounted * 9;
+        double originalPrice = 4;
+        double specialPrice = (originalPrice / 2.0);
+
+        int macaroonsInSets = halfDozensPurchased(quantity) * 12;
+        int remainingMacaroons = quantity % (macaroonsInSets);
+        return (remainingMacaroons * originalPrice) + (macaroonsInSets * specialPrice);
     }
 }
