@@ -25,7 +25,7 @@ public class NewClient {
 
 	public static void main(String[] args) {
 		ArrayList<Toppings> teaToppings = new ArrayList<>();
-		ArrayList<Toppings> coffeeToppings = new ArrayList<>();
+		ArrayList<DrinkToppings> coffeeToppings = new ArrayList<>();
 
 		//CREATING THE FACTORIES
 		PastryFactory pastryMaker = new PastryFactory();
@@ -44,7 +44,6 @@ public class NewClient {
 		coupons.add(new DrinkCoupon());
 
 		Sale sale = new Sale(itemsInSale, coupons);
-
 		System.out.println(sale);
 	}
 
