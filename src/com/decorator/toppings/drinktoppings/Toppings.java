@@ -8,7 +8,7 @@ import com.factory.Drink;
  *
  */
 public abstract class Toppings extends Drink {
-	Drink base;
+	protected Drink base;
 
 	public Toppings(Drink base) {
 		this.base = base;
