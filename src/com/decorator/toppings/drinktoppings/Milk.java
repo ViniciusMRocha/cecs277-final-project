@@ -10,6 +10,6 @@ public abstract class Milk extends Toppings {
 
     @Override
     public double getCost() {
-        return return base.getCost() + 10.0;
+        return base.getCost() + 10.0;
     }
 }

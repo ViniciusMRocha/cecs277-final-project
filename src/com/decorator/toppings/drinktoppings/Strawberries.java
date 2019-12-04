@@ -14,6 +14,6 @@ public class Strawberries extends Toppings {
 
     @Override
     public double getCost() {
-        return return base.getCost() + 0.50;
+        return base.getCost() + 0.50;
     }
 }
