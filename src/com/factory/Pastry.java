@@ -116,7 +116,7 @@ class Macaroon extends Pastry {
 
     public double getCost() {
         double originalPrice = 2;
-        double specialPrice = 6;
+        double specialPrice = 9;
 
         int macaroonsInSets = halfDozensPurchased(quantity) * 12;
         int remainingMacaroons = quantity % (macaroonsInSets);
