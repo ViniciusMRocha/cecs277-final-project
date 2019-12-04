@@ -88,7 +88,7 @@ class Cookie extends Pastry {
 
     public double getCost() {
         double originalPrice = 1.50;
-        double specialPrice = (originalPrice / 2.0);
+        double specialPrice = 3;
 
         int cookiesInSetsOfThree = setsOfThreePurchased(quantity) * 3;
         int remainingCookies = quantity % (cookiesInSetsOfThree);
@@ -115,8 +115,8 @@ class Macaroon extends Pastry {
     }
 
     public double getCost() {
-        double originalPrice = 4;
-        double specialPrice = (originalPrice / 2.0);
+        double originalPrice = 2;
+        double specialPrice = 6;
 
         int macaroonsInSets = halfDozensPurchased(quantity) * 12;
         int remainingMacaroons = quantity % (macaroonsInSets);
