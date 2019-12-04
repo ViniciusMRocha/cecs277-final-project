@@ -12,4 +12,9 @@ public class SoyMilk extends Milk {
     public String getDescription() {
         return "Soy milk!";
     }
+
+    @Override
+    public double getCost() {
+        return base.getCost() + 0.50;
+    }
 }
