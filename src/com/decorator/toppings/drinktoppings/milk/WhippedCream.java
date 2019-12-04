@@ -15,6 +15,6 @@ public class WhippedCream extends Toppings {
 
     @Override
     public double getCost() {
-        return 5;
+        return 0.50;
     }
 }
