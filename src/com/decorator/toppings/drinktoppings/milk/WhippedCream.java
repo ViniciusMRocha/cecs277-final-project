@@ -10,7 +10,7 @@ public class WhippedCream extends Toppings {
 
     @Override
     public String getDescription() {
-        return "whipped cream";
+        return base.getDescription() + "whipped cream, ";
     }
 
     @Override
