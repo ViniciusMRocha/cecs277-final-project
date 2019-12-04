@@ -27,18 +27,27 @@ import java.util.ArrayList;
 public class NewClient {
 
 	public static void main(String[] args) {
-		ArrayList<DrinkToppings> teaToppings = new ArrayList<>();
-		ArrayList<DrinkToppings> coffeeToppings = new ArrayList<>();
+
 
 		//CREATING THE FACTORIES
 		PastryFactory pastryMaker = new PastryFactory();
 		DrinkFactory drinkMaker = new DrinkFactory();
+		ArrayList<DrinkToppings> coffeeToppings = new ArrayList<>();
+
 		coffeeToppings.add(DrinkToppings.WHIPPED_CREAM);
-		//teaToppings.add(DrinkToppings.COCONUT_JELLY);
+		Product almondLatte = drinkMaker.createProduct("Almond Latte", DrinkTypes.COFFEE, Drink.Size.MEDIUM, coffeeToppings, Drink.Sweetness.NO_SUGAR, Drink.Milk.NO_MILK); //TODO: Add list of toppings to ENUM!
+		coffeeToppings.clear();
+
+		Product darkRoast = drinkMaker.createProduct("Dark Roast", DrinkTypes.COFFEE, Drink.Size.LARGE, coffeeToppings, Drink.Sweetness.NO_SUGAR, Drink.Milk.NO_MILK); //TODO: Add list of toppings to ENUM!
+
+		coffeeToppings.add(DrinkToppings.WHIPPED_CREAM);
+		Product hazelnutLatte = drinkMaker.createProduct("Hazelnut Latte", DrinkTypes.COFFEE, Drink.Size.SMALL, coffeeToppings, Drink.Sweetness.NO_SUGAR, Drink.Milk.SOY_MILK); //TODO: Add list of toppings to ENUM!
+		Product pumpkinSpiceLatte = drinkMaker.createProduct("Pumpkin Spice Latte", DrinkTypes.COFFEE, Drink.Size.SMALL, coffeeToppings, Drink.Sweetness.NO_SUGAR, Drink.Milk.HALF_AND_HALF); //TODO: Add list of toppings to ENUM!
+
+		ArrayList<DrinkToppings> teaToppings = new ArrayList<>();
+
 		teaToppings.add(DrinkToppings.BOBA);
 		teaToppings.add(DrinkToppings.COCONUT_JELLY);
-
-		//Product coffee = drinkMaker.createProduct("Almond Latte", DrinkTypes.COFFEE, Drink.Size.MEDIUM, coffeeToppings, Drink.Sweetness.NO_SUGAR, Drink.Milk.NO_MILK); //TODO: Add list of toppings to ENUM!
 		Product jasmineGreenTea = drinkMaker.createProduct("Jasmine Green Tea", DrinkTypes.TEA, Drink.Size.LARGE, teaToppings, Drink.Sweetness.QUARTER_SWEET, Drink.Milk.SOY_MILK);
 		teaToppings.clear();
 
@@ -59,12 +68,14 @@ public class NewClient {
 
 		Product chocolateCroissant = pastryMaker.createProduct("Chocolate Nut", PastryTypes.CROISSANT, 1, Pastry.HeatState.COLD, 0, 0);
 		Product plainCroissant = pastryMaker.createProduct("Plain", PastryTypes.CROISSANT, 1, Pastry.HeatState.HEATED, 0, 0);
-
 		Product oatmealCookie = pastryMaker.createProduct("Oatmeal", PastryTypes.COOKIE, 7, 0, 0, 0);
-
 		Product varietyMacaroon = pastryMaker.createProduct("Variety", PastryTypes.MACAROON, 7, 0, 0, 0);
 
 		ArrayList<Product> itemsInSale = new ArrayList<>();
+		itemsInSale.add(almondLatte);
+		itemsInSale.add(darkRoast);
+		itemsInSale.add(hazelnutLatte);
+		itemsInSale.add(pumpkinSpiceLatte);
 
 		itemsInSale.add(jasmineGreenTea);
 		itemsInSale.add(summerMintTea);

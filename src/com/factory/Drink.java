@@ -5,7 +5,7 @@ package com.factory;
 public abstract class Drink implements Product {
     String description = "Unknown Drink";
     Size size;
-    protected String name;
+    String name;
     Milk milkType;
 
     /**
@@ -132,7 +132,7 @@ class Coffee extends Drink {
         this.name = name;
         this.size = size;
         this.milkType = milkType;
-        //description = "Hot coffee!";
+        description = "A delicious piping coffee with ";
     }
     /**
      * Gets the cost of coffee.

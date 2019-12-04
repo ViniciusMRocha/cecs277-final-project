@@ -32,8 +32,10 @@ public class Sale {
     @Override
     public String toString() {
         String output = "";
+        int itemNumber = 1;
         for(Product item : itemsInSale) {
             output += "\n-------------------- NEW ITEM --------------------\n";
+            output += "Item #" + (itemNumber++) + "\n";
             output += item.getDescription() + "\n";
             output += String.format("Cost: $%.2f" , item.getCost());
         }
