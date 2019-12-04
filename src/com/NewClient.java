@@ -1,6 +1,6 @@
 package com;
 
-import com.decorator.toppings.drinktoppings.DrinkToppings;
+import com.decorator.toppings.drinktoppings.Toppings;
 import com.factory.*;
 import com.sale.Coupon;
 import com.sale.Sale;
@@ -24,8 +24,8 @@ import java.util.ArrayList;
 public class NewClient {
 
 	public static void main(String[] args) {
-		ArrayList<DrinkToppings> teaToppings = new ArrayList<>();
-		ArrayList<DrinkToppings> coffeeToppings = new ArrayList<>();
+		ArrayList<Toppings> teaToppings = new ArrayList<>();
+		ArrayList<Toppings> coffeeToppings = new ArrayList<>();
 
 		//CREATING THE FACTORIES
 		PastryFactory pastryMaker = new PastryFactory();

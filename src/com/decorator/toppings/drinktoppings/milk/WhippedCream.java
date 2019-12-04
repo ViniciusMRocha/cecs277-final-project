@@ -1,9 +1,9 @@
 package com.decorator.toppings.drinktoppings.milk;
 
-import com.decorator.toppings.drinktoppings.DrinkToppings;
+import com.decorator.toppings.drinktoppings.Toppings;
 import com.factory.Drink;
 
-public class WhippedCream extends DrinkToppings {
+public class WhippedCream extends Toppings {
     public WhippedCream(Drink base) {
         super(base);
     }

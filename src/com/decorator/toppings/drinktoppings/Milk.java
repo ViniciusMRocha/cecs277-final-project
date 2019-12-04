@@ -2,7 +2,7 @@ package com.decorator.toppings.drinktoppings;
 
 import com.factory.Drink;
 
-public abstract class Milk extends DrinkToppings {
+public abstract class Milk extends Toppings {
 
     public Milk(Drink base) {
         super(base);

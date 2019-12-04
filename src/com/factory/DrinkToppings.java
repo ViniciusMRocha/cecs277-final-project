@@ -1,0 +1,8 @@
+package com.factory;
+
+public enum DrinkToppings {
+    COCONUT_JELLY, LYCHEE_JELLY, GRASS_JELLY, PASSIONFRUIT_JELLY,
+    HALF_AND_HALF, POPPING_BOBA,
+    WHIPPED_CREAM, STRAWBERRIES,
+    BOBA, SOY_MILK
+}

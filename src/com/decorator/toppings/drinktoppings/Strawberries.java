@@ -2,7 +2,7 @@ package com.decorator.toppings.drinktoppings;
 
 import com.factory.Drink;
 
-public class Strawberries extends DrinkToppings {
+public class Strawberries extends Toppings {
     public Strawberries(Drink base) {
         super(base);
     }
@@ -14,6 +14,6 @@ public class Strawberries extends DrinkToppings {
 
     @Override
     public double getCost() {
-        return 6;
+        return base.getCost() + 6;
     }
 }

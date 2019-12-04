@@ -1,9 +1,8 @@
 package com.decorator.toppings.drinktoppings;
 
-import com.decorator.toppings.drinktoppings.DrinkToppings;
 import com.factory.Drink;
 
-public class PoppingBoba extends DrinkToppings {
+public class PoppingBoba extends Toppings {
     public PoppingBoba(Drink base) {
         super(base);
     }
