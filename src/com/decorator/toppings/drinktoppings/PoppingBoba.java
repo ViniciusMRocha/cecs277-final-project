@@ -14,6 +14,6 @@ public class PoppingBoba extends Toppings {
 
     @Override
     public double getCost() {
-        return return getBase().getCost() + 0.50;
+        return return base.getCost() + 0.50;
     }
 }

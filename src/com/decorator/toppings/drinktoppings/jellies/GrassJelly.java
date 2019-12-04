@@ -14,6 +14,6 @@ public class GrassJelly extends Jellies {
 
     @Override
     public double getCost() {
-        return return getBase().getCost() + 0.50;
+        return base.getCost() + 0.50;
     }
 }
