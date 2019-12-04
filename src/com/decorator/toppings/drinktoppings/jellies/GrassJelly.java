@@ -14,6 +14,6 @@ public class GrassJelly extends Jellies {
 
     @Override
     public double getCost() {
-        return 0;
+        return 0.50;
     }
 }
