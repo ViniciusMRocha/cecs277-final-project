@@ -14,6 +14,6 @@ public class Boba extends Toppings {
 
     @Override
     public double getCost() {
-        return 5;
+        return base.getCost() + 0.50;
     }
 }

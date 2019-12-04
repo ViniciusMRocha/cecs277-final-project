@@ -14,6 +14,6 @@ public class CoconutJelly extends Jellies {
 
     @Override
     public double getCost() {
-        return 0.50;
+        return base.getCost() + 0.50;
     }
 }
