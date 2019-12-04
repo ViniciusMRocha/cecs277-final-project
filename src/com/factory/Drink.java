@@ -128,7 +128,7 @@ class Coffee extends Drink {
                 return 2.50;
 
             case MEDIUM:
-                return 3.00;
+                return 2.00;
 
             case LARGE:
                 return 3.50;
