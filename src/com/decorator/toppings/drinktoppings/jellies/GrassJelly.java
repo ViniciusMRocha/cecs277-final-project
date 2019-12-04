@@ -1,15 +1,16 @@
 package com.decorator.toppings.drinktoppings.jellies;
 
+import com.decorator.toppings.drinktoppings.Toppings;
 import com.factory.Drink;
 
-public class GrassJelly extends Jellies {
+public class GrassJelly extends Toppings {
     public GrassJelly(Drink base) {
         super(base);
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return base.getDescription() + "grass jelly, ";
     }
 
     @Override

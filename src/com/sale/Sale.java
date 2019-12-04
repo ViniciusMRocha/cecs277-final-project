@@ -32,11 +32,19 @@ public class Sale {
     @Override
     public String toString() {
         String output = "";
-        for(Product item : itemsInSale)
+        for(Product item : itemsInSale) {
+            output += "\n-------------------- NEW ITEM --------------------\n";
             output += item.getDescription() + "\n";
+            output += String.format("Cost: $%.2f" , item.getCost());
+        }
+        output += "\n\n-------------------- COUPONS --------------------\n";
 
-        for(Coupon coupon : coupons)
-            output += coupon + "\n";
+        for(Coupon coupon : coupons) {
+            output += "\n-------------------- NEW COUPON --------------------\n";
+            output += coupon;
+        }
+
+        output += "\n\n-------------------- ORDER TOTAL --------------------\n";
 
         output += "Total price: " + totalPrice;
         return output;

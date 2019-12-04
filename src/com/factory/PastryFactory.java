@@ -9,23 +9,21 @@ package com.factory;
 		/**
 		 * The createProduct(Object, Object) method initializes a new Pastry object given a set of parameters.
 		 * @param type The type of Pastry to be created.
-		 * @param details An ArrayList that outlines any additional additions the drink will have, such as the amount,
-		 *                or if it should be heated)
 		 * @return The new Pastry object.
 		 */
 		@Override
-	public Product createProduct(Object type, Object details, Object details2, Object details3) {
+	public Product createProduct(Object name, Object type, Object quantity, Object heatState, Object details3, Object details4) {
 		Pastry p = null;
 
 		switch ((PastryTypes) type) {
 			case CROISSANT:
-				p = new Croissant((Croissant.HeatState) details);
+				p = new Croissant((String)name, (int)quantity, (Croissant.HeatState) heatState);
 				break;
 			case COOKIE:
-				p = new Cookie((int)details);
+				p = new Cookie((String)name, (int)quantity);
 				break;
 			case MACAROON:
-				p = new Macaroon((int)details);
+				p = new Macaroon((String)name, (int)quantity);
 				break;
 		}
 

@@ -1,15 +1,16 @@
 package com.decorator.toppings.drinktoppings.jellies;
 
+import com.decorator.toppings.drinktoppings.Toppings;
 import com.factory.Drink;
 
-public class CoconutJelly extends Jellies {
+public class CoconutJelly extends Toppings {
     public CoconutJelly(Drink base) {
         super(base);
     }
 
     @Override
     public String getDescription() {
-        return null;
+            return base.getDescription() + "coconut jelly, ";
     }
 
     @Override

@@ -9,7 +9,7 @@ public class Boba extends Toppings {
 
     @Override
     public String getDescription() {
-        return "Boba";
+        return base.getDescription() + "boba, ";
     }
 
     @Override

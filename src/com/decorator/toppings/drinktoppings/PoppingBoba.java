@@ -9,7 +9,8 @@ public class PoppingBoba extends Toppings {
 
     @Override
     public String getDescription() {
-        return "Popping boba";
+        return base.getDescription() + "popping boba, ";
+
     }
 
     @Override

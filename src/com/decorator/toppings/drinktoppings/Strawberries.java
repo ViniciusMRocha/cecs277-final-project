@@ -9,7 +9,7 @@ public class Strawberries extends Toppings {
 
     @Override
     public String getDescription() {
-        return "Strawberries";
+        return base.getDescription() + "strawberries, ";
     }
 
     @Override

@@ -6,7 +6,6 @@ package com.factory;
 public abstract class Pastry implements Product {
     String name;
     String description;
-    String type;
     int quantity;
 
     /**
@@ -14,7 +13,7 @@ public abstract class Pastry implements Product {
      * @return
      */
     public String getDescription() {
-        return "Name: " + this.name + "\nToppings: " + this.description + "\nType: " + this.type + "\nQuantity:" + this.quantity;
+        return "Name: " + this.name + "\nToppings: " + this.description + "\nQuantity: " + this.quantity;
     }
 
     public String getName() {
@@ -26,9 +25,7 @@ public abstract class Pastry implements Product {
      * @return the cost
      */
     public abstract double getCost();
-}
 
-class Croissant extends Pastry {
     /**
      * A enum that represents what size the Drink is.
      */
@@ -46,14 +43,18 @@ class Croissant extends Pastry {
         }
     }
 
+}
+
+class Croissant extends Pastry {
     /**
      * A Croissant is a type of pastry.
      */
     private HeatState heatState;
 
-    Croissant(HeatState heatState) {
-        name = "Croissant";
-        description = "A delicious, fresh croissant!";
+    Croissant(String name, int quantity, HeatState heatState) {
+        this.name = name;
+        this.quantity = quantity;
+        description = "A delicious, fresh croissant with ";
         this.heatState = heatState;
     }
 
@@ -72,8 +73,8 @@ class Croissant extends Pastry {
  */
 class Cookie extends Pastry {
 
-    Cookie(int quantity) {
-        name = "Cookie";
+    Cookie(String name, int quantity) {
+        this.name = name;
         description = "A mouth-watering treat!";
         this.quantity = quantity;
     }
@@ -88,8 +89,9 @@ class Cookie extends Pastry {
 
     public double getCost() {
         double originalPrice = 1.50;
-        double specialPrice = 3;
+        double specialPrice = 1.00;
 
+        if(quantity < 3) return (quantity * originalPrice);
         int cookiesInSetsOfThree = setsOfThreePurchased(quantity) * 3;
         int remainingCookies = quantity % (cookiesInSetsOfThree);
         return (remainingCookies * originalPrice) + (cookiesInSetsOfThree * specialPrice);
@@ -100,8 +102,8 @@ class Cookie extends Pastry {
  */
 class Macaroon extends Pastry {
 
-    Macaroon(int quantity)  {
-        name = "Macaroon";
+    Macaroon(String name, int quantity)  {
+        this.name = name;
         description = "This is a macaroon.";
         this.quantity = quantity;
     }
@@ -116,8 +118,9 @@ class Macaroon extends Pastry {
 
     public double getCost() {
         double originalPrice = 2;
-        double specialPrice = 9;
+        double specialPrice = 1.50;
 
+        if(quantity < 12) return (quantity * originalPrice);
         int macaroonsInSets = halfDozensPurchased(quantity) * 12;
         int remainingMacaroons = quantity % (macaroonsInSets);
         return (remainingMacaroons * originalPrice) + (macaroonsInSets * specialPrice);

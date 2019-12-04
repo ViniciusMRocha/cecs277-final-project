@@ -5,15 +5,16 @@ package com.factory;
 public abstract class Drink implements Product {
     String description = "Unknown Drink";
     Size size;
+    protected String name;
+    Milk milkType;
 
     /**
      * Get the description of the drink.
      * @return the description
      */
     public String getDescription() {
-        return description;
+        return "Name: " + name + "\nToppings: " + this.description;
     }
-
     /**
      * An abstract method to determine the cost of different sub-types of pastry.
      * @return the cost
@@ -42,9 +43,7 @@ public abstract class Drink implements Product {
      */
     public enum Sweetness {
         QUARTER_SWEET("A fourth sweet"), HALF_SWEET("Half sweet"), THREE_FOURTHS_SWEET("Three fourths sweet"), NO_SUGAR("No sugar");
-
         private String description;
-
         Sweetness(String description) {
             this.description = description;
         }
@@ -53,23 +52,40 @@ public abstract class Drink implements Product {
             return description;
         }
     }
+
+    /**
+     * An enum that defines the amount of sweetness the tea will have.
+     */
+    public enum Milk {
+        NO_MILK("No milk"), HALF_AND_HALF("Half and half"), SOY_MILK("Soy milk");
+
+        private String milkDescription;
+        Milk(String milkDescription) {
+            this.milkDescription = milkDescription;
+        }
+
+        public String getMilkDescription() {
+            return milkDescription;
+        }
+    }
 }
 
 /**
  * Tea is a type of Drink.
  */
 class Tea extends Drink {
-    private String name;
     private Sweetness sweetness;
 
     /**
      * Initializes Tea.
      */
-    public Tea(Size size, Sweetness sweetness) {
+    public Tea(String name, Size size, Sweetness sweetness, Milk milkType) {
+        this.name = name;
+
         this.size = size;
         this.sweetness = sweetness;
-        description = "A nice cuppa tea!";
-        name = "Tea";
+        this.milkType = milkType;
+        description = "A nice cuppa tea with ";
     }
 
     /**
@@ -77,30 +93,31 @@ class Tea extends Drink {
      * @return the total cost.
      */
     public double getCost() {
+        double drinkCost = 0.0;
         switch (size) {
             case SMALL:
-                return 1.50;
+                drinkCost += 1.50;
+                break;
 
             case MEDIUM:
-                return 2.00;
+                drinkCost += 2.00;
+                break;
 
             case LARGE:
-                return 3;
-
-            default:
-                return 0;
+                drinkCost += 3.00;
+                break;
         }
-    }
 
-    /**
-     * Gets description.
-     *
-     * TODO: Properly add descriptions based on toppings added!
-     * @return complete information about the product
-     */
-    public String getDescription() {
-        return "Name: " + this.name + "\nDescription: " + this.description + "\nSweetness: " + this.sweetness.getDescription()
-                + "\nSize: " + this.size.getSizeName() + "\nCost: " + String.format("$%.2f" , this.getCost()) + "\n\n";
+        switch (milkType) {
+            case SOY_MILK:
+                drinkCost += 0.50;
+                break;
+
+            case HALF_AND_HALF:
+                drinkCost += 0.25;
+                break;
+        }
+        return drinkCost;
     }
 }
 
@@ -108,45 +125,42 @@ class Tea extends Drink {
  * Coffee is a type of drink.
  */
 class Coffee extends Drink {
-    private String name;
-
     /**
      * Creates a new Coffee drink,
      */
-    public Coffee(Size size) {
+    public Coffee(String name, Size size, Milk milkType) {
+        this.name = name;
         this.size = size;
-        description = "Hot coffee!";
-        name = "Coffee";
+        this.milkType = milkType;
+        //description = "Hot coffee!";
     }
     /**
      * Gets the cost of coffee.
      * @return the total cost.
      */
     public double getCost() {
+        double drinkCost = 0.0;
         switch (size) {
             case SMALL:
-                return 1.50;
-
             case MEDIUM:
-                return 2.00;
+                drinkCost += 2.00;
+                break;
 
             case LARGE:
-                return 2.50;
-
-            default:
-                return 0;
+                drinkCost += 2.50;
+                break;
         }
-    }
 
-    /**
-     * Gets description.
-     *
-     * TODO: Properly add descriptions based on toppings added!
-     * @return complete information about the product
-     */
-    public String getDescription() {
-        return "Name: " + this.name + "\nDescription: " + this.description + "\nSize: " + this.size.getSizeName()
-                + "\nCost: " + String.format("$%.2f" , this.getCost()) + "\n\n" ;
-    }
+        switch (milkType) {
+            case SOY_MILK:
+                drinkCost += 0.50;
+                break;
 
+            case HALF_AND_HALF:
+                drinkCost += 0.25;
+                break;
+        }
+
+        return drinkCost;
+    }
 }
