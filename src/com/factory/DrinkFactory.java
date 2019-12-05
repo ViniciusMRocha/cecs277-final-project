@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * A DrinkFactory is an implementation of the ProductFactory. It creates a unique type of Drink object depending on
  * the user's specifications.
  */
-public class DrinkFactory implements ProductFactory {
+public class DrinkFactory extends ProductFactory {
 
     private DrinkToppings[] ArrayList;
 
@@ -20,7 +20,7 @@ public class DrinkFactory implements ProductFactory {
      * TODO: Properly document the uses for each object parameter, if applicable.
      */
     @Override
-    public Product createProduct(Object name, Object type, Object size, Object toppings, Object sweetness, Object milk) {
+    public Drink createProduct(Object name, Object type, Object size, Object toppings, Object sweetness, Object milk) {
         Drink p = null;
 
         switch((DrinkTypes)type) {

@@ -7,6 +7,8 @@ public abstract class Drink implements Product {
     Size size;
     String name;
     Milk milkType;
+    double cost;
+
 
     /**
      * Get the description of the drink.
@@ -20,6 +22,22 @@ public abstract class Drink implements Product {
      * @return the cost
      */
     public abstract double getCost();
+
+    public String getName() {
+        return name;
+    }
+
+    public double getDrinkCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public ProductTypes type() {
+        return ProductTypes.DRINK;
+    }
 
     /**
      * A enum that represents what size the Drink is.
@@ -67,100 +85,5 @@ public abstract class Drink implements Product {
         public String getMilkDescription() {
             return milkDescription;
         }
-    }
-}
-
-/**
- * Tea is a type of Drink.
- */
-class Tea extends Drink {
-    private Sweetness sweetness;
-
-    /**
-     * Initializes Tea.
-     */
-    public Tea(String name, Size size, Sweetness sweetness, Milk milkType) {
-        this.name = name;
-
-        this.size = size;
-        this.sweetness = sweetness;
-        this.milkType = milkType;
-        description = "A nice cuppa tea with ";
-    }
-
-    /**
-     * Gets the cost of tea.
-     * @return the total cost.
-     */
-    public double getCost() {
-        double drinkCost = 0.0;
-        switch (size) {
-            case SMALL:
-                drinkCost += 1.50;
-                break;
-
-            case MEDIUM:
-                drinkCost += 2.00;
-                break;
-
-            case LARGE:
-                drinkCost += 3.00;
-                break;
-        }
-
-        switch (milkType) {
-            case SOY_MILK:
-                drinkCost += 0.50;
-                break;
-
-            case HALF_AND_HALF:
-                drinkCost += 0.25;
-                break;
-        }
-        return drinkCost;
-    }
-}
-
-/**
- * Coffee is a type of drink.
- */
-class Coffee extends Drink {
-    /**
-     * Creates a new Coffee drink,
-     */
-    public Coffee(String name, Size size, Milk milkType) {
-        this.name = name;
-        this.size = size;
-        this.milkType = milkType;
-        description = "A delicious piping coffee with ";
-    }
-    /**
-     * Gets the cost of coffee.
-     * @return the total cost.
-     */
-    public double getCost() {
-        double drinkCost = 0.0;
-        switch (size) {
-            case SMALL:
-            case MEDIUM:
-                drinkCost += 2.00;
-                break;
-
-            case LARGE:
-                drinkCost += 2.50;
-                break;
-        }
-
-        switch (milkType) {
-            case SOY_MILK:
-                drinkCost += 0.50;
-                break;
-
-            case HALF_AND_HALF:
-                drinkCost += 0.25;
-                break;
-        }
-
-        return drinkCost;
     }
 }

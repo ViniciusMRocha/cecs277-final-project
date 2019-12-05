@@ -1,7 +1,6 @@
 package com.sale.coupontypes;
 
-import com.factory.Drink;
-import com.factory.Product;
+import com.factory.*;
 import com.sale.Coupon;
 import com.sale.Sale;
 
@@ -12,21 +11,21 @@ public class DrinkCoupon extends Coupon {
 
     @Override
     protected double calculateDiscount(Sale sale) {
+        System.out.println("Items in sale: ");
+
         Drink drinkToSubsidize = getHighestPricedDrink(sale);
-        discountedItem = drinkToSubsidize;
         if(drinkToSubsidize == null) return 0;
         return (drinkToSubsidize.getCost()) * 0.5;
     }
 
     private Drink getHighestPricedDrink(Sale sale) {
         Drink drink = null;
+        double drinkPrice = 0.0;
         for(Product item : sale.getItemsInSale()) {
             if(item instanceof Drink) {
-                if(drink == null)
+                if(item.getCost() > drinkPrice) {
                     drink = (Drink)item;
-                else {
-                    if(item.getCost() > drink.getCost())
-                        drink = (Drink)item;
+                    drinkPrice = ((Drink)item).getCost();
                 }
             }
         }

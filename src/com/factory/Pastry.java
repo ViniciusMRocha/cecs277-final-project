@@ -8,6 +8,9 @@ public abstract class Pastry implements Product {
     String description;
     int quantity;
 
+    public ProductTypes type() {
+        return ProductTypes.PASTRY;
+    }
     /**
      * Get the description of the pastry.
      * @return
@@ -69,35 +72,6 @@ class Croissant extends Pastry {
     }
 }
 /**
- * A Cookie is a type of pastry.
- */
-class Cookie extends Pastry {
-
-    Cookie(String name, int quantity) {
-        this.name = name;
-        description = "A mouth-watering treat!";
-        this.quantity = quantity;
-    }
-
-    /**
-     * How many sets-of-three cookies have been purchased.
-     * @return the many sets of three purchased.
-     */
-    private int setsOfThreePurchased(int quantity) {
-        return (int)(Math.floor(quantity / 3));
-    }
-
-    public double getCost() {
-        double originalPrice = 1.50;
-        double specialPrice = 1.00;
-
-        if(quantity < 3) return (quantity * originalPrice);
-        int cookiesInSetsOfThree = setsOfThreePurchased(quantity) * 3;
-        int remainingCookies = quantity % (cookiesInSetsOfThree);
-        return (remainingCookies * originalPrice) + (cookiesInSetsOfThree * specialPrice);
-    }
-}
-/**
  * A Macaroon is a type of pastry.
  */
 class Macaroon extends Pastry {
@@ -113,15 +87,15 @@ class Macaroon extends Pastry {
      * @return how many half-dozens purchased.
      */
     private int halfDozensPurchased(int quantity) {
-        return (int)(Math.floor(quantity / 12));
+        return (int)(Math.floor(quantity / 6));
     }
 
     public double getCost() {
         double originalPrice = 2;
         double specialPrice = 1.50;
 
-        if(quantity < 12) return (quantity * originalPrice);
-        int macaroonsInSets = halfDozensPurchased(quantity) * 12;
+        if(quantity < 6) return (quantity * originalPrice);
+        int macaroonsInSets = halfDozensPurchased(quantity) * 6;
         int remainingMacaroons = quantity % (macaroonsInSets);
         return (remainingMacaroons * originalPrice) + (macaroonsInSets * specialPrice);
     }

@@ -1,5 +1,6 @@
 package com.sale.coupontypes;
 
+import com.factory.Cookie;
 import com.factory.Pastry;
 import com.factory.Product;
 import com.sale.Coupon;
@@ -13,9 +14,9 @@ public class PastryCoupon extends Coupon {
 
     @Override
     protected double calculateDiscount(Sale sale) {
+
         for(Product item : sale.getItemsInSale())
-            if(item instanceof Pastry)
-                if(((Pastry) item).getName().equals("Cookie")) //TODO: Change this to an Enum
+            if(item instanceof Cookie)
                     return 1.0;
         return 0.0;
     }

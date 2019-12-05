@@ -20,8 +20,10 @@ public class Sale {
         for(Product product : itemsInSale)
             cost += product.getCost();
 
-        for(Coupon coupon : coupons)
-            cost -= coupon.calculateDiscount(this);
+        for(Coupon coupon : coupons) {
+            double discount = coupon.calculateDiscount(this);
+            cost -= discount;
+        }
         return cost;
     }
 
@@ -29,8 +31,7 @@ public class Sale {
         return itemsInSale;
     }
 
-    @Override
-    public String toString() {
+    public String printItems() {
         String output = "";
         int itemNumber = 1;
         for(Product item : itemsInSale) {
@@ -39,7 +40,11 @@ public class Sale {
             output += item.getDescription() + "\n";
             output += String.format("Cost: $%.2f" , item.getCost());
         }
-        output += "\n\n-------------------- COUPONS --------------------\n";
+        return output;
+    }
+    @Override
+    public String toString() {
+        String output = "";
 
         for(Coupon coupon : coupons) {
             output += "\n-------------------- NEW COUPON --------------------\n";

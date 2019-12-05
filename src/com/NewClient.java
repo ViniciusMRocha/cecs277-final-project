@@ -72,6 +72,7 @@ public class NewClient {
 		Product varietyMacaroon = pastryMaker.createProduct("Variety", PastryTypes.MACAROON, 7, 0, 0, 0);
 
 		ArrayList<Product> itemsInSale = new ArrayList<>();
+
 		itemsInSale.add(almondLatte);
 		itemsInSale.add(darkRoast);
 		itemsInSale.add(hazelnutLatte);
@@ -88,11 +89,27 @@ public class NewClient {
 		//Product pastry = pastryMaker.createProduct(PastryTypes.CROISSANT, bubTea);
 
 		ArrayList<Coupon> coupons = new ArrayList<>();
+		ArrayList<Coupon> coupons2 = new ArrayList<>();
+		ArrayList<Coupon> coupons3 = new ArrayList<>();
 		coupons.add(new DrinkCoupon());
-		coupons.add(new GeneralCoupon());
-		coupons.add(new PastryCoupon());
+
 		Sale sale = new Sale(itemsInSale, coupons);
+		System.out.println(sale.printItems());
+
+
+		coupons2.add(new GeneralCoupon());
+		Sale sale2 = new Sale(itemsInSale, coupons2);
+
+		coupons3.add(new PastryCoupon());
+		Sale sale3 = new Sale(itemsInSale, coupons3);
+		System.out.println("---------- NEW SALE ONE -----------");
 		System.out.println(sale);
+		System.out.println("---------- NEW SALE TWO -----------");
+		System.out.println(sale2);
+		System.out.println("---------- NEW SALE -----------");
+
+		System.out.println(sale3);
+
 	}
 
 }

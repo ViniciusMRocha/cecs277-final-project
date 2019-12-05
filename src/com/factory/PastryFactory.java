@@ -4,7 +4,7 @@ package com.factory;
 	 * A PastryFactory is an implementation of the ProductFactory. It creates a unique type of Pastry object depending on
 	 * the user's specifications.
 	 */
-	public class PastryFactory implements ProductFactory {
+	public class PastryFactory extends ProductFactory {
 
 		/**
 		 * The createProduct(Object, Object) method initializes a new Pastry object given a set of parameters.

@@ -1,6 +1,9 @@
 package com.frontend;
 
+import com.bulenkov.darcula.DarculaLaf;
+
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicLookAndFeel;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -82,6 +85,12 @@ public class PointOfSaleGUI extends JPanel {
      * Create the GUI and display it.
      */
     private static void createAndShowGUI() {
+        BasicLookAndFeel darculaLookAndFeel = new DarculaLaf();
+        try {
+            UIManager.setLookAndFeel(darculaLookAndFeel);
+        } catch (UnsupportedLookAndFeelException ex) {
+            // ups!
+        }
         //Create and set up the window.
         JFrame frame = new JFrame("Final Exam");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
