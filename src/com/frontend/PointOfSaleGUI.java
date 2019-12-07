@@ -41,7 +41,7 @@ public class PointOfSaleGUI extends JPanel {
 
         JPanel panel2 = new JPanel(new BorderLayout());
         tabbedPane.addTab("Edit an existing sale", panel2);
-        panel2.setPreferredSize(new Dimension(410, 300));
+        panel2.setPreferredSize(new Dimension(610, 300));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBorder(BorderFactory.createTitledBorder("Options"));
@@ -80,7 +80,21 @@ public class PointOfSaleGUI extends JPanel {
             }
         });
 
+        JButton removeButton = new JButton("Remove selected order");
+        removeButton.setEnabled(false);
+
+        existingOrders.getSelectionModel().addListSelectionListener(e -> {
+            if(existingOrders.getSelectedRow() == -1) {
+                removeButton.setEnabled(false);
+                viewButton.setEnabled(false);
+            } else {
+                removeButton.setEnabled(true);
+                viewButton.setEnabled(true);
+            }
+        });
+
         buttonPanel.add(editButton, BorderLayout.EAST);
+        buttonPanel.add(removeButton, BorderLayout.EAST);
         buttonPanel.add(viewButton, BorderLayout.WEST);
         panel2.add(buttonPanel, BorderLayout.SOUTH);
 
