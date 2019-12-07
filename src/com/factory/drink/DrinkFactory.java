@@ -1,8 +1,10 @@
-package com.factory;
+package com.factory.drink;
 
 import com.decorator.toppings.drinktoppings.*;
 import com.decorator.toppings.drinktoppings.jellies.*;
 import com.decorator.toppings.drinktoppings.milk.*;
+import com.factory.DrinkTypes;
+import com.factory.ProductFactory;
 
 import java.util.ArrayList;
 
@@ -12,8 +14,6 @@ import java.util.ArrayList;
  * the user's specifications.
  */
 public class DrinkFactory extends ProductFactory {
-
-    private DrinkToppings[] ArrayList;
 
     /**
      * The createProduct(Object, Object) method initializes a new Drink object given a set of parameters.

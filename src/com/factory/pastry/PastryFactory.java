@@ -1,6 +1,10 @@
-package com.factory;
+package com.factory.pastry;
 
-	/**
+import com.factory.PastryTypes;
+import com.factory.Product;
+import com.factory.ProductFactory;
+
+/**
 	 * A PastryFactory is an implementation of the ProductFactory. It creates a unique type of Pastry object depending on
 	 * the user's specifications.
 	 */

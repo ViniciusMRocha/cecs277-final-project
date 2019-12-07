@@ -8,12 +8,21 @@ public class Sale {
     private ArrayList<Product> itemsInSale;
     private double totalPrice;
     private ArrayList<Coupon> coupons;
+    private static int totalOrders = 0;
+    private int receiptNumber = 0;
 
     public Sale(ArrayList<Product> itemsInSale, ArrayList<Coupon> coupons) {
         this.itemsInSale = itemsInSale;
         this.coupons = coupons;
         totalPrice = calculateTotalCost();
+        totalOrders++;
+        receiptNumber = totalOrders;
     }
+
+    public int getReceiptNumber() {
+        return receiptNumber;
+    }
+
 
     private double calculateTotalCost() {
         double cost = 0.0;
@@ -25,6 +34,14 @@ public class Sale {
             cost -= discount;
         }
         return cost;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public int couponsUsed() {
+        return coupons.size();
     }
 
     public ArrayList<Product> getItemsInSale() {

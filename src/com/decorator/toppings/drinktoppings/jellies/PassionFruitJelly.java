@@ -1,11 +1,16 @@
 package com.decorator.toppings.drinktoppings.jellies;
 
 import com.decorator.toppings.drinktoppings.Toppings;
-import com.factory.Drink;
+import com.factory.drink.Drink;
 
 public class PassionFruitJelly extends Toppings {
     public PassionFruitJelly(Drink base) {
         super(base);
+    }
+
+    @Override
+    public String getName() {
+        return base.getName();
     }
 
     @Override

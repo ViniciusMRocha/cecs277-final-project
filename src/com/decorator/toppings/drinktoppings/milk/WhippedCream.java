@@ -1,7 +1,7 @@
 package com.decorator.toppings.drinktoppings.milk;
 
 import com.decorator.toppings.drinktoppings.Toppings;
-import com.factory.Drink;
+import com.factory.drink.Drink;
 
 public class WhippedCream extends Toppings {
     public WhippedCream(Drink base) {
@@ -11,6 +11,11 @@ public class WhippedCream extends Toppings {
     @Override
     public String getDescription() {
         return base.getDescription() + "whipped cream, ";
+    }
+
+    @Override
+    public String getName() {
+        return base.getName();
     }
 
     @Override

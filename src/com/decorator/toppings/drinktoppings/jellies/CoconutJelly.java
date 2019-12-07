@@ -1,7 +1,7 @@
 package com.decorator.toppings.drinktoppings.jellies;
 
 import com.decorator.toppings.drinktoppings.Toppings;
-import com.factory.Drink;
+import com.factory.drink.Drink;
 
 public class CoconutJelly extends Toppings {
     public CoconutJelly(Drink base) {
@@ -11,6 +11,11 @@ public class CoconutJelly extends Toppings {
     @Override
     public String getDescription() {
             return base.getDescription() + "coconut jelly, ";
+    }
+
+    @Override
+    public String getName() {
+        return base.getName();
     }
 
     @Override

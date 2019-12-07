@@ -1,4 +1,7 @@
-package com.factory;
+package com.factory.drink;
+
+import com.factory.Product;
+
 /**
  * An abstract representation of a Drink.
  */
@@ -15,13 +18,14 @@ public abstract class Drink implements Product {
      * @return the description
      */
     public String getDescription() {
-        return "Name: " + name + "\nToppings: " + this.description;
+        return this.description;
     }
     /**
      * An abstract method to determine the cost of different sub-types of pastry.
      * @return the cost
      */
     public abstract double getCost();
+
 
     public String getName() {
         return name;
@@ -33,10 +37,6 @@ public abstract class Drink implements Product {
 
     public void setCost(double cost) {
         this.cost = cost;
-    }
-
-    public ProductTypes type() {
-        return ProductTypes.DRINK;
     }
 
     /**

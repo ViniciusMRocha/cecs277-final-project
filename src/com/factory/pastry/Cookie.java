@@ -1,4 +1,4 @@
-package com.factory;
+package com.factory.pastry;
 
 /**
  * A Cookie is a type of pastry.

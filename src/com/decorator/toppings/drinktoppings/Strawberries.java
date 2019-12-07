@@ -1,6 +1,6 @@
 package com.decorator.toppings.drinktoppings;
 
-import com.factory.Drink;
+import com.factory.drink.Drink;
 
 public class Strawberries extends Toppings {
     public Strawberries(Drink base) {
@@ -10,6 +10,11 @@ public class Strawberries extends Toppings {
     @Override
     public String getDescription() {
         return base.getDescription() + "strawberries, ";
+    }
+
+    @Override
+    public String getName() {
+        return base.getName();
     }
 
     @Override

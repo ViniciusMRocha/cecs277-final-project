@@ -1,32 +1,40 @@
-package com.factory;
+package com.factory.drink;
 
 /**
- * Coffee is a type of drink.
+ * Tea is a type of Drink.
  */
-public class Coffee extends Drink {
+public class Tea extends Drink {
+    private Sweetness sweetness;
+
     /**
-     * Creates a new Coffee drink,
+     * Initializes Tea.
      */
-    public Coffee(String name, Size size, Milk milkType) {
+    public Tea(String name, Size size, Sweetness sweetness, Milk milkType) {
         this.name = name;
         this.size = size;
+        this.sweetness = sweetness;
         this.milkType = milkType;
-        description = "A delicious coffee with ";
+        description = "A nice cuppa tea with ";
     }
+
     /**
-     * Gets the cost of coffee.
+     * Gets the cost of tea.
+     *
      * @return the total cost.
      */
     public double getCost() {
         double drinkCost = 0.0;
         switch (size) {
             case SMALL:
+                drinkCost += 1.50;
+                break;
+
             case MEDIUM:
                 drinkCost += 2.00;
                 break;
 
             case LARGE:
-                drinkCost += 2.50;
+                drinkCost += 3.00;
                 break;
         }
 

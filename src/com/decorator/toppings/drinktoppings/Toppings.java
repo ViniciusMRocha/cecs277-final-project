@@ -1,6 +1,6 @@
 package com.decorator.toppings.drinktoppings;
 
-import com.factory.Drink;
+import com.factory.drink.Drink;
 
 /**
  * Toppings represent the different kinda of toppings that a Drink
@@ -11,6 +11,7 @@ public abstract class Toppings extends Drink {
 	protected Drink base;
 
 	public Toppings(Drink base) {
+		super();
 		this.base = base;
 	}
 	public abstract String getDescription();

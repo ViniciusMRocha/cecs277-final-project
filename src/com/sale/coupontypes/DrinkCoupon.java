@@ -1,6 +1,7 @@
 package com.sale.coupontypes;
 
 import com.factory.*;
+import com.factory.drink.Drink;
 import com.sale.Coupon;
 import com.sale.Sale;
 
@@ -25,7 +26,7 @@ public class DrinkCoupon extends Coupon {
             if(item instanceof Drink) {
                 if(item.getCost() > drinkPrice) {
                     drink = (Drink)item;
-                    drinkPrice = ((Drink)item).getCost();
+                    drinkPrice = item.getCost();
                 }
             }
         }
