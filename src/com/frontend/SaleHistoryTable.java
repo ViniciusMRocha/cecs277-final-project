@@ -7,8 +7,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class OrderHistoryTable extends JTable {
-    public OrderHistoryTable(ArrayList<Sale> sales) {
+public class SaleHistoryTable extends JTable {
+    public SaleHistoryTable(ArrayList<Sale> sales) {
         super();
         this.getTableHeader().setReorderingAllowed(false);
         SaleTableModel tableModel = new SaleTableModel(sales);
@@ -21,7 +21,7 @@ public class OrderHistoryTable extends JTable {
 
     }
 
-    public OrderHistoryTable(Sale sales) {
+    public SaleHistoryTable(Sale sales) {
         super();
         this.getTableHeader().setReorderingAllowed(false);
         SaleDetailsTableModel tableModel = new SaleDetailsTableModel(sales);

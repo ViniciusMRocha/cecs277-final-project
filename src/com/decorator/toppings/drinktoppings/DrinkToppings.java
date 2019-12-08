@@ -12,12 +12,16 @@ public enum DrinkToppings {
         this.toppingNames = toppingNames;
     }
 
-    public String getToppingNames() {
-        return toppingNames;
-    }
-
     @Override
     public String toString() {
         return toppingNames;
+    }
+
+    public static DrinkToppings getEnumValueFromString(String text) {
+        for (DrinkToppings toppings : DrinkToppings.values()) {
+            if (toppings.toppingNames.equalsIgnoreCase(text))
+                return toppings;
+        }
+        return null;
     }
 }

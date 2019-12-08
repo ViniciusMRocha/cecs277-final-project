@@ -12,7 +12,7 @@ public enum CoffeeTypes {
         this.coffeeName = coffeeName;
     }
 
-    public String getCoffeeName() {
+    public String toString() {
         return coffeeName;
     }
 }

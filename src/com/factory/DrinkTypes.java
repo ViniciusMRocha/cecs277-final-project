@@ -1,5 +1,15 @@
 package com.factory;
 
 public enum DrinkTypes {
-    COFFEE, TEA
+    COFFEE("Coffee"), TEA("Tea");
+
+    private String drinkName;
+
+    DrinkTypes(String drinkName) {
+        this.drinkName = drinkName;
+    }
+
+    public String toString() {
+        return drinkName;
+    }
 }

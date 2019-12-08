@@ -11,7 +11,7 @@ public enum TeaTypes {
         this.teaName = teaName;
     }
 
-    public String getTeaName() {
+    public String toString() {
         return teaName;
     }
 }
