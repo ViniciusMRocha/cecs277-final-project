@@ -46,7 +46,7 @@ public class PointOfSaleGUI extends JPanel {
         tabbedPane.addTab("Create or modify a sale", salePanel);
         JPanel panel2 = new JPanel(new BorderLayout());
         tabbedPane.addTab("View sale history", panel2);
-
+        tabbedPane.setPreferredSize(new Dimension(550, 500));
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBorder(BorderFactory.createTitledBorder("Options"));
 
@@ -127,8 +127,6 @@ public class PointOfSaleGUI extends JPanel {
         toppingsPanel.setLayout(new GridLayout(3,2));
 
         productDetailsComboBox.addActionListener(new ProductDetailsActionListener());
-        toppingsPanel.setPreferredSize(new Dimension(250, 100));
-        GridBagConstraints gbc2 = createGridBagConstraints2();
 
         panel1.add(toppingsPanel, gbc);
 
@@ -155,18 +153,20 @@ public class PointOfSaleGUI extends JPanel {
                 System.out.println("Toppings selected: " + toppings);
                 Product drinkProduct = drinkFactory.createProduct(drinkName, type, size, toppings, Drink.Sweetness.NO_SUGAR, Drink.Milk.NO_MILK);
                 items.add(drinkProduct);
+                createdSale.addToSale(drinkProduct, null);
             }
-            Sale test = new Sale(items, null);
 
-            SaleDetailsTableModel tableModel2 = new SaleDetailsTableModel(test);
+            SaleDetailsTableModel tableModel2 = new SaleDetailsTableModel(createdSale);
             saleDetails.updateTableModel(tableModel2);
         });
         panel1.add(addToOrderButton, gbc);
 
         JPanel panel = new JPanel();
+        panel1.setPreferredSize(new Dimension(550, 250));
+        saleDetails.setPreferredSize(new Dimension(550, 250));
+        panel.setPreferredSize(new Dimension(550, 550));
         panel.add(panel1, gbc);
         panel.add(saleDetails, gbc);
-        panel1.setPreferredSize(panel.getPreferredSize());
 
         return panel;
     }
@@ -190,18 +190,11 @@ public class PointOfSaleGUI extends JPanel {
     private GridBagConstraints createGridBagConstraints() {
         GridBagConstraints cons = new GridBagConstraints();
         cons.fill = GridBagConstraints.HORIZONTAL;
-        cons.weightx = 0.1;
+        cons.weightx = 1;
         cons.gridx = 0;
         return cons;
     }
 
-    private GridBagConstraints createGridBagConstraints2() {
-        GridBagConstraints cons = new GridBagConstraints();
-        cons.fill = GridBagConstraints.HORIZONTAL;
-        cons.weightx = 0.5;
-        cons.gridx = 0;
-        return cons;
-    }
     /**
      * Create the GUI and display it.
      */
@@ -209,7 +202,6 @@ public class PointOfSaleGUI extends JPanel {
         JFrame frame = new JFrame("Final Exam");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
-
         frame.add(new PointOfSaleGUI());
         frame.pack();
         frame.setVisible(true);

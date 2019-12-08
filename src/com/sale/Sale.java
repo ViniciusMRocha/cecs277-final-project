@@ -29,6 +29,14 @@ public class Sale {
         indexesOfCouponUsages = new ArrayList<>();
     }
 
+    public void addToSale(Product itemsInSale, ArrayList<Coupon> coupons) {
+        this.itemsInSale.add(itemsInSale);
+        if(coupons != null) this.coupons.addAll(coupons);
+        totalPrice = calculateTotalCost();
+        totalOrders++;
+        receiptNumber = totalOrders;
+    }
+
     public int getReceiptNumber() {
         return receiptNumber;
     }
