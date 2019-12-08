@@ -11,7 +11,8 @@ public enum TeaTypes {
         this.teaName = teaName;
     }
 
-    public String toString() {
+    @Override
+public String toString() {
         return teaName;
     }
 }

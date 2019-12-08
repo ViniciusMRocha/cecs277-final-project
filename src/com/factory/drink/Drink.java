@@ -51,7 +51,8 @@ public abstract class Drink implements Product {
             this.sizeName = sizeName;
         }
 
-        public String getSizeName() {
+        @Override
+        public String toString() {
             return sizeName;
         }
     }

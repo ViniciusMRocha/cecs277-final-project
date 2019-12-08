@@ -12,7 +12,8 @@ public enum CoffeeTypes {
         this.coffeeName = coffeeName;
     }
 
-    public String toString() {
+    @Override
+public String toString() {
         return coffeeName;
     }
 }

@@ -22,13 +22,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PointOfSaleGUI extends JPanel {
 
     private JFrame orderFrame;
-    private ArrayList<DrinkTypes> drinks;
-    private ArrayList<PastryTypes> pastries;
     private ArrayList<JCheckBox> teaToppingsCheckBoxes;
     private ArrayList<JCheckBox> coffeeToppingsCheckBoxes;
     private JComboBox productDetailsComboBox;
@@ -203,12 +200,6 @@ public class PointOfSaleGUI extends JPanel {
     }
 
     private void createMenuOptions() {
-        pastries = new ArrayList<>();
-        pastries.addAll(Arrays.asList(PastryTypes.values()));
-
-        drinks = new ArrayList<>();
-        drinks.addAll(Arrays.asList(DrinkTypes.values()));
-
         teaToppingsCheckBoxes = new ArrayList<>();
         for(DrinkToppings teaToppings : DrinkToppings.values()) {
             if(!teaToppings.equals(DrinkToppings.WHIPPED_CREAM))
@@ -351,10 +342,10 @@ public class PointOfSaleGUI extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(productTypeComboBox.getSelectedItem().equals(ProductTypes.DRINK)) {
-                productDetailsComboBox.setModel(new DefaultComboBoxModel(drinks.toArray()));
+                productDetailsComboBox.setModel(new DefaultComboBoxModel(DrinkTypes.values()));
                 productDetailsComboBox.setVisible(true);
             } else if(productTypeComboBox.getSelectedItem().equals(ProductTypes.PASTRY)) {
-                productDetailsComboBox.setModel(new DefaultComboBoxModel(pastries.toArray()));
+                productDetailsComboBox.setModel(new DefaultComboBoxModel(PastryTypes.values()));
                 productDetailsComboBox.setVisible(true);
             }
         }

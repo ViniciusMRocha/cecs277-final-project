@@ -9,7 +9,8 @@ public enum DrinkTypes {
         this.drinkName = drinkName;
     }
 
-    public String toString() {
+    @Override
+public String toString() {
         return drinkName;
     }
 }
