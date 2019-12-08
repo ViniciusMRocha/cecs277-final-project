@@ -14,9 +14,12 @@ public class PastryCoupon extends Coupon {
     @Override
     protected double calculateDiscount(Sale sale) {
 
-        for(Product item : sale.getItemsInSale())
-            if(item instanceof Cookie)
-                    return 1.0;
+        for(Product item : sale.getItemsInSale()) {
+            if (item instanceof Cookie) {
+                sale.addDiscountedItemIndex(sale.getItemsInSale().indexOf(item));
+                return 1.0;
+            }
+        }
         return 0.0;
     }
 }

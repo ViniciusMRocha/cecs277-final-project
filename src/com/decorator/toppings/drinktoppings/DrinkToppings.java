@@ -1,7 +1,23 @@
 package com.decorator.toppings.drinktoppings;
 
 public enum DrinkToppings {
-    COCONUT_JELLY, LYCHEE_JELLY, GRASS_JELLY, PASSIONFRUIT_JELLY,
-    BOBA, POPPING_BOBA,
-    WHIPPED_CREAM, STRAWBERRIES,
+    COCONUT_JELLY("Coconut Jelly"), LYCHEE_JELLY("Lychee Jelly"), GRASS_JELLY("Grass Jelly"), PASSIONFRUIT_JELLY("Passionfruit Jelly"),
+    BOBA("Boba"), POPPING_BOBA("Popping Boba"),
+    WHIPPED_CREAM("Whipped Cream"), STRAWBERRIES("Strawberries");
+
+
+    private String toppingNames;
+
+    DrinkToppings(String toppingNames) {
+        this.toppingNames = toppingNames;
+    }
+
+    public String getToppingNames() {
+        return toppingNames;
+    }
+
+    @Override
+    public String toString() {
+        return toppingNames;
+    }
 }

@@ -30,6 +30,7 @@ public class DrinkCoupon extends Coupon {
                 }
             }
         }
+        sale.addDiscountedItemIndex(sale.getItemsInSale().indexOf(drink));
         return drink;
     }
 }

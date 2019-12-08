@@ -2,53 +2,188 @@ package com.frontend;
 
 
 import com.decorator.toppings.drinktoppings.DrinkToppings;
+import com.decorator.toppings.drinktoppings.Toppings;
 import com.factory.DrinkTypes;
 import com.factory.PastryTypes;
 import com.factory.Product;
-import com.factory.drink.Drink;
-import com.factory.drink.DrinkFactory;
+import com.factory.ProductTypes;
+import com.factory.drink.*;
 import com.factory.pastry.Pastry;
 import com.factory.pastry.PastryFactory;
 import com.sale.Coupon;
 import com.sale.Sale;
 import com.sale.coupontypes.DrinkCoupon;
 import com.sale.coupontypes.GeneralCoupon;
-import com.sale.coupontypes.PastryCoupon;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class PointOfSaleGUI extends JPanel {
 
     private static JFrame orderFrame;
+    private static ArrayList<DrinkTypes> drinks;
+    private static ArrayList<PastryTypes> pastries;
+
+    private static ArrayList<JCheckBox> teaToppingsCheckBoxes;
+    private static ArrayList<JCheckBox> coffeeToppingsCheckBoxes;
+
+    private JComboBox drinkNameComboBox;
 
     private PointOfSaleGUI() {
-        super(new BorderLayout());
+        //super();
+        ArrayList<Sale> sales = createSales();
+        GridBagConstraints cons = createGridBagConstraints();
         JTabbedPane tabbedPane = new JTabbedPane();
 
-        JPanel panel1 = new JPanel(new BorderLayout());
-        tabbedPane.addTab("Make a new sale", panel1);
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridBagLayout());
+        panel1.setSize(new Dimension(600, 350));
 
-        String comboBoxItems[] = {"Drink", "Food"};
-        JComboBox cb = new JComboBox(comboBoxItems);
-        cb.setEditable(false);
-        panel1.add(cb, BorderLayout.NORTH);
+        DefaultComboBoxModel drinkModel = new DefaultComboBoxModel(drinks.toArray());
+        DefaultComboBoxModel pastryModel = new DefaultComboBoxModel(pastries.toArray());
 
-        JButton select = new JButton("Text");
-        panel1.add(select, BorderLayout.SOUTH);
+        //String comboBoxItems[] = {"Drink", "Pastry"};
 
+        ArrayList<ProductTypes> productTypes = new ArrayList<>();
+        productTypes.add(ProductTypes.DRINK);
+        productTypes.add(ProductTypes.PASTRY);
+
+        DefaultComboBoxModel productTypeModel = new DefaultComboBoxModel(productTypes.toArray());
+        JComboBox productTypeComboBox = new JComboBox();
+        productTypeComboBox.setModel(productTypeModel);
+
+        productTypeComboBox.setEditable(false);
+        productTypeComboBox.setSelectedIndex(-1);
+
+        ArrayList<Drink.Size> sizes = new ArrayList<>();
+
+        ArrayList<String> coffeeTypes = new ArrayList<>();
+        coffeeTypes.add(CoffeeTypes.ALMOND_LATTE.getCoffeeName());
+        coffeeTypes.add(CoffeeTypes.DARK_ROAST.getCoffeeName());
+        coffeeTypes.add(CoffeeTypes.HAZELNUT_LATTE.getCoffeeName());
+        coffeeTypes.add(CoffeeTypes.PUMPKIN_SPICE_LATTE.getCoffeeName());
+
+        ArrayList<String> teaTypes = new ArrayList<>();
+        teaTypes.add(TeaTypes.JASMINE_GREEN_TEA.getTeaName());
+        teaTypes.add(TeaTypes.SUMMER_MINT_TEA.getTeaName());
+        teaTypes.add(TeaTypes.MILK_TEA.getTeaName());
+
+
+        sizes.add(Drink.Size.SMALL);
+        sizes.add(Drink.Size.MEDIUM);
+        sizes.add(Drink.Size.LARGE);
+
+        JComboBox sizeSelectionComboBox = new JComboBox();
+        drinkNameComboBox = new JComboBox();
+        drinkNameComboBox.setVisible(false);
+
+        DefaultComboBoxModel teaTypesComboBoxModel = new DefaultComboBoxModel(teaTypes.toArray());
+        DefaultComboBoxModel coffeeTypesComboBoxModel = new DefaultComboBoxModel(coffeeTypes.toArray());
+
+        DefaultComboBoxModel sizeComboBoxModel = new DefaultComboBoxModel(sizes.toArray());
+        sizeSelectionComboBox.setModel(sizeComboBoxModel);
+        sizeSelectionComboBox.setVisible(false);
+
+        JComboBox productDetailsComboBox = new JComboBox();
+        productDetailsComboBox.setVisible(false);
+        productDetailsComboBox.setSelectedIndex(-1);
+
+        JPanel toppingsPanel;
+
+        productTypeComboBox.addActionListener(e -> {
+            if(productTypeComboBox.getSelectedItem().equals(ProductTypes.DRINK)) {
+                productDetailsComboBox.setModel(drinkModel);
+                productDetailsComboBox.setVisible(true);
+            } else if(productTypeComboBox.getSelectedItem().equals(ProductTypes.PASTRY)) {
+                productDetailsComboBox.setModel(pastryModel);
+                productDetailsComboBox.setVisible(true);
+            }
+        });
+
+
+
+        panel1.add(productTypeComboBox, cons);
+        panel1.add(productDetailsComboBox, cons);
+        panel1.add(sizeSelectionComboBox, cons);
+        panel1.add(drinkNameComboBox, cons);
+        OrderDetailsWindow saleDetails = new OrderDetailsWindow();
+        SaleDetailsTableModel tableModel = new SaleDetailsTableModel(sales.get(2));
+
+        saleDetails.updateTableModel(tableModel);
+
+        toppingsPanel = new JPanel();
+        toppingsPanel.setLayout(new GridLayout(3,3));
+
+
+
+        productDetailsComboBox.addActionListener(e -> {
+            toppingsPanel.removeAll();
+            sizeSelectionComboBox.setModel(sizeComboBoxModel);
+            sizeSelectionComboBox.setVisible(true);
+            if(productDetailsComboBox.getSelectedItem().equals(DrinkTypes.COFFEE)) {
+                drinkNameComboBox.setModel(coffeeTypesComboBoxModel);
+                for (JCheckBox toppingCheckBox : coffeeToppingsCheckBoxes) {
+                    toppingsPanel.add(toppingCheckBox);
+                }
+            } else if(productDetailsComboBox.getSelectedItem().equals(DrinkTypes.TEA)) {
+                System.out.println("tea names: " + teaTypes);
+                drinkNameComboBox.setModel(teaTypesComboBoxModel);
+                for (JCheckBox toppingCheckBox : teaToppingsCheckBoxes) {
+                    toppingsPanel.add(toppingCheckBox);
+                }
+            }
+            drinkNameComboBox.setVisible(true);
+            drinkNameComboBox.revalidate();
+            drinkNameComboBox.repaint();
+            toppingsPanel.revalidate();
+            toppingsPanel.repaint();
+        });
+
+
+        panel1.add(toppingsPanel, cons);
+
+
+
+        JButton addToOrderButton = new JButton("Add to order");
+        addToOrderButton.addActionListener(e -> {
+            DrinkFactory drinkFactory = new DrinkFactory();
+            PastryFactory pastryFactory = new PastryFactory();
+            ProductTypes finalType = (ProductTypes)productTypeComboBox.getModel().getSelectedItem();
+
+            if(finalType.equals(ProductTypes.DRINK)) {
+                String drinkName = drinkNameComboBox.getSelectedItem().toString();
+                DrinkTypes type = (DrinkTypes)productDetailsComboBox.getSelectedItem();
+                Drink.Size size = (Drink.Size)sizeComboBoxModel.getSelectedItem();
+                ArrayList<String> toppings = getSelectedToppings(type);
+                System.out.println("Toppings selected: " + toppings);
+                //Product drinkProduct = drinkFactory.createProduct(drinkName, type, size,)
+            }
+
+            Product createdProduct = pastryFactory.createProduct("Oatmeal", PastryTypes.COOKIE, 7, 0, 0, 0);
+            ArrayList<Product> items = new ArrayList<>();
+            items.add(createdProduct);
+
+            Sale test = new Sale(items, null);
+            SaleDetailsTableModel tableModel2 = new SaleDetailsTableModel(test);
+            saleDetails.updateTableModel(tableModel2);
+        });
+
+        panel1.add(addToOrderButton, cons);
+
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, panel1, saleDetails);
+
+        tabbedPane.addTab("Make a new sale", splitPane);
         JPanel panel2 = new JPanel(new BorderLayout());
         tabbedPane.addTab("Edit an existing sale", panel2);
-        panel2.setPreferredSize(new Dimension(410, 300));
+        panel2.setPreferredSize(new Dimension(600, 300));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBorder(BorderFactory.createTitledBorder("Options"));
 
 
 
-        ArrayList<Sale> sales = createSales();
         JTable existingOrders = new OrderHistoryTable(sales);
 
         orderFrame = new JFrame();
@@ -84,7 +219,7 @@ public class PointOfSaleGUI extends JPanel {
         buttonPanel.add(viewButton, BorderLayout.WEST);
         panel2.add(buttonPanel, BorderLayout.SOUTH);
 
-        JLabel text = new JLabel("Please select a sale to edit");
+        JLabel text = new JLabel("Please addToOrderButton a sale to edit");
         text.setHorizontalAlignment(SwingConstants.CENTER);
         panel2.add(text, BorderLayout.NORTH);
 
@@ -93,15 +228,67 @@ public class PointOfSaleGUI extends JPanel {
         add(tabbedPane);
     }
 
+    private ArrayList<String> getSelectedToppings(DrinkTypes type) {
+        ArrayList<String> toppingsSelected = new ArrayList<>();
+        if(type.equals(DrinkTypes.COFFEE)) {
+            for(JCheckBox checkBox : coffeeToppingsCheckBoxes) {
+                if(checkBox.isSelected())
+                    toppingsSelected.add(checkBox.getText());
+            }
+        } else if(type.equals(DrinkTypes.TEA)) {
+            for(JCheckBox checkBox : teaToppingsCheckBoxes) {
+                if(checkBox.isSelected())
+                    toppingsSelected.add(checkBox.getText());
+            }
+        }
+        return toppingsSelected;
+    }
+
+    private GridBagConstraints createGridBagConstraints() {
+        GridBagConstraints cons = new GridBagConstraints();
+        cons.fill = GridBagConstraints.BOTH;
+        cons.weightx = 1;
+        cons.weightx = 0.1;
+        cons.gridx = 0;
+        return cons;
+    }
     /**
      * Create the GUI and display it.
      */
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("Final Exam");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(true);
         frame.add(new PointOfSaleGUI(), BorderLayout.CENTER);
+        frame.setSize(600, 300);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    private static void createMenuOptions() {
+        pastries = new ArrayList<>();
+        pastries.add(PastryTypes.COOKIE);
+        pastries.add(PastryTypes.CROISSANT);
+        pastries.add(PastryTypes.MACAROON);
+
+        drinks = new ArrayList<>();
+        drinks.add(DrinkTypes.COFFEE);
+        drinks.add(DrinkTypes.TEA);
+
+
+
+        teaToppingsCheckBoxes = new ArrayList<>();
+        teaToppingsCheckBoxes.add(new JCheckBox(DrinkToppings.BOBA.getToppingNames()));
+        teaToppingsCheckBoxes.add(new JCheckBox(DrinkToppings.POPPING_BOBA.getToppingNames()));
+        teaToppingsCheckBoxes.add(new JCheckBox(DrinkToppings.GRASS_JELLY.getToppingNames()));
+        teaToppingsCheckBoxes.add(new JCheckBox(DrinkToppings.LYCHEE_JELLY.getToppingNames()));
+        teaToppingsCheckBoxes.add(new JCheckBox(DrinkToppings.PASSIONFRUIT_JELLY.getToppingNames()));
+        teaToppingsCheckBoxes.add(new JCheckBox(DrinkToppings.COCONUT_JELLY.getToppingNames()));
+        teaToppingsCheckBoxes.add(new JCheckBox(DrinkToppings.STRAWBERRIES.getToppingNames()));
+
+
+        coffeeToppingsCheckBoxes = new ArrayList<>();
+        coffeeToppingsCheckBoxes.add(new JCheckBox(DrinkToppings.WHIPPED_CREAM.toString()));
     }
 
     private ArrayList<Sale> createSales() {
@@ -177,9 +364,13 @@ public class PointOfSaleGUI extends JPanel {
 
         ArrayList<Product> itemsInSale2 = new ArrayList<>(itemsInSale);
 
-        itemsInSale2.remove(1); // Changed the amount of items in a sale to test if the JTables would update correctly.
-        coupons3.add(new PastryCoupon());
+        for(int a = 0; a < itemsInSale2.size() - 1; a++) {
+            itemsInSale2.remove(a);
+            itemsInSale2.remove(a);
+        }
+        coupons3.add(new DrinkCoupon());
         Sale sale3 = new Sale(itemsInSale2, coupons3);
+
 
         ArrayList<Sale> sales = new ArrayList<>();
         sales.add(sale);
@@ -190,6 +381,7 @@ public class PointOfSaleGUI extends JPanel {
     }
 
     public static void main(String[] args) {
+        createMenuOptions();
         createAndShowGUI();
     }
 }

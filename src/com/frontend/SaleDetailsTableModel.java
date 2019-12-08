@@ -5,6 +5,7 @@ import com.factory.drink.Drink;
 import com.factory.pastry.Pastry;
 import com.sale.Sale;
 
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 public class SaleDetailsTableModel extends AbstractTableModel {
@@ -14,7 +15,7 @@ public class SaleDetailsTableModel extends AbstractTableModel {
 
     SaleDetailsTableModel(Sale sale) {
         this.sale = sale;
-        this.columnNames = new String[]{"Item #", "Item name", "Item details", "Cost"};
+        this.columnNames = new String[]{"Item #", "Item name", "Item details", "Cost", "Quantity", "Discounted", "Modify"};
     }
 
     @Override
@@ -24,7 +25,7 @@ public class SaleDetailsTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 7;
     }
 
     @Override
@@ -55,6 +56,27 @@ public class SaleDetailsTableModel extends AbstractTableModel {
                 break;
             case 3:
                 value = String.format("$%.2f" , sale.getItemsInSale().get(rowIndex).getCost());
+                break;
+            case 4:
+                if(product instanceof Pastry)
+                    value = ((Pastry)product).getQuantity();
+                else
+                    value = 1;
+                break;
+
+            case 5:
+                value = "N/A";
+                for(int indexes : sale.getIndexesOfCouponUsages()) {
+                    if(indexes == rowIndex)
+                        value = "Yes";
+                    else
+                        value = "No";
+                    break;
+                }
+                break;
+
+            case 6:
+                value = new JButton("Test");
                 break;
         }
         return value;

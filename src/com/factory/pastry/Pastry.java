@@ -28,6 +28,10 @@ public abstract class Pastry implements Product {
      */
     public abstract double getCost();
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     /**
      * A enum that represents what size the Drink is.
      */

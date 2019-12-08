@@ -9,20 +9,30 @@ public class Sale {
     private double totalPrice;
     private ArrayList<Coupon> coupons;
     private static int totalOrders = 0;
-    private int receiptNumber = 0;
+    private int receiptNumber;
+    private ArrayList<Integer> indexesOfCouponUsages;
 
     public Sale(ArrayList<Product> itemsInSale, ArrayList<Coupon> coupons) {
+        indexesOfCouponUsages = new ArrayList<>();
         this.itemsInSale = itemsInSale;
-        this.coupons = coupons;
+        if(coupons == null) this.coupons = new ArrayList<>();
+        else this.coupons = coupons;
         totalPrice = calculateTotalCost();
         totalOrders++;
         receiptNumber = totalOrders;
+    }
+
+    public Sale() {
+        indexesOfCouponUsages = new ArrayList<>();
     }
 
     public int getReceiptNumber() {
         return receiptNumber;
     }
 
+    public void addDiscountedItemIndex(int index) {
+        indexesOfCouponUsages.add(index);
+    }
 
     private double calculateTotalCost() {
         double cost = 0.0;
@@ -34,6 +44,10 @@ public class Sale {
             cost -= discount;
         }
         return cost;
+    }
+
+    public ArrayList<Integer> getIndexesOfCouponUsages() {
+        return indexesOfCouponUsages;
     }
 
     public double getTotalPrice() {
