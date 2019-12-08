@@ -23,6 +23,9 @@ public class Sale {
     }
 
     public Sale() {
+        itemsInSale = new ArrayList<>();
+        coupons = new ArrayList<>();
+        totalPrice = 0.0;
         indexesOfCouponUsages = new ArrayList<>();
     }
 

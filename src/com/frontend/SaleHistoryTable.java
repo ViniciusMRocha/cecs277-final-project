@@ -12,7 +12,6 @@ public class SaleHistoryTable extends JTable {
         super();
         this.getTableHeader().setReorderingAllowed(false);
         SaleTableModel tableModel = new SaleTableModel(sales);
-        this.setPreferredScrollableViewportSize(new Dimension(600, 70));
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setModel(tableModel);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -26,7 +25,7 @@ public class SaleHistoryTable extends JTable {
         this.getTableHeader().setReorderingAllowed(false);
         SaleDetailsTableModel tableModel = new SaleDetailsTableModel(sales);
 
-        this.setPreferredScrollableViewportSize(new Dimension(600, 70));
+        //this.setPreferredScrollableViewportSize(new Dimension(600, 70));
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.setModel(tableModel);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
