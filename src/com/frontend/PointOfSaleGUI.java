@@ -38,8 +38,11 @@ public class PointOfSaleGUI extends JPanel {
 
     private JComboBox drinkNameComboBox;
 
+    /**
+     * Initialize and setup all components to be placed onto the GUI.
+     */
     private PointOfSaleGUI() {
-        createMenuOptions();
+        initializeCheckBoxArrayLists();
         JTabbedPane tabbedPane = new JTabbedPane();
 
         JPanel salePanel = initializeSalePanel();
@@ -95,12 +98,16 @@ public class PointOfSaleGUI extends JPanel {
         add(tabbedPane);
     }
 
+    /**
+     * Initializes the first tab of the program for creating a new sale.
+     * @return A completed JPanel
+     */
     private JPanel initializeSalePanel() {
-        JPanel panel1 = new JPanel();
+        JPanel saleInputPanel = new JPanel();
         GridBagLayout gbl = new GridBagLayout();
         GridBagConstraints gbc = createGridBagConstraints();
-        gbl.setConstraints(panel1, gbc);
-        panel1.setLayout(gbl);
+        gbl.setConstraints(saleInputPanel, gbc);
+        saleInputPanel.setLayout(gbl);
 
         productTypeComboBox = new JComboBox(new DefaultComboBoxModel(ProductTypes.values()));
         productTypeComboBox.setEditable(false);
@@ -116,10 +123,10 @@ public class PointOfSaleGUI extends JPanel {
 
         productTypeComboBox.addActionListener(new ProductTypeActionListener());
 
-        panel1.add(productTypeComboBox, gbc);
-        panel1.add(productDetailsComboBox, gbc);
-        panel1.add(sizeSelectionComboBox, gbc);
-        panel1.add(drinkNameComboBox, gbc);
+        saleInputPanel.add(productTypeComboBox, gbc);
+        saleInputPanel.add(productDetailsComboBox, gbc);
+        saleInputPanel.add(sizeSelectionComboBox, gbc);
+        saleInputPanel.add(drinkNameComboBox, gbc);
 
         toppingsPanel = new JPanel();
         toppingsPanel.setVisible(false);
@@ -128,7 +135,7 @@ public class PointOfSaleGUI extends JPanel {
 
         productDetailsComboBox.addActionListener(new ProductDetailsActionListener());
 
-        panel1.add(toppingsPanel, gbc);
+        saleInputPanel.add(toppingsPanel, gbc);
 
         createdSale = new Sale();
 
@@ -159,18 +166,26 @@ public class PointOfSaleGUI extends JPanel {
             SaleDetailsTableModel tableModel2 = new SaleDetailsTableModel(createdSale);
             saleDetails.updateTableModel(tableModel2);
         });
-        panel1.add(addToOrderButton, gbc);
+        saleInputPanel.add(addToOrderButton, gbc);
 
+        JScrollPane saleInputScrollPanee = new JScrollPane(saleInputPanel);
         JPanel panel = new JPanel();
-        panel1.setPreferredSize(new Dimension(550, 250));
+        saleInputPanel.setPreferredSize(new Dimension(550, 250));
         saleDetails.setPreferredSize(new Dimension(550, 250));
         panel.setPreferredSize(new Dimension(550, 550));
-        panel.add(panel1, gbc);
+
+
+        panel.add(saleInputScrollPanee, gbc);
         panel.add(saleDetails, gbc);
 
         return panel;
     }
 
+    /**
+     * Gets an ArrayList of toppings from the JCheckBoxes that the user selected.
+     * @param type What type of Drink the user is purchasing.
+     * @return
+     */
     private ArrayList<DrinkToppings> getSelectedToppings(DrinkTypes type) {
         ArrayList<DrinkToppings> toppingsSelected = new ArrayList<>();
         if(type.equals(DrinkTypes.COFFEE)) {
@@ -187,6 +202,11 @@ public class PointOfSaleGUI extends JPanel {
         return toppingsSelected;
     }
 
+    /**
+     * This method sets a number of constants for the GridBagLayoutManager. This basically conttrols how the components
+     * display on the panel.
+     * @return
+     */
     private GridBagConstraints createGridBagConstraints() {
         GridBagConstraints cons = new GridBagConstraints();
         cons.fill = GridBagConstraints.HORIZONTAL;
@@ -207,7 +227,10 @@ public class PointOfSaleGUI extends JPanel {
         frame.setVisible(true);
     }
 
-    private void createMenuOptions() {
+    /**
+     * Initializes ArrayLists for the Tea toppings and Coffee toppings.
+     */
+    private void initializeCheckBoxArrayLists() {
         teaToppingsCheckBoxes = new ArrayList<>();
         for(DrinkToppings teaToppings : DrinkToppings.values()) {
             if(!teaToppings.equals(DrinkToppings.WHIPPED_CREAM))
@@ -218,6 +241,10 @@ public class PointOfSaleGUI extends JPanel {
         coffeeToppingsCheckBoxes.add(new JCheckBox(DrinkToppings.WHIPPED_CREAM.toString()));
     }
 
+    /**
+     * createSales() creates all example sales given in the Part 2 PDF.
+     * @return an ArrayList of all Sales.
+     */
     private ArrayList<Sale> createSales() {
         PastryFactory pastryMaker = new PastryFactory();
         DrinkFactory drinkMaker = new DrinkFactory();
@@ -285,18 +312,11 @@ public class PointOfSaleGUI extends JPanel {
         Sale sale = new Sale(itemsInSale, coupons);
         System.out.println(sale.printItems());
 
-
         coupons2.add(new GeneralCoupon());
         Sale sale2 = new Sale(itemsInSale, coupons2);
 
-        ArrayList<Product> itemsInSale2 = new ArrayList<>(itemsInSale);
-
-        for(int a = 0; a < itemsInSale2.size() - 1; a++) {
-            itemsInSale2.remove(a);
-            itemsInSale2.remove(a);
-        }
         coupons3.add(new DrinkCoupon());
-        Sale sale3 = new Sale(itemsInSale2, coupons3);
+        Sale sale3 = new Sale(itemsInSale, coupons3);
 
 
         ArrayList<Sale> sales = new ArrayList<>();
@@ -311,6 +331,13 @@ public class PointOfSaleGUI extends JPanel {
         createAndShowGUI();
     }
 
+    /**
+     * The ProductDetailsActionListener waits until the user has selected what type of Drink they want to purchase.
+     * (Either coffee or tea). And updates the panel to provide options for the user to finish the sale. (Toppings, drink name,
+     * sweetness, milk type, etc)
+     *
+     * This also needs to be updated for pastries.
+     */
     class ProductDetailsActionListener implements ActionListener {
 
         /**
@@ -320,7 +347,6 @@ public class PointOfSaleGUI extends JPanel {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-
             if (productTypeComboBox.getModel().getSelectedItem().equals(ProductTypes.DRINK)) {
                 if (productDetailsComboBox.getSelectedIndex() == -1) {
                     sizeSelectionComboBox.setVisible(false);
@@ -331,11 +357,6 @@ public class PointOfSaleGUI extends JPanel {
                 }
 
                 toppingsPanel.removeAll();
-                sizeSelectionComboBox.setVisible(true);
-                toppingsPanel.setVisible(true);
-                addToOrderButton.setEnabled(true);
-
-
                 if (productDetailsComboBox.getSelectedItem().equals(DrinkTypes.COFFEE)) {
                     drinkNameComboBox.setModel(new DefaultComboBoxModel(CoffeeTypes.values()));
                     for (JCheckBox toppingCheckBox : coffeeToppingsCheckBoxes) {
@@ -348,12 +369,16 @@ public class PointOfSaleGUI extends JPanel {
                     }
                 }
 
-                drinkNameComboBox.setVisible(true);
                 drinkNameComboBox.revalidate();
                 drinkNameComboBox.repaint();
                 toppingsPanel.revalidate();
                 toppingsPanel.repaint();
+                drinkNameComboBox.setVisible(true);
+                toppingsPanel.setVisible(true);
+                sizeSelectionComboBox.setVisible(true);
+                addToOrderButton.setEnabled(true);
             } else if(productTypeComboBox.getModel().getSelectedItem().equals(ProductTypes.PASTRY)) {
+                //This area is where thee Pastry implementation will happen.
                 sizeSelectionComboBox.setVisible(false);
                 toppingsPanel.setVisible(false);
                 addToOrderButton.setEnabled(false);
@@ -362,6 +387,11 @@ public class PointOfSaleGUI extends JPanel {
             }
         }
     }
+
+    /**
+     * This Listener is invoked when the user selects a Product type (Either Drink or Pastry) from the JCombobox.
+     * Depending on what they chose, new components become visible for the user to finish their transaction.
+     */
     class ProductTypeActionListener implements ActionListener {
         /**
          * Invoked when an action occurs.
