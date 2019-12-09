@@ -70,6 +70,11 @@ public abstract class Drink implements Product {
         public String getDescription() {
             return description;
         }
+
+        @Override
+        public String toString() {
+            return description;
+        }
     }
 
     /**
@@ -84,6 +89,11 @@ public abstract class Drink implements Product {
         }
 
         public String getMilkDescription() {
+            return milkDescription;
+        }
+
+        @Override
+        public String toString() {
             return milkDescription;
         }
     }

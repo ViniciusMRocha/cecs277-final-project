@@ -31,6 +31,8 @@ public class PointOfSaleGUI extends JPanel {
     private JComboBox productTypeComboBox;
     private JPanel toppingsPanel;
     private JComboBox sizeSelectionComboBox;
+    private JComboBox milkSelectionComboBox;
+    private JComboBox sweetSelectionComboBox;
     private JButton addToOrderButton;
 
     private Sale createdSale;
@@ -143,6 +145,12 @@ public class PointOfSaleGUI extends JPanel {
         //Represents the combobox that lets you choose a size.
         sizeSelectionComboBox = new JComboBox(new DefaultComboBoxModel(Drink.Size.values()));
 
+        //Represents the comboBox that lets you choose the quantity of milk
+        milkSelectionComboBox = new JComboBox(new DefaultComboBoxModel(Drink.Milk.values()));
+
+        //Represents the comboBox that lets you choose the level of sweetness
+        sweetSelectionComboBox = new JComboBox(new DefaultComboBoxModel(Drink.Sweetness.values()));
+
         //The drinkaName combobox displays the specific names of all products. (e.g. "Hazelnut Latte", "Milk Tea")
         drinkNameComboBox = new JComboBox();
         productDetailsComboBox = new JComboBox();
@@ -150,6 +158,8 @@ public class PointOfSaleGUI extends JPanel {
         //Set them to invisible until they're needed
         drinkNameComboBox.setVisible(false);
         sizeSelectionComboBox.setVisible(false);
+        milkSelectionComboBox.setVisible(false);
+        sweetSelectionComboBox.setVisible(false);
         productDetailsComboBox.setVisible(false);
 
         productTypeComboBox.addActionListener(new ProductTypeActionListener());
@@ -157,6 +167,8 @@ public class PointOfSaleGUI extends JPanel {
         saleInputPanel.add(productTypeComboBox, gbc);
         saleInputPanel.add(productDetailsComboBox, gbc);
         saleInputPanel.add(sizeSelectionComboBox, gbc);
+        saleInputPanel.add(milkSelectionComboBox, gbc);
+        saleInputPanel.add(sweetSelectionComboBox, gbc);
         saleInputPanel.add(drinkNameComboBox, gbc);
 
         toppingsPanel = new JPanel();
@@ -194,9 +206,11 @@ public class PointOfSaleGUI extends JPanel {
                 String drinkName = drinkNameComboBox.getSelectedItem().toString();
                 DrinkTypes type = (DrinkTypes)productDetailsComboBox.getSelectedItem();
                 Drink.Size size = (Drink.Size)sizeSelectionComboBox.getModel().getSelectedItem();
+                Drink.Milk Milk = (Drink.Milk)milkSelectionComboBox.getModel().getSelectedItem();
+                Drink.Sweetness sweetness = (Drink.Sweetness)sweetSelectionComboBox.getModel().getSelectedItem();
                 ArrayList<DrinkToppings> toppings = getSelectedToppings(type);
                 System.out.println("Toppings selected: " + toppings);
-                Product drinkProduct = drinkFactory.createProduct(drinkName, type, size, toppings, Drink.Sweetness.NO_SUGAR, Drink.Milk.NO_MILK);
+                Product drinkProduct = drinkFactory.createProduct(drinkName, type, size, toppings, sweetness, Milk);
                 items.add(drinkProduct);
                 createdSale.addToSale(drinkProduct, null);
             }
@@ -388,6 +402,8 @@ public class PointOfSaleGUI extends JPanel {
             if (productTypeComboBox.getModel().getSelectedItem().equals(ProductTypes.DRINK)) {
                 if (productDetailsComboBox.getSelectedIndex() == -1) {
                     sizeSelectionComboBox.setVisible(false);
+                    milkSelectionComboBox.setVisible(false);
+                    sweetSelectionComboBox.setVisible(false);
                     toppingsPanel.setVisible(false);
                     addToOrderButton.setEnabled(false);
                     drinkNameComboBox.setVisible(false);
@@ -414,10 +430,14 @@ public class PointOfSaleGUI extends JPanel {
                 drinkNameComboBox.setVisible(true);
                 toppingsPanel.setVisible(true);
                 sizeSelectionComboBox.setVisible(true);
+                milkSelectionComboBox.setVisible(true);
+                sweetSelectionComboBox.setVisible(true);
                 addToOrderButton.setEnabled(true);
             } else if(productTypeComboBox.getModel().getSelectedItem().equals(ProductTypes.PASTRY)) {
                 //This area is where thee Pastry implementation will happen.
                 sizeSelectionComboBox.setVisible(false);
+                milkSelectionComboBox.setVisible(false);
+                sweetSelectionComboBox.setVisible(false);
                 toppingsPanel.setVisible(false);
                 addToOrderButton.setEnabled(false);
                 drinkNameComboBox.setVisible(false);
