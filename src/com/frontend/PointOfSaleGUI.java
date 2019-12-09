@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 public class PointOfSaleGUI extends JPanel {
 
-    private JFrame orderFrame;
     private ArrayList<JCheckBox> teaToppingsCheckBoxes;
     private ArrayList<JCheckBox> coffeeToppingsCheckBoxes;
     private JComboBox productDetailsComboBox;
@@ -43,28 +42,46 @@ public class PointOfSaleGUI extends JPanel {
      */
     private PointOfSaleGUI() {
         initializeCheckBoxArrayLists();
-        JTabbedPane tabbedPane = new JTabbedPane();
+
 
         JPanel salePanel = initializeSalePanel();
+
+        //Creates a new tabbed pane, titles them, and adds both Panels to it.
+        JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Create or modify a sale", salePanel);
         JPanel panel2 = new JPanel(new BorderLayout());
         tabbedPane.addTab("View sale history", panel2);
         tabbedPane.setPreferredSize(new Dimension(550, 500));
+
+        //Creates a panel for the buttons on the Order History tab
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBorder(BorderFactory.createTitledBorder("Options"));
 
-        orderFrame = new JFrame();
+        //The orderFrame is the window that pops up when the user views their order in the Order History tab
+        JFrame orderFrame = new JFrame();
         SaleDetailsWindow orderDetailsPanel = new SaleDetailsWindow();
         orderFrame.add(orderDetailsPanel);
-        orderFrame.setVisible(false);
-        orderFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        orderFrame.setVisible(false); //Set it to invisible until it's called by the View button
+        orderFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); //Disposes the frame when it's closed, instead of closing the entire program.
 
+        //Represents all the example sales in the Part 2 PDF
         ArrayList<Sale> sales = createSales();
-        JTable existingOrders = new SaleHistoryTable(sales);
+        JTable existingOrders = new SaleHistoryTable(sales); //Create a new table, and populate the table with the sales
 
         JButton viewButton = new JButton("View selected order");
         viewButton.setEnabled(false);
-        viewButton.addActionListener(e -> {
+
+        /**
+         * This is the short-hand way to write an Action Listener.
+         * This Listener waits until the View button is clicked, then it displays the items/details of the sale that's
+         * selected in the JTable.
+         *
+         * This can be done because we're using a custom Table Model. A Table Model basically models the behavior of the table (duh).
+         * It lets us choose how each column displays data. In this case, our model takes a Sales object, and applies it to the table.
+         *
+         * Our model makes each row of the JTable represent an actual Sale object, so they're easy to modify, easy to display, etc;
+         */
+        viewButton.addActionListener(e -> { //This is a short-hand way to write an Action Listener.
             Sale selectedSale = ((SaleTableModel)existingOrders.getModel()).getSaleAt(existingOrders.getSelectedRow());
             SaleDetailsTableModel model = new SaleDetailsTableModel(selectedSale);
             orderDetailsPanel.updateTableModel(model);
@@ -75,6 +92,13 @@ public class PointOfSaleGUI extends JPanel {
         JButton editButton = new JButton("Edit selected order");
         editButton.setEnabled(false);
 
+        /**
+         * This ActionListener gets the Selection Model from the table of existing orders, and fires whenever the user
+         * selects a different row on the JTable.
+         *
+         * If the user hasn't selected any row (getSelectedRow() == -1), then disable the buttons, because the buttons try
+         * to grab a Sale object from the row. Obviously it would crash because there's no Sale object to grab.
+         */
         existingOrders.getSelectionModel().addListSelectionListener(e -> {
             if(existingOrders.getSelectedRow() == -1) {
                 editButton.setEnabled(false);
@@ -93,6 +117,7 @@ public class PointOfSaleGUI extends JPanel {
         text.setHorizontalAlignment(SwingConstants.CENTER);
         panel2.add(text, BorderLayout.NORTH);
 
+        //Wraps the existing orders JTable into a scroll pane, so the user can scroll down if there's too many rows to display in the panel.
         JScrollPane scrollPane = new JScrollPane(existingOrders);
         panel2.add(scrollPane, BorderLayout.CENTER);
         add(tabbedPane);
@@ -109,16 +134,22 @@ public class PointOfSaleGUI extends JPanel {
         gbl.setConstraints(saleInputPanel, gbc);
         saleInputPanel.setLayout(gbl);
 
+
+        //Represents the combobox that lets you choose Drink, or Pastry.
         productTypeComboBox = new JComboBox(new DefaultComboBoxModel(ProductTypes.values()));
         productTypeComboBox.setEditable(false);
         productTypeComboBox.setSelectedIndex(-1);
 
+        //Represents the combobox that lets you choose a size.
         sizeSelectionComboBox = new JComboBox(new DefaultComboBoxModel(Drink.Size.values()));
+
+        //The drinkaName combobox displays the specific names of all products. (e.g. "Hazelnut Latte", "Milk Tea")
         drinkNameComboBox = new JComboBox();
+        productDetailsComboBox = new JComboBox();
+
+        //Set them to invisible until they're needed
         drinkNameComboBox.setVisible(false);
         sizeSelectionComboBox.setVisible(false);
-
-        productDetailsComboBox = new JComboBox();
         productDetailsComboBox.setVisible(false);
 
         productTypeComboBox.addActionListener(new ProductTypeActionListener());
@@ -139,12 +170,19 @@ public class PointOfSaleGUI extends JPanel {
 
         createdSale = new Sale();
 
+        //This is the Panel for the JTable that displays the items you are purchasing (on the sale creation tab)
         SaleDetailsWindow saleDetails = new SaleDetailsWindow();
-        SaleDetailsTableModel tableModel = new SaleDetailsTableModel(createdSale);
-        saleDetails.updateTableModel(tableModel);
+        SaleDetailsTableModel saleDetailsTableModel = new SaleDetailsTableModel(createdSale);
+        saleDetails.updateTableModel(saleDetailsTableModel);
 
         addToOrderButton = new JButton("Add to order");
         addToOrderButton.setEnabled(false);
+        /**
+         * When you add your completed order, it creates a new Product object according to the data you've selected from
+         * the previous components above.
+         *
+         * Not yet complete. Still need Pastry support and coupon handling.
+         */
         addToOrderButton.addActionListener(e -> {
             DrinkFactory drinkFactory = new DrinkFactory();
             PastryFactory pastryFactory = new PastryFactory();
@@ -168,12 +206,12 @@ public class PointOfSaleGUI extends JPanel {
         });
         saleInputPanel.add(addToOrderButton, gbc);
 
+        //Create a scrollPane for the saleInput panel on the first tab. If there's too many components that appear, a scrollbar appears.
         JScrollPane saleInputScrollPanee = new JScrollPane(saleInputPanel);
         JPanel panel = new JPanel();
         saleInputPanel.setPreferredSize(new Dimension(550, 250));
         saleDetails.setPreferredSize(new Dimension(550, 250));
         panel.setPreferredSize(new Dimension(550, 550));
-
 
         panel.add(saleInputScrollPanee, gbc);
         panel.add(saleDetails, gbc);
