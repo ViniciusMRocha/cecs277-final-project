@@ -18,6 +18,8 @@ import com.sale.coupontypes.DrinkCoupon;
 import com.sale.coupontypes.GeneralCoupon;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.text.BoxView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,7 +36,10 @@ public class PointOfSaleGUI extends JPanel {
     private JComboBox milkSelectionComboBox;
     private JComboBox sweetSelectionComboBox;
     private JButton addToOrderButton;
+    private JButton removeOrderButton;
+    private JButton proceedToPaymentButton;
 
+    private JScrollPane saleInputScrollPanee;
     private Sale createdSale;
 
     private JComboBox drinkNameComboBox;
@@ -44,7 +49,7 @@ public class PointOfSaleGUI extends JPanel {
      */
     private PointOfSaleGUI() {
         initializeCheckBoxArrayLists();
-
+        setLayout(new BorderLayout());
 
         JPanel salePanel = initializeSalePanel();
 
@@ -67,7 +72,7 @@ public class PointOfSaleGUI extends JPanel {
         orderFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); //Disposes the frame when it's closed, instead of closing the entire program.
 
         //Represents all the example sales in the Part 2 PDF
-        ArrayList<Sale> sales = createSales();
+        ArrayList<Sale> sales = new ArrayList<>();
         JTable existingOrders = new SaleHistoryTable(sales); //Create a new table, and populate the table with the sales
 
         JButton viewButton = new JButton("View selected order");
@@ -115,7 +120,7 @@ public class PointOfSaleGUI extends JPanel {
         buttonPanel.add(viewButton, BorderLayout.WEST);
         panel2.add(buttonPanel, BorderLayout.SOUTH);
 
-        JLabel text = new JLabel("Please addToOrderButton a sale to edit");
+        JLabel text = new JLabel("Sales for the day");
         text.setHorizontalAlignment(SwingConstants.CENTER);
         panel2.add(text, BorderLayout.NORTH);
 
@@ -123,6 +128,25 @@ public class PointOfSaleGUI extends JPanel {
         JScrollPane scrollPane = new JScrollPane(existingOrders);
         panel2.add(scrollPane, BorderLayout.CENTER);
         add(tabbedPane);
+
+        JPanel paymentPanel = createPaymentPanel();
+        tabbedPane.add("Payment", paymentPanel);
+    }
+
+
+    private JPanel createPaymentPanel() {
+        JPanel paymentPanel = new JPanel();
+        paymentPanel.setLayout(new BoxLayout(paymentPanel, BoxLayout.PAGE_AXIS));
+        JLabel totalDueLabel = new JLabel("Total");
+        JLabel paymentAmountLabel = new JLabel("Payment amount");
+        JLabel changeLabel = new JLabel("Change");
+
+        JTextField inputAmountDueField = new JTextField();
+        JButton processPaymentButton = new JButton();
+        paymentPanel.add(totalDueLabel, BoxLayout.X_AXIS);
+        paymentPanel.add(paymentAmountLabel, BoxLayout.X_AXIS);
+        paymentPanel.add(changeLabel, BoxLayout.X_AXIS);
+        return paymentPanel;
     }
 
     /**
@@ -131,11 +155,7 @@ public class PointOfSaleGUI extends JPanel {
      */
     private JPanel initializeSalePanel() {
         JPanel saleInputPanel = new JPanel();
-        GridBagLayout gbl = new GridBagLayout();
-        GridBagConstraints gbc = createGridBagConstraints();
-        gbl.setConstraints(saleInputPanel, gbc);
-        saleInputPanel.setLayout(gbl);
-
+        saleInputPanel.setLayout(new BoxLayout(saleInputPanel, BoxLayout.PAGE_AXIS));
 
         //Represents the combobox that lets you choose Drink, or Pastry.
         productTypeComboBox = new JComboBox(new DefaultComboBoxModel(ProductTypes.values()));
@@ -164,12 +184,12 @@ public class PointOfSaleGUI extends JPanel {
 
         productTypeComboBox.addActionListener(new ProductTypeActionListener());
 
-        saleInputPanel.add(productTypeComboBox, gbc);
-        saleInputPanel.add(productDetailsComboBox, gbc);
-        saleInputPanel.add(sizeSelectionComboBox, gbc);
-        saleInputPanel.add(milkSelectionComboBox, gbc);
-        saleInputPanel.add(sweetSelectionComboBox, gbc);
-        saleInputPanel.add(drinkNameComboBox, gbc);
+        saleInputPanel.add(productTypeComboBox);
+        saleInputPanel.add(productDetailsComboBox);
+        saleInputPanel.add(sizeSelectionComboBox);
+        saleInputPanel.add(milkSelectionComboBox);
+        saleInputPanel.add(sweetSelectionComboBox);
+        saleInputPanel.add(drinkNameComboBox);
 
         toppingsPanel = new JPanel();
         toppingsPanel.setVisible(false);
@@ -178,17 +198,41 @@ public class PointOfSaleGUI extends JPanel {
 
         productDetailsComboBox.addActionListener(new ProductDetailsActionListener());
 
-        saleInputPanel.add(toppingsPanel, gbc);
+        saleInputPanel.add(toppingsPanel);
 
         createdSale = new Sale();
 
         //This is the Panel for the JTable that displays the items you are purchasing (on the sale creation tab)
         SaleDetailsWindow saleDetails = new SaleDetailsWindow();
+        saleDetails.getOrderDetails().getSelectionModel().addListSelectionListener(listSelectionEvent -> {
+            if(saleDetails.getOrderDetails().getSelectedRow() != -1) {
+                removeOrderButton.setEnabled(true);
+            } else {
+                removeOrderButton.setEnabled(false);
+            }
+        });
         SaleDetailsTableModel saleDetailsTableModel = new SaleDetailsTableModel(createdSale);
         saleDetails.updateTableModel(saleDetailsTableModel);
 
         addToOrderButton = new JButton("Add to order");
+        removeOrderButton = new JButton("Remove order");
+        proceedToPaymentButton = new JButton("Proceed to payment");
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.setBorder(BorderFactory.createTitledBorder("Options"));
+
+        buttonPanel.add(addToOrderButton);
+        buttonPanel.add(removeOrderButton);
+        buttonPanel.add(proceedToPaymentButton);
+
         addToOrderButton.setEnabled(false);
+        removeOrderButton.setEnabled(false);
+
+        removeOrderButton.addActionListener(actionEvent -> {
+            createdSale.getItemsInSale().remove(saleDetails.getOrderDetails().getSelectedRow());
+            SaleDetailsTableModel newSaleDetailsModel = new SaleDetailsTableModel(createdSale);
+            saleDetails.updateTableModel(newSaleDetailsModel);
+        });
         /**
          * When you add your completed order, it creates a new Product object according to the data you've selected from
          * the previous components above.
@@ -200,7 +244,6 @@ public class PointOfSaleGUI extends JPanel {
             PastryFactory pastryFactory = new PastryFactory();
             ProductTypes finalType = (ProductTypes)productTypeComboBox.getModel().getSelectedItem();
             ArrayList<Product> items = new ArrayList<>();
-
 
             if(finalType.equals(ProductTypes.DRINK)) {
                 String drinkName = drinkNameComboBox.getSelectedItem().toString();
@@ -218,17 +261,12 @@ public class PointOfSaleGUI extends JPanel {
             SaleDetailsTableModel tableModel2 = new SaleDetailsTableModel(createdSale);
             saleDetails.updateTableModel(tableModel2);
         });
-        saleInputPanel.add(addToOrderButton, gbc);
+        saleInputPanel.add(buttonPanel);
 
-        //Create a scrollPane for the saleInput panel on the first tab. If there's too many components that appear, a scrollbar appears.
-        JScrollPane saleInputScrollPanee = new JScrollPane(saleInputPanel);
         JPanel panel = new JPanel();
-        saleInputPanel.setPreferredSize(new Dimension(550, 250));
-        saleDetails.setPreferredSize(new Dimension(550, 250));
-        panel.setPreferredSize(new Dimension(550, 550));
-
-        panel.add(saleInputScrollPanee, gbc);
-        panel.add(saleDetails, gbc);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(saleInputPanel, BoxLayout.X_AXIS);
+        panel.add(saleDetails, BoxLayout.X_AXIS);
 
         return panel;
     }
@@ -293,92 +331,6 @@ public class PointOfSaleGUI extends JPanel {
         coffeeToppingsCheckBoxes.add(new JCheckBox(DrinkToppings.WHIPPED_CREAM.toString()));
     }
 
-    /**
-     * createSales() creates all example sales given in the Part 2 PDF.
-     * @return an ArrayList of all Sales.
-     */
-    private ArrayList<Sale> createSales() {
-        PastryFactory pastryMaker = new PastryFactory();
-        DrinkFactory drinkMaker = new DrinkFactory();
-        ArrayList<DrinkToppings> coffeeToppings = new ArrayList<>();
-
-        coffeeToppings.add(DrinkToppings.WHIPPED_CREAM);
-        Product almondLatte = drinkMaker.createProduct("Almond Latte", DrinkTypes.COFFEE, Drink.Size.MEDIUM, coffeeToppings, Drink.Sweetness.NO_SUGAR, Drink.Milk.NO_MILK); //TODO: Add list of toppings to ENUM!
-        ArrayList<DrinkToppings> coffeeToppings1 = new ArrayList<>();
-
-        Product darkRoast = drinkMaker.createProduct("Dark Roast", DrinkTypes.COFFEE, Drink.Size.LARGE, coffeeToppings1, Drink.Sweetness.NO_SUGAR, Drink.Milk.NO_MILK); //TODO: Add list of toppings to ENUM!
-
-        ArrayList<DrinkToppings> coffeeToppings3 = new ArrayList<>();
-
-        coffeeToppings3.add(DrinkToppings.WHIPPED_CREAM);
-        Product hazelnutLatte = drinkMaker.createProduct("Hazelnut Latte", DrinkTypes.COFFEE, Drink.Size.SMALL, coffeeToppings3, Drink.Sweetness.NO_SUGAR, Drink.Milk.SOY_MILK); //TODO: Add list of toppings to ENUM!
-        Product pumpkinSpiceLatte = drinkMaker.createProduct("Pumpkin Spice Latte", DrinkTypes.COFFEE, Drink.Size.SMALL, coffeeToppings3, Drink.Sweetness.NO_SUGAR, Drink.Milk.HALF_AND_HALF); //TODO: Add list of toppings to ENUM!
-
-        ArrayList<DrinkToppings> teaToppings = new ArrayList<>();
-
-        teaToppings.add(DrinkToppings.BOBA);
-        teaToppings.add(DrinkToppings.COCONUT_JELLY);
-        Product jasmineGreenTea = drinkMaker.createProduct("Jasmine Green Tea", DrinkTypes.TEA, Drink.Size.LARGE, teaToppings, Drink.Sweetness.QUARTER_SWEET, Drink.Milk.SOY_MILK);
-        ArrayList<DrinkToppings> teaToppings2 = new ArrayList<>();
-
-        teaToppings2.add(DrinkToppings.PASSIONFRUIT_JELLY);
-        teaToppings2.add(DrinkToppings.STRAWBERRIES);
-        teaToppings2.add(DrinkToppings.COCONUT_JELLY);
-        Product summerMintTea = drinkMaker.createProduct("Summer Mint Tea", DrinkTypes.TEA, Drink.Size.LARGE, teaToppings2, Drink.Sweetness.HALF_SWEET, Drink.Milk.NO_MILK);
-        ArrayList<DrinkToppings> teaToppings3 = new ArrayList<>();
-
-        teaToppings3.add(DrinkToppings.BOBA);
-        Product milkTea = drinkMaker.createProduct("Milk Tea", DrinkTypes.TEA, Drink.Size.MEDIUM, teaToppings3, Drink.Sweetness.THREE_FOURTHS_SWEET, Drink.Milk.HALF_AND_HALF);
-        ArrayList<DrinkToppings> teaToppings4 = new ArrayList<>();
-
-        teaToppings4.add(DrinkToppings.BOBA);
-        teaToppings4.add(DrinkToppings.LYCHEE_JELLY);
-        Product jasmineGreenTeaTwo = drinkMaker.createProduct("Jasmine Green Tea", DrinkTypes.TEA, Drink.Size.MEDIUM, teaToppings4, Drink.Sweetness.NO_SUGAR, Drink.Milk.SOY_MILK);
-
-        Product chocolateCroissant = pastryMaker.createProduct("Chocolate Nut", PastryTypes.CROISSANT, 1, Pastry.HeatState.COLD, 0, 0);
-        Product plainCroissant = pastryMaker.createProduct("Plain", PastryTypes.CROISSANT, 1, Pastry.HeatState.HEATED, 0, 0);
-        Product oatmealCookie = pastryMaker.createProduct("Oatmeal", PastryTypes.COOKIE, 7, 0, 0, 0);
-        Product varietyMacaroon = pastryMaker.createProduct("Variety", PastryTypes.MACAROON, 7, 0, 0, 0);
-
-        ArrayList<Product> itemsInSale = new ArrayList<>();
-
-        itemsInSale.add(almondLatte);
-        itemsInSale.add(darkRoast);
-        itemsInSale.add(hazelnutLatte);
-        itemsInSale.add(pumpkinSpiceLatte);
-
-        itemsInSale.add(jasmineGreenTea);
-        itemsInSale.add(summerMintTea);
-        itemsInSale.add(milkTea);
-        itemsInSale.add(jasmineGreenTeaTwo);
-        itemsInSale.add(chocolateCroissant);
-        itemsInSale.add(plainCroissant);
-        itemsInSale.add(oatmealCookie);
-        itemsInSale.add(varietyMacaroon);
-
-        ArrayList<Coupon> coupons = new ArrayList<>();
-        ArrayList<Coupon> coupons2 = new ArrayList<>();
-        ArrayList<Coupon> coupons3 = new ArrayList<>();
-        coupons.add(new DrinkCoupon());
-
-        Sale sale = new Sale(itemsInSale, coupons);
-        System.out.println(sale.printItems());
-
-        coupons2.add(new GeneralCoupon());
-        Sale sale2 = new Sale(itemsInSale, coupons2);
-
-        coupons3.add(new DrinkCoupon());
-        Sale sale3 = new Sale(itemsInSale, coupons3);
-
-
-        ArrayList<Sale> sales = new ArrayList<>();
-        sales.add(sale);
-        sales.add(sale2);
-        sales.add(sale3);
-
-        return sales;
-    }
-
     public static void main(String[] args) {
         createAndShowGUI();
     }
@@ -441,10 +393,10 @@ public class PointOfSaleGUI extends JPanel {
                 toppingsPanel.setVisible(false);
                 addToOrderButton.setEnabled(false);
                 drinkNameComboBox.setVisible(false);
-
             }
         }
     }
+
 
     /**
      * This Listener is invoked when the user selects a Product type (Either Drink or Pastry) from the JCombobox.

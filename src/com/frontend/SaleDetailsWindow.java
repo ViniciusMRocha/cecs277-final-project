@@ -1,6 +1,8 @@
 package com.frontend;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 
 class SaleDetailsWindow extends JPanel {
@@ -18,6 +20,10 @@ class SaleDetailsWindow extends JPanel {
         JScrollPane scrollPane = new JScrollPane(orderDetails);
         panel2.add(scrollPane, BorderLayout.CENTER);
         add(panel2);
+    }
+
+    public JTable getOrderDetails() {
+        return orderDetails;
     }
 
     void updateTableModel(SaleDetailsTableModel tableModel) {
