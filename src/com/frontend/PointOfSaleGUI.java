@@ -23,6 +23,8 @@ import javax.swing.text.BoxView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 public class PointOfSaleGUI extends JPanel {
@@ -39,10 +41,11 @@ public class PointOfSaleGUI extends JPanel {
     private JButton removeOrderButton;
     private JButton proceedToPaymentButton;
 
+    private JPanel paymentPanel;
     private JScrollPane saleInputScrollPanee;
-    private Sale createdSale;
 
     private JComboBox drinkNameComboBox;
+    private JTabbedPane tabbedPane;
 
     /**
      * Initialize and setup all components to be placed onto the GUI.
@@ -54,11 +57,18 @@ public class PointOfSaleGUI extends JPanel {
         JPanel salePanel = initializeSalePanel();
 
         //Creates a new tabbed pane, titles them, and adds both Panels to it.
-        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Create or modify a sale", salePanel);
-        JPanel panel2 = new JPanel(new BorderLayout());
-        tabbedPane.addTab("View sale history", panel2);
+
+        paymentPanel = new PaymentPanel();
+
+        tabbedPane.add("Finalize sale", paymentPanel);
+
+        JPanel saleHistoryPanel = new JPanel(new BorderLayout());
+        tabbedPane.addTab("View sale history", saleHistoryPanel);
+
         tabbedPane.setPreferredSize(new Dimension(550, 500));
+        tabbedPane.setEnabledAt(1, false);
 
         //Creates a panel for the buttons on the Order History tab
         JPanel buttonPanel = new JPanel();
@@ -118,35 +128,16 @@ public class PointOfSaleGUI extends JPanel {
 
         buttonPanel.add(editButton, BorderLayout.EAST);
         buttonPanel.add(viewButton, BorderLayout.WEST);
-        panel2.add(buttonPanel, BorderLayout.SOUTH);
+        saleHistoryPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         JLabel text = new JLabel("Sales for the day");
         text.setHorizontalAlignment(SwingConstants.CENTER);
-        panel2.add(text, BorderLayout.NORTH);
+        saleHistoryPanel.add(text, BorderLayout.NORTH);
 
         //Wraps the existing orders JTable into a scroll pane, so the user can scroll down if there's too many rows to display in the panel.
         JScrollPane scrollPane = new JScrollPane(existingOrders);
-        panel2.add(scrollPane, BorderLayout.CENTER);
+        saleHistoryPanel.add(scrollPane, BorderLayout.CENTER);
         add(tabbedPane);
-
-        JPanel paymentPanel = createPaymentPanel();
-        tabbedPane.add("Payment", paymentPanel);
-    }
-
-
-    private JPanel createPaymentPanel() {
-        JPanel paymentPanel = new JPanel();
-        paymentPanel.setLayout(new BoxLayout(paymentPanel, BoxLayout.PAGE_AXIS));
-        JLabel totalDueLabel = new JLabel("Total");
-        JLabel paymentAmountLabel = new JLabel("Payment amount");
-        JLabel changeLabel = new JLabel("Change");
-
-        JTextField inputAmountDueField = new JTextField();
-        JButton processPaymentButton = new JButton();
-        paymentPanel.add(totalDueLabel, BoxLayout.X_AXIS);
-        paymentPanel.add(paymentAmountLabel, BoxLayout.X_AXIS);
-        paymentPanel.add(changeLabel, BoxLayout.X_AXIS);
-        return paymentPanel;
     }
 
     /**
@@ -155,8 +146,9 @@ public class PointOfSaleGUI extends JPanel {
      */
     private JPanel initializeSalePanel() {
         JPanel saleInputPanel = new JPanel();
+        //saleInputPanel.setPreferredSize(new Dimension(550, 250));
+        //saleInputPanel.setMaximumSize(saleInputPanel.getPreferredSize());
         saleInputPanel.setLayout(new BoxLayout(saleInputPanel, BoxLayout.PAGE_AXIS));
-
         //Represents the combobox that lets you choose Drink, or Pastry.
         productTypeComboBox = new JComboBox(new DefaultComboBoxModel(ProductTypes.values()));
         productTypeComboBox.setEditable(false);
@@ -200,23 +192,37 @@ public class PointOfSaleGUI extends JPanel {
 
         saleInputPanel.add(toppingsPanel);
 
-        createdSale = new Sale();
-
         //This is the Panel for the JTable that displays the items you are purchasing (on the sale creation tab)
         SaleDetailsWindow saleDetails = new SaleDetailsWindow();
-        saleDetails.getOrderDetails().getSelectionModel().addListSelectionListener(listSelectionEvent -> {
-            if(saleDetails.getOrderDetails().getSelectedRow() != -1) {
-                removeOrderButton.setEnabled(true);
-            } else {
-                removeOrderButton.setEnabled(false);
-            }
-        });
+        Sale createdSale = saleDetails.getCreatedSale();
+
         SaleDetailsTableModel saleDetailsTableModel = new SaleDetailsTableModel(createdSale);
         saleDetails.updateTableModel(saleDetailsTableModel);
 
+        saleDetails.getOrderDetails().getSelectionModel().addListSelectionListener(listSelectionEvent -> {
+            if(saleDetails.getOrderDetails().getSelectedRow() != -1)
+                removeOrderButton.setEnabled(true);
+            else
+                removeOrderButton.setEnabled(false);
+        });
+
+        saleDetails.getOrderDetails().addPropertyChangeListener(evt -> {
+            saleDetails.updateJLabelHeader();
+            if(saleDetailsTableModel.getRowCount() > 0)
+                proceedToPaymentButton.setEnabled(true);
+            else
+                proceedToPaymentButton.setEnabled(false);
+
+
+        });
+
         addToOrderButton = new JButton("Add to order");
-        removeOrderButton = new JButton("Remove order");
+        removeOrderButton = new JButton("Remove from order");
         proceedToPaymentButton = new JButton("Proceed to payment");
+        proceedToPaymentButton.addActionListener(e -> {
+            tabbedPane.setEnabledAt(1, true);
+            tabbedPane.setSelectedIndex(1);
+        });
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBorder(BorderFactory.createTitledBorder("Options"));
@@ -227,6 +233,7 @@ public class PointOfSaleGUI extends JPanel {
 
         addToOrderButton.setEnabled(false);
         removeOrderButton.setEnabled(false);
+        //proceedToPaymentButton.setEnabled(false);
 
         removeOrderButton.addActionListener(actionEvent -> {
             createdSale.getItemsInSale().remove(saleDetails.getOrderDetails().getSelectedRow());
@@ -267,7 +274,6 @@ public class PointOfSaleGUI extends JPanel {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(saleInputPanel, BoxLayout.X_AXIS);
         panel.add(saleDetails, BoxLayout.X_AXIS);
-
         return panel;
     }
 

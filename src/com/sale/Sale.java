@@ -65,6 +65,10 @@ public class Sale {
         return totalPrice;
     }
 
+    public String getFormattedTotalPrice() {
+        return String.format("$%.2f", totalPrice);
+    }
+
     public int couponsUsed() {
         return coupons.size();
     }

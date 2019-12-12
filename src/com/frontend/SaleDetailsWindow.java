@@ -1,33 +1,53 @@
 package com.frontend;
 
+import com.sale.Sale;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 class SaleDetailsWindow extends JPanel {
 
     private JTable orderDetails;
+    private JLabel tableHeaderJLabel;
+    private Sale createdSale;
 
     SaleDetailsWindow() {
         super(new BorderLayout());
+        createdSale = new Sale();
         orderDetails = new JTable();
+
         JPanel panel2 = new JPanel(new BorderLayout());
-        JLabel text = new JLabel("Here are your order details");
-        text.setHorizontalAlignment(SwingConstants.CENTER);
-        panel2.add(text, BorderLayout.NORTH);
+        tableHeaderJLabel = new JLabel("Order details - Total: " + createdSale.getTotalPrice());
+        tableHeaderJLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        panel2.add(tableHeaderJLabel, BorderLayout.NORTH);
 
         JScrollPane scrollPane = new JScrollPane(orderDetails);
         panel2.add(scrollPane, BorderLayout.CENTER);
         add(panel2);
     }
 
-    public JTable getOrderDetails() {
+    JTable getOrderDetails() {
         return orderDetails;
+    }
+
+    public JLabel getTableHeaderJLabel() {
+        return tableHeaderJLabel;
     }
 
     void updateTableModel(SaleDetailsTableModel tableModel) {
         orderDetails.setModel(tableModel);
         orderDetails.repaint();
+    }
+
+    void updateJLabelHeader() {
+        tableHeaderJLabel.setText("Order details - Total: " + createdSale.getFormattedTotalPrice());
+    }
+
+    public Sale getCreatedSale() {
+        return createdSale;
     }
 }
