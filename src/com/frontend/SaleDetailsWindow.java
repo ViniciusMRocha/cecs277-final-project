@@ -3,16 +3,12 @@ package com.frontend;
 import com.sale.Sale;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 class SaleDetailsWindow extends JPanel {
 
     private JTable orderDetails;
-    private JLabel tableHeaderJLabel;
+    private JLabel totalCostLabel;
     private Sale createdSale;
 
     SaleDetailsWindow() {
@@ -21,12 +17,12 @@ class SaleDetailsWindow extends JPanel {
         orderDetails = new JTable();
 
         JPanel panel2 = new JPanel(new BorderLayout());
-        tableHeaderJLabel = new JLabel("Order details - Total: " + createdSale.getTotalPrice());
-        tableHeaderJLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        totalCostLabel = new JLabel("Order details - Subtotal: " + createdSale.getTotalPrice());
+        totalCostLabel.setHorizontalAlignment(SwingConstants.CENTER);
         orderDetails.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 
-        panel2.add(tableHeaderJLabel, BorderLayout.NORTH);
+        panel2.add(totalCostLabel, BorderLayout.NORTH);
 
         JScrollPane scrollPane = new JScrollPane(orderDetails);
         panel2.add(scrollPane, BorderLayout.CENTER);
@@ -37,18 +33,13 @@ class SaleDetailsWindow extends JPanel {
         return orderDetails;
     }
 
-    public JLabel getTableHeaderJLabel() {
-        return tableHeaderJLabel;
-    }
-
     void updateTableModel(SaleDetailsTableModel tableModel) {
         orderDetails.setModel(tableModel);
         orderDetails.repaint();
     }
 
-    void updateJLabelHeader() {
-        tableHeaderJLabel.setText("Order details - Total: " + createdSale.getFormattedTotalPrice());
-        tableHeaderJLabel.revalidate();
+    void updateTotalCostLabel() {
+        totalCostLabel.setText("Order details - Subtotal: " + createdSale.getFormattedTotalPrice());
     }
 
     public Sale getCreatedSale() {

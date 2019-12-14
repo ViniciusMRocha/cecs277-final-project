@@ -12,8 +12,6 @@ public class DrinkCoupon extends Coupon {
 
     @Override
     protected double calculateDiscount(Sale sale) {
-        System.out.println("Items in sale: ");
-
         Drink drinkToSubsidize = getHighestPricedDrink(sale);
         if(drinkToSubsidize == null) return 0;
         return (drinkToSubsidize.getCost()) * 0.5;

@@ -9,7 +9,7 @@ import com.factory.drink.CoffeeTypes;
 import com.factory.drink.Drink;
 import com.factory.drink.DrinkFactory;
 import com.factory.drink.TeaTypes;
-import com.factory.pastry.PastryFactory;
+import com.factory.pastry.*;
 import com.sale.Sale;
 
 import javax.swing.*;
@@ -34,10 +34,13 @@ public class PointOfSaleGUI extends JPanel {
 
     private PaymentPanel paymentPanel;
 
-    private JComboBox drinkNameComboBox;
+    private JComboBox productNameComboBox;
     private JTabbedPane tabbedPane;
+    private JSpinner quantitySelectionSpinner;
 
+    private JCheckBox heatCroissantCheckBox;
     private Sale createdSale;
+
 
     /**
      * Initialize and setup all components to be placed onto the GUI.
@@ -50,18 +53,18 @@ public class PointOfSaleGUI extends JPanel {
 
         //Creates a new tabbed pane, titles them, and adds both Panels to it.
         tabbedPane = new JTabbedPane();
-        tabbedPane.addTab("Create or modify a sale", salePanel);
+        tabbedPane.addTab("1) Create or modify a sale", salePanel);
 
         paymentPanel = new PaymentPanel(createdSale);
 
-        tabbedPane.add("Finalize sale", paymentPanel);
+        tabbedPane.add("2) Finalize sale", paymentPanel);
 
         JPanel saleHistoryPanel = new JPanel(new BorderLayout());
-        tabbedPane.addTab("View sale history", saleHistoryPanel);
+        tabbedPane.addTab("3) View sale history", saleHistoryPanel);
 
         tabbedPane.setPreferredSize(new Dimension(550, 500));
         tabbedPane.setEnabledAt(1, false);
-
+        tabbedPane.setEnabledAt(2, false);
         //Creates a panel for the buttons on the Order History tab
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBorder(BorderFactory.createTitledBorder("Options"));
@@ -138,6 +141,7 @@ public class PointOfSaleGUI extends JPanel {
      */
     private JPanel initializeSalePanel() {
         JPanel saleInputPanel = new JPanel();
+        saleInputPanel.setBorder(BorderFactory.createTitledBorder("Select a product to add to your order"));
         //saleInputPanel.setPreferredSize(new Dimension(550, 250));
         //saleInputPanel.setMaximumSize(saleInputPanel.getPreferredSize());
         saleInputPanel.setLayout(new BoxLayout(saleInputPanel, BoxLayout.PAGE_AXIS));
@@ -145,6 +149,8 @@ public class PointOfSaleGUI extends JPanel {
         productTypeComboBox = new JComboBox(new DefaultComboBoxModel(ProductTypes.values()));
         productTypeComboBox.setEditable(false);
         productTypeComboBox.setSelectedIndex(-1);
+
+        heatCroissantCheckBox = new JCheckBox("Would you like to heat your croissant? (+$0.50)");
 
         //Represents the combobox that lets you choose a size.
         sizeSelectionComboBox = new JComboBox(new DefaultComboBoxModel(Drink.Size.values()));
@@ -156,24 +162,31 @@ public class PointOfSaleGUI extends JPanel {
         sweetSelectionComboBox = new JComboBox(new DefaultComboBoxModel(Drink.Sweetness.values()));
 
         //The drinkaName combobox displays the specific names of all products. (e.g. "Hazelnut Latte", "Milk Tea")
-        drinkNameComboBox = new JComboBox();
+        productNameComboBox = new JComboBox();
         productDetailsComboBox = new JComboBox();
-
+        quantitySelectionSpinner = new JSpinner();
+        SpinnerNumberModel snm = new SpinnerNumberModel(0, 0, 10000, 1);
+        quantitySelectionSpinner.setModel(snm);
         //Set them to invisible until they're needed
-        drinkNameComboBox.setVisible(false);
+        quantitySelectionSpinner.setVisible(false);
+        productNameComboBox.setVisible(false);
         sizeSelectionComboBox.setVisible(false);
         milkSelectionComboBox.setVisible(false);
         sweetSelectionComboBox.setVisible(false);
         productDetailsComboBox.setVisible(false);
+        heatCroissantCheckBox.setVisible(false);
+
 
         productTypeComboBox.addActionListener(new ProductTypeActionListener());
+
 
         saleInputPanel.add(productTypeComboBox);
         saleInputPanel.add(productDetailsComboBox);
         saleInputPanel.add(sizeSelectionComboBox);
         saleInputPanel.add(milkSelectionComboBox);
         saleInputPanel.add(sweetSelectionComboBox);
-        saleInputPanel.add(drinkNameComboBox);
+        saleInputPanel.add(productNameComboBox);
+        saleInputPanel.add(quantitySelectionSpinner);
 
         toppingsPanel = new JPanel();
         toppingsPanel.setVisible(false);
@@ -183,6 +196,7 @@ public class PointOfSaleGUI extends JPanel {
         productDetailsComboBox.addActionListener(new ProductDetailsActionListener());
 
         saleInputPanel.add(toppingsPanel);
+
 
         //This is the Panel for the JTable that displays the items you are purchasing (on the sale creation tab)
         SaleDetailsWindow saleDetails = new SaleDetailsWindow();
@@ -199,7 +213,7 @@ public class PointOfSaleGUI extends JPanel {
         });
 
         saleDetails.getOrderDetails().addPropertyChangeListener(evt -> {
-            saleDetails.updateJLabelHeader();
+            saleDetails.updateTotalCostLabel();
             if(saleDetailsTableModel.getRowCount() > 0)
                 proceedToPaymentButton.setEnabled(true);
             else
@@ -229,7 +243,7 @@ public class PointOfSaleGUI extends JPanel {
         removeOrderButton.addActionListener(actionEvent -> {
             createdSale.removeFromSale(saleDetails.getOrderDetails().getSelectedRow());
             SaleDetailsTableModel newSaleDetailsModel = new SaleDetailsTableModel(createdSale);
-            saleDetails.updateJLabelHeader();
+            saleDetails.updateTotalCostLabel();
             saleDetails.updateTableModel(newSaleDetailsModel);
         });
         /**
@@ -245,16 +259,31 @@ public class PointOfSaleGUI extends JPanel {
             ArrayList<Product> items = new ArrayList<>();
 
             if(finalType.equals(ProductTypes.DRINK)) {
-                String drinkName = drinkNameComboBox.getSelectedItem().toString();
+                String drinkName = productNameComboBox.getSelectedItem().toString();
                 DrinkTypes type = (DrinkTypes)productDetailsComboBox.getSelectedItem();
                 Drink.Size size = (Drink.Size)sizeSelectionComboBox.getModel().getSelectedItem();
                 Drink.Milk Milk = (Drink.Milk)milkSelectionComboBox.getModel().getSelectedItem();
+
                 Drink.Sweetness sweetness = (Drink.Sweetness)sweetSelectionComboBox.getModel().getSelectedItem();
                 ArrayList<DrinkToppings> toppings = getSelectedToppings(type);
-                System.out.println("Toppings selected: " + toppings);
                 Product drinkProduct = drinkFactory.createProduct(drinkName, type, size, toppings, sweetness, Milk);
-                items.add(drinkProduct);
                 createdSale.addToSale(drinkProduct);
+                items.add(drinkProduct);
+
+            } else if(finalType.equals(ProductTypes.PASTRY)) {
+                String pastryName = productNameComboBox.getSelectedItem().toString();
+                PastryTypes type = (PastryTypes)productDetailsComboBox.getSelectedItem();
+                int quantity = (int)quantitySelectionSpinner.getValue();
+                Croissant.HeatState croissantHeated;
+
+                if(heatCroissantCheckBox.isSelected())
+                    croissantHeated = Pastry.HeatState.HEATED;
+                else
+                    croissantHeated = Pastry.HeatState.COLD;
+
+                Product pastryProduct = pastryFactory.createProduct(pastryName, type, quantity, croissantHeated, 0, 0);
+                createdSale.addToSale(pastryProduct);
+                items.add(pastryProduct);
             }
 
             SaleDetailsTableModel tableModel2 = new SaleDetailsTableModel(createdSale);
@@ -336,39 +365,40 @@ public class PointOfSaleGUI extends JPanel {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (productTypeComboBox.getModel().getSelectedItem().equals(ProductTypes.DRINK)) {
-                if (productDetailsComboBox.getSelectedIndex() == -1) {
-                    sizeSelectionComboBox.setVisible(false);
-                    milkSelectionComboBox.setVisible(false);
-                    sweetSelectionComboBox.setVisible(false);
-                    toppingsPanel.setVisible(false);
-                    addToOrderButton.setEnabled(false);
-                    drinkNameComboBox.setVisible(false);
-                    return;
-                }
+            if (productDetailsComboBox.getSelectedIndex() == -1) {
+                sizeSelectionComboBox.setVisible(false);
+                milkSelectionComboBox.setVisible(false);
+                sweetSelectionComboBox.setVisible(false);
+                toppingsPanel.setVisible(false);
+                addToOrderButton.setEnabled(false);
+                productNameComboBox.setVisible(false);
+                return;
+            }
 
+            if (productTypeComboBox.getModel().getSelectedItem().equals(ProductTypes.DRINK)) {
                 toppingsPanel.removeAll();
+                sweetSelectionComboBox.setVisible(false);
                 if (productDetailsComboBox.getSelectedItem().equals(DrinkTypes.COFFEE)) {
-                    drinkNameComboBox.setModel(new DefaultComboBoxModel(CoffeeTypes.values()));
+                    productNameComboBox.setModel(new DefaultComboBoxModel(CoffeeTypes.values()));
                     for (JCheckBox toppingCheckBox : coffeeToppingsCheckBoxes) {
                         toppingsPanel.add(toppingCheckBox);
                     }
                 } else if (productDetailsComboBox.getSelectedItem().equals(DrinkTypes.TEA)) {
-                    drinkNameComboBox.setModel(new DefaultComboBoxModel(TeaTypes.values()));
+                    sweetSelectionComboBox.setVisible(true);
+                    productNameComboBox.setModel(new DefaultComboBoxModel(TeaTypes.values()));
                     for (JCheckBox toppingCheckBox : teaToppingsCheckBoxes) {
                         toppingsPanel.add(toppingCheckBox);
                     }
                 }
 
-                drinkNameComboBox.revalidate();
-                drinkNameComboBox.repaint();
+                productNameComboBox.revalidate();
+                productNameComboBox.repaint();
                 toppingsPanel.revalidate();
                 toppingsPanel.repaint();
-                drinkNameComboBox.setVisible(true);
+                productNameComboBox.setVisible(true);
                 toppingsPanel.setVisible(true);
                 sizeSelectionComboBox.setVisible(true);
                 milkSelectionComboBox.setVisible(true);
-                sweetSelectionComboBox.setVisible(true);
                 addToOrderButton.setEnabled(true);
             } else if(productTypeComboBox.getModel().getSelectedItem().equals(ProductTypes.PASTRY)) {
                 //This area is where thee Pastry implementation will happen.
@@ -376,8 +406,18 @@ public class PointOfSaleGUI extends JPanel {
                 milkSelectionComboBox.setVisible(false);
                 sweetSelectionComboBox.setVisible(false);
                 toppingsPanel.setVisible(false);
-                addToOrderButton.setEnabled(false);
-                drinkNameComboBox.setVisible(false);
+
+                productNameComboBox.setVisible(true);
+                quantitySelectionSpinner.setVisible(true);
+
+                if(productDetailsComboBox.getSelectedItem().equals(PastryTypes.CROISSANT)) {
+                    productNameComboBox.setModel(new DefaultComboBoxModel(CroissantTypes.values()));
+                } else if(productDetailsComboBox.getSelectedItem().equals(PastryTypes.COOKIE)) {
+                    productNameComboBox.setModel(new DefaultComboBoxModel(CookieTypes.values()));
+                } else if(productDetailsComboBox.getSelectedItem().equals(PastryTypes.MACAROON)) {
+                    productNameComboBox.setModel(new DefaultComboBoxModel(MacaroonTypes.values()));
+                }
+                addToOrderButton.setEnabled(true);
             }
         }
     }
@@ -403,6 +443,7 @@ public class PointOfSaleGUI extends JPanel {
                 productDetailsComboBox.setModel(new DefaultComboBoxModel(PastryTypes.values()));
                 productDetailsComboBox.setSelectedIndex(-1);
                 productDetailsComboBox.setVisible(true);
+
             }
         }
     }

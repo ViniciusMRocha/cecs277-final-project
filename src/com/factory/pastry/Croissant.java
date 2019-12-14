@@ -16,10 +16,10 @@ public class Croissant extends Pastry {
     public double getCost() {
         switch (heatState) {
             case HEATED:
-                return 2.50;
+                return (quantity * 2.50);
             case COLD:
             default:
-                return 2.00;
+                return (quantity * 2.00);
         }
     }
 }

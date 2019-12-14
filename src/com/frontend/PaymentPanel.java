@@ -1,12 +1,13 @@
 package com.frontend;
 
-import com.decorator.toppings.drinktoppings.DrinkToppings;
+import com.sale.Coupon;
 import com.sale.Sale;
 import com.sale.coupontypes.CouponTypes;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class PaymentPanel extends JPanel {
@@ -14,13 +15,18 @@ public class PaymentPanel extends JPanel {
     private Sale createdSale;
     private JLabel totalDueLabel;
     private ArrayList<JCheckBox> couponCheckBoxes;
+    private JSpinner paymentInputField;
+
     /**
-     * Initializes ArrayLists for the Tea toppings and Coffee toppings.
+     * Initializes ArrayLists for the coupon options.
      */
     private void initializeCheckBoxArrayLists() {
         couponCheckBoxes = new ArrayList<>();
         for(CouponTypes coupon : CouponTypes.values()) {
-            couponCheckBoxes.add(new JCheckBox(coupon.toString()));
+            JCheckBox couponCheckBox = new JCheckBox(coupon.toString());
+            couponCheckBox.addActionListener(new CheckBoxActionListener());
+            couponCheckBox.setToolTipText(coupon.getCouponDescription());
+            couponCheckBoxes.add(couponCheckBox);
         }
     }
     public PaymentPanel(Sale createdSale) {
@@ -42,13 +48,14 @@ public class PaymentPanel extends JPanel {
 
         JPanel inputFieldPanel = new JPanel();
 
-        JSpinner paymentInputField = new JSpinner();
+        paymentInputField = new JSpinner();
         SpinnerNumberModel snm = new SpinnerNumberModel(0.0, 0.0, 9999.0, 0.01);
         //JSpinner.NumberEditor spinnerEditor = new JSpinner.NumberEditor(paymentInputField, "0.00");
         paymentInputField.setModel(snm);
         //paymentInputField.setEditor(spinnerEditor);
 
         JButton processPaymentButton = new JButton("Pay balance");
+        processPaymentButton.addActionListener(new PayBalanceButtonActionListener());
         processPaymentButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         JPanel paymentInformationPanel = new JPanel();
 
@@ -65,11 +72,50 @@ public class PaymentPanel extends JPanel {
         paymentInformationPanel.add(inputFieldPanel, BorderLayout.NORTH);
         paymentInformationPanel.add(changeLabel, BorderLayout.SOUTH);
 
-
         this.add(paymentInformationPanel, BorderLayout.NORTH);
     }
 
     public void setTotalDueLabel(Sale sale) {
         totalDueLabel.setText("Total due: " + sale.getFormattedTotalPrice());
+    }
+
+
+    class PayBalanceButtonActionListener implements ActionListener {
+
+        /**
+         * Invoked when an action occurs.
+         *
+         * @param e the event to be processed
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            double paymentAmountInput = (double)paymentInputField.getValue();
+            if(paymentAmountInput < createdSale.getTotalPrice())
+                JOptionPane.showMessageDialog(null, "That isn't enough money to cover the total cost!");
+            else
+                JOptionPane.showMessageDialog(null, "This is where you'd display the change given.");
+        }
+    }
+    class CheckBoxActionListener implements ActionListener {
+
+        /**
+         * Invoked when an action occurs.
+         *
+         * @param e the event to be processed
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ArrayList<Coupon> couponsSelected = new ArrayList<>();
+
+            for(JCheckBox checkBox : couponCheckBoxes) {
+                if(checkBox.isSelected()) {
+                    System.out.println(checkBox.getText() + " is now selected!");
+                    CouponTypes selectedCoupons = CouponTypes.getEnumValueFromString(checkBox.getText());
+                    couponsSelected.add(CouponTypes.getCouponFromEnumValue(selectedCoupons));
+                }
+            }
+            createdSale = new Sale(createdSale.getItemsInSale(), couponsSelected);
+            setTotalDueLabel(createdSale);
+        }
     }
 }
