@@ -1,6 +1,5 @@
 package com.frontend;
 
-
 import com.decorator.toppings.drinktoppings.DrinkToppings;
 import com.factory.DrinkTypes;
 import com.factory.PastryTypes;
@@ -10,21 +9,13 @@ import com.factory.drink.CoffeeTypes;
 import com.factory.drink.Drink;
 import com.factory.drink.DrinkFactory;
 import com.factory.drink.TeaTypes;
-import com.factory.pastry.Pastry;
 import com.factory.pastry.PastryFactory;
-import com.sale.Coupon;
 import com.sale.Sale;
-import com.sale.coupontypes.DrinkCoupon;
-import com.sale.coupontypes.GeneralCoupon;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.text.BoxView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 public class PointOfSaleGUI extends JPanel {
@@ -41,11 +32,12 @@ public class PointOfSaleGUI extends JPanel {
     private JButton removeOrderButton;
     private JButton proceedToPaymentButton;
 
-    private JPanel paymentPanel;
-    private JScrollPane saleInputScrollPanee;
+    private PaymentPanel paymentPanel;
 
     private JComboBox drinkNameComboBox;
     private JTabbedPane tabbedPane;
+
+    private Sale createdSale;
 
     /**
      * Initialize and setup all components to be placed onto the GUI.
@@ -60,7 +52,7 @@ public class PointOfSaleGUI extends JPanel {
         tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Create or modify a sale", salePanel);
 
-        paymentPanel = new PaymentPanel();
+        paymentPanel = new PaymentPanel(createdSale);
 
         tabbedPane.add("Finalize sale", paymentPanel);
 
@@ -194,7 +186,7 @@ public class PointOfSaleGUI extends JPanel {
 
         //This is the Panel for the JTable that displays the items you are purchasing (on the sale creation tab)
         SaleDetailsWindow saleDetails = new SaleDetailsWindow();
-        Sale createdSale = saleDetails.getCreatedSale();
+        createdSale = saleDetails.getCreatedSale();
 
         SaleDetailsTableModel saleDetailsTableModel = new SaleDetailsTableModel(createdSale);
         saleDetails.updateTableModel(saleDetailsTableModel);
@@ -212,8 +204,6 @@ public class PointOfSaleGUI extends JPanel {
                 proceedToPaymentButton.setEnabled(true);
             else
                 proceedToPaymentButton.setEnabled(false);
-
-
         });
 
         addToOrderButton = new JButton("Add to order");
@@ -222,6 +212,7 @@ public class PointOfSaleGUI extends JPanel {
         proceedToPaymentButton.addActionListener(e -> {
             tabbedPane.setEnabledAt(1, true);
             tabbedPane.setSelectedIndex(1);
+            paymentPanel.setTotalDueLabel(createdSale);
         });
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
@@ -236,8 +227,9 @@ public class PointOfSaleGUI extends JPanel {
         //proceedToPaymentButton.setEnabled(false);
 
         removeOrderButton.addActionListener(actionEvent -> {
-            createdSale.getItemsInSale().remove(saleDetails.getOrderDetails().getSelectedRow());
+            createdSale.removeFromSale(saleDetails.getOrderDetails().getSelectedRow());
             SaleDetailsTableModel newSaleDetailsModel = new SaleDetailsTableModel(createdSale);
+            saleDetails.updateJLabelHeader();
             saleDetails.updateTableModel(newSaleDetailsModel);
         });
         /**
@@ -262,7 +254,7 @@ public class PointOfSaleGUI extends JPanel {
                 System.out.println("Toppings selected: " + toppings);
                 Product drinkProduct = drinkFactory.createProduct(drinkName, type, size, toppings, sweetness, Milk);
                 items.add(drinkProduct);
-                createdSale.addToSale(drinkProduct, null);
+                createdSale.addToSale(drinkProduct);
             }
 
             SaleDetailsTableModel tableModel2 = new SaleDetailsTableModel(createdSale);
@@ -296,19 +288,6 @@ public class PointOfSaleGUI extends JPanel {
             }
         }
         return toppingsSelected;
-    }
-
-    /**
-     * This method sets a number of constants for the GridBagLayoutManager. This basically conttrols how the components
-     * display on the panel.
-     * @return
-     */
-    private GridBagConstraints createGridBagConstraints() {
-        GridBagConstraints cons = new GridBagConstraints();
-        cons.fill = GridBagConstraints.HORIZONTAL;
-        cons.weightx = 1;
-        cons.gridx = 0;
-        return cons;
     }
 
     /**

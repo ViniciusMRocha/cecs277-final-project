@@ -1,5 +1,7 @@
 package com.factory.drink;
 
+import com.factory.DrinkTypes;
+
 /**
  * Coffee is a type of drink.
  */
@@ -8,10 +10,11 @@ public class Coffee extends Drink {
      * Creates a new Coffee drink,
      */
     public Coffee(String name, Size size, Milk milkType) {
+        drinkType = DrinkTypes.COFFEE;
         this.name = name;
         this.size = size;
         this.milkType = milkType;
-        description = "A delicious coffee with ";
+        description = "";
     }
     /**
      * Gets the cost of coffee.

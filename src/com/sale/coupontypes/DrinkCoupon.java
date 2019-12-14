@@ -7,7 +7,7 @@ import com.sale.Sale;
 
 public class DrinkCoupon extends Coupon {
     public DrinkCoupon() {
-        super("Drink coupon", "50% oﬀ highest priced drink for current purchase.");
+        super(CouponTypes.DRINK_COUPON.getCouponName(), CouponTypes.DRINK_COUPON.getCouponDescription());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.frontend;
 
+import com.factory.DrinkTypes;
 import com.factory.Product;
 import com.factory.drink.Drink;
 import com.factory.pastry.Pastry;
@@ -15,7 +16,7 @@ public class SaleDetailsTableModel extends AbstractTableModel {
 
     SaleDetailsTableModel(Sale sale) {
         this.sale = sale;
-        this.columnNames = new String[]{"Item #", "Item name", "Item details", "Cost", "Quantity", "Discounted", "Modify"};
+        this.columnNames = new String[]{"Item #", "Item name", "Item additions", "Cost", "Quantity"};
     }
 
     @Override
@@ -25,7 +26,7 @@ public class SaleDetailsTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 7;
+        return 5;
     }
 
     @Override
@@ -52,7 +53,10 @@ public class SaleDetailsTableModel extends AbstractTableModel {
                     value = ((Drink)product).getName();
                 break;
             case 2:
-                value = product.getDescription();
+                if(!product.getDescription().equals(""))
+                    value = product.getDescription();
+                else
+                    value = "None";
                 break;
             case 3:
                 value = String.format("$%.2f" , sale.getItemsInSale().get(rowIndex).getCost());
@@ -62,21 +66,6 @@ public class SaleDetailsTableModel extends AbstractTableModel {
                     value = ((Pastry)product).getQuantity();
                 else
                     value = 1;
-                break;
-
-            case 5:
-                value = "N/A";
-                for(int indexes : sale.getIndexesOfCouponUsages()) {
-                    if(indexes == rowIndex)
-                        value = "Yes";
-                    else
-                        value = "No";
-                    break;
-                }
-                break;
-
-            case 6:
-                value = new JButton("Test");
                 break;
         }
         return value;

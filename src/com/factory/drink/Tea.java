@@ -1,5 +1,7 @@
 package com.factory.drink;
 
+import com.factory.DrinkTypes;
+
 /**
  * Tea is a type of Drink.
  */
@@ -14,7 +16,8 @@ public class Tea extends Drink {
         this.size = size;
         this.sweetness = sweetness;
         this.milkType = milkType;
-        description = "A nice cuppa tea with ";
+        drinkType = DrinkTypes.TEA;
+        description = "";
     }
 
     /**

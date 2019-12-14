@@ -23,6 +23,9 @@ class SaleDetailsWindow extends JPanel {
         JPanel panel2 = new JPanel(new BorderLayout());
         tableHeaderJLabel = new JLabel("Order details - Total: " + createdSale.getTotalPrice());
         tableHeaderJLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        orderDetails.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+
         panel2.add(tableHeaderJLabel, BorderLayout.NORTH);
 
         JScrollPane scrollPane = new JScrollPane(orderDetails);
@@ -45,6 +48,7 @@ class SaleDetailsWindow extends JPanel {
 
     void updateJLabelHeader() {
         tableHeaderJLabel.setText("Order details - Total: " + createdSale.getFormattedTotalPrice());
+        tableHeaderJLabel.revalidate();
     }
 
     public Sale getCreatedSale() {

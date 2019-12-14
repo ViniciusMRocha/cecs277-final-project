@@ -1,11 +1,13 @@
 package com.factory.drink;
 
+import com.factory.DrinkTypes;
 import com.factory.Product;
 
 /**
  * An abstract representation of a Drink.
  */
 public abstract class Drink implements Product {
+    DrinkTypes drinkType;
     String description = "Unknown Drink";
     Size size;
     String name;
@@ -37,6 +39,10 @@ public abstract class Drink implements Product {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public DrinkTypes getDrinkType() {
+        return drinkType;
     }
 
     /**
