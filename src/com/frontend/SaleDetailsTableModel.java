@@ -1,12 +1,10 @@
 package com.frontend;
 
-import com.factory.DrinkTypes;
 import com.factory.Product;
 import com.factory.drink.Drink;
 import com.factory.pastry.Pastry;
 import com.sale.Sale;
 
-import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 
 public class SaleDetailsTableModel extends AbstractTableModel {

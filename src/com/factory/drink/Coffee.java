@@ -3,11 +3,17 @@ package com.factory.drink;
 import com.factory.DrinkTypes;
 
 /**
- * Coffee is a type of drink.
+ * Coffee is an extension of the abstract Drink class, which is a type of Product available for purchase at
+ * "Cha-cha-cha Time!"
  */
 public class Coffee extends Drink {
+
     /**
-     * Creates a new Coffee drink,
+     * Creates a new Coffee object with the specified parameters.
+     *
+     * @param name The name of the coffee
+     * @param size The size of the coffee
+     * @param milkType The type of milk in the coffee
      */
     public Coffee(String name, Size size, Milk milkType) {
         drinkType = DrinkTypes.COFFEE;
@@ -16,6 +22,7 @@ public class Coffee extends Drink {
         this.milkType = milkType;
         description = "";
     }
+
     /**
      * Gets the cost of coffee.
      * @return the total cost.

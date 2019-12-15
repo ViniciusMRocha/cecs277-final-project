@@ -4,7 +4,7 @@ import com.factory.DrinkTypes;
 import com.factory.Product;
 
 /**
- * An abstract representation of a Drink.
+ * An abstract representation of a Drink, which is also a type of Product sold at "Cha-cha-cha Time!"
  */
 public abstract class Drink implements Product {
     DrinkTypes drinkType;
@@ -17,7 +17,7 @@ public abstract class Drink implements Product {
 
     /**
      * Get the description of the drink.
-     * @return the description
+     * @return the drink description
      */
     public String getDescription() {
         return this.description;
@@ -28,21 +28,16 @@ public abstract class Drink implements Product {
      */
     public abstract double getCost();
 
-
+    /**
+     * Gets the name of the drink.
+     * @return The drink's name
+     */
     public String getName() {
         return name;
     }
 
-    public double getDrinkCost() {
-        return cost;
-    }
-
     public void setCost(double cost) {
         this.cost = cost;
-    }
-
-    public DrinkTypes getDrinkType() {
-        return drinkType;
     }
 
     /**
@@ -53,10 +48,18 @@ public abstract class Drink implements Product {
 
         private String sizeName;
 
+        /**
+         * Defines a new Size enum with the given sizeName.
+         * @param sizeName The size of the drink
+         */
         Size(String sizeName) {
             this.sizeName = sizeName;
         }
 
+        /**
+         * Prints out the value of an enum to a String
+         * @return The value of a Size enum
+         */
         @Override
         public String toString() {
             return sizeName;
@@ -69,14 +72,27 @@ public abstract class Drink implements Product {
     public enum Sweetness {
         QUARTER_SWEET("A fourth sweet"), HALF_SWEET("Half sweet"), THREE_FOURTHS_SWEET("Three fourths sweet"), NO_SUGAR("No sugar");
         private String description;
+
+        /**
+         * Defines a new Sweetness enum that represents the sweetness of a Drink.
+         * @param description The description of the sweetness
+         */
         Sweetness(String description) {
             this.description = description;
         }
 
+        /**
+         * Gets the description of the enum type
+         * @return The description
+         */
         public String getDescription() {
             return description;
         }
 
+        /**
+         * Prints out the value of an enum to a String.
+         * @return The value of a Sweetness enum
+         */
         @Override
         public String toString() {
             return description;
@@ -90,14 +106,19 @@ public abstract class Drink implements Product {
         NO_MILK("No milk"), HALF_AND_HALF("Half and half"), SOY_MILK("Soy milk");
 
         private String milkDescription;
+
+        /**
+         * Defines a type of Milk enum that represents the milkiness of a Drink.
+         * @param milkDescription The description of the milkiness
+         */
         Milk(String milkDescription) {
             this.milkDescription = milkDescription;
         }
 
-        public String getMilkDescription() {
-            return milkDescription;
-        }
-
+        /**
+         * Prints out the value of an enum to a String
+         * @return The value of a Milk enum
+         */
         @Override
         public String toString() {
             return milkDescription;

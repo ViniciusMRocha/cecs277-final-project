@@ -18,6 +18,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+
+/**
+ * PointOfSaleGUI runs the main application for the "Cha-cha-cha Time!" coffeehouse,
+ * initializing all the Components that are used on the frame.
+ */
 public class PointOfSaleGUI extends JPanel {
 
     private ArrayList<JCheckBox> teaToppingsCheckBoxes;
@@ -40,7 +45,6 @@ public class PointOfSaleGUI extends JPanel {
 
     private JCheckBox heatCroissantCheckBox;
     private Sale createdSale;
-
 
     /**
      * Initialize and setup all components to be placed onto the GUI.
@@ -137,7 +141,7 @@ public class PointOfSaleGUI extends JPanel {
 
     /**
      * Initializes the first tab of the program for creating a new sale.
-     * @return A completed JPanel
+     * @return The JPanel that is placed on the first tab of the tabbedPane
      */
     private JPanel initializeSalePanel() {
         JPanel saleInputPanel = new JPanel();
@@ -301,7 +305,7 @@ public class PointOfSaleGUI extends JPanel {
     /**
      * Gets an ArrayList of toppings from the JCheckBoxes that the user selected.
      * @param type What type of Drink the user is purchasing.
-     * @return
+     * @return An ArrayList of DrinkToppings that the user selected.
      */
     private ArrayList<DrinkToppings> getSelectedToppings(DrinkTypes type) {
         ArrayList<DrinkToppings> toppingsSelected = new ArrayList<>();
@@ -429,7 +433,7 @@ public class PointOfSaleGUI extends JPanel {
      */
     class ProductTypeActionListener implements ActionListener {
         /**
-         * Invoked when an action occurs.
+         * The actionPereformed(ActionEvent) method is executed when the ActionListener is called.
          *
          * @param e the event to be processed
          */
