@@ -7,6 +7,7 @@ import com.sale.Sale;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.awt.event.ActionListener;
 
 public class SaleDetailsTableModel extends AbstractTableModel {
 
@@ -15,7 +16,7 @@ public class SaleDetailsTableModel extends AbstractTableModel {
 
     SaleDetailsTableModel(Sale sale) {
         this.sale = sale;
-        this.columnNames = new String[]{"Item #", "Item name", "Item details", "Cost", "Quantity", "Discounted", "Modify"};
+        this.columnNames = new String[]{"Item #", "Item name", "Item details", "Cost", "Quantity", "Discounted"};
     }
 
     @Override
@@ -25,7 +26,7 @@ public class SaleDetailsTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 7;
+        return 6;
     }
 
     @Override
@@ -74,16 +75,10 @@ public class SaleDetailsTableModel extends AbstractTableModel {
                     break;
                 }
                 break;
-
-            case 6:
-                value = new JButton("Test");
-                break;
         }
         return value;
     }
 
     @Override
-    public Class<?> getColumnClass(int columnIndex) {
-        return String.class;
-    }
+    public Class<?> getColumnClass(int columnIndex) { return String.class; }
 }
