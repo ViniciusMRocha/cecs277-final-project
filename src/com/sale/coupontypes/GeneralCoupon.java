@@ -7,7 +7,7 @@ import com.sale.Sale;
 public class GeneralCoupon extends Coupon {
 
     public GeneralCoupon() {
-        super("General coupon", "$2 oﬀ a total purchase of at least $10.");
+        super(CouponTypes.GENERAL_COUPON.getCouponName(), CouponTypes.GENERAL_COUPON.getCouponDescription());
     }
 
     @Override

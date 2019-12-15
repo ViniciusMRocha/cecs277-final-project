@@ -7,13 +7,11 @@ import com.sale.Sale;
 
 public class DrinkCoupon extends Coupon {
     public DrinkCoupon() {
-        super("Drink coupon", "50% oﬀ highest priced drink for current purchase.");
+        super(CouponTypes.DRINK_COUPON.getCouponName(), CouponTypes.DRINK_COUPON.getCouponDescription());
     }
 
     @Override
     protected double calculateDiscount(Sale sale) {
-        System.out.println("Items in sale: ");
-
         Drink drinkToSubsidize = getHighestPricedDrink(sale);
         if(drinkToSubsidize == null) return 0;
         return (drinkToSubsidize.getCost()) * 0.5;

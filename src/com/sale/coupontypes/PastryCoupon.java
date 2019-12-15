@@ -8,7 +8,7 @@ import com.sale.Sale;
 public class PastryCoupon extends Coupon {
 
     public PastryCoupon() {
-        super("Pastry coupon", "$1 oﬀ a cookie purchase.");
+        super(CouponTypes.PASTRY_COUPON.getCouponName(), CouponTypes.PASTRY_COUPON.getCouponDescription());
     }
 
     @Override

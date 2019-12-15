@@ -1,24 +1,34 @@
 package com.factory.drink;
 
+import com.factory.DrinkTypes;
+
 /**
- * Tea is a type of Drink.
+ * Tea is an extension of the abstract Drink class, which is a type of Product available for purchase at
+ * "Cha-cha-cha Time!"
  */
 public class Tea extends Drink {
     private Sweetness sweetness;
 
+
     /**
-     * Initializes Tea.
+     * Initializes a new Tea object with the specified parameters.
+     *
+     * @param name The name of the Tea
+     * @param size The size of the Tea
+     * @param sweetness The sweetness of the tea
+     * @param milkType The type of milk in the tea
      */
     public Tea(String name, Size size, Sweetness sweetness, Milk milkType) {
         this.name = name;
         this.size = size;
         this.sweetness = sweetness;
         this.milkType = milkType;
-        description = "A nice cuppa tea with ";
+        drinkType = DrinkTypes.TEA;
+        description = "";
     }
 
     /**
-     * Gets the cost of tea.
+     * Gets the cost of the tea.
      *
      * @return the total cost.
      */

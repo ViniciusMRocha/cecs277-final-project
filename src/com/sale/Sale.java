@@ -17,7 +17,7 @@ public class Sale {
         this.itemsInSale = itemsInSale;
         if(coupons == null) this.coupons = new ArrayList<>();
         else this.coupons = coupons;
-        totalPrice = calculateTotalCost();
+        calculateTotalCost();
         totalOrders++;
         receiptNumber = totalOrders;
     }
@@ -29,10 +29,22 @@ public class Sale {
         indexesOfCouponUsages = new ArrayList<>();
     }
 
-    public void addToSale(Product itemsInSale, ArrayList<Coupon> coupons) {
-        this.itemsInSale.add(itemsInSale);
-        if(coupons != null) this.coupons.addAll(coupons);
-        totalPrice = calculateTotalCost();
+    public void addToSale(Product itemToAdd) {
+        this.itemsInSale.add(itemToAdd);
+        calculateTotalCost();
+        totalOrders++;
+        receiptNumber = totalOrders;
+    }
+
+    public void addCouponToSale(Coupon coupon) {
+        this.coupons.add(coupon);
+        calculateTotalCost();
+    }
+
+
+    public void removeFromSale(int itemIndex) {
+        this.itemsInSale.remove(itemIndex);
+        calculateTotalCost();
         totalOrders++;
         receiptNumber = totalOrders;
     }
@@ -45,16 +57,16 @@ public class Sale {
         indexesOfCouponUsages.add(index);
     }
 
-    private double calculateTotalCost() {
-        double cost = 0.0;
+    public void calculateTotalCost() {
+        double totalPrice = 0.0;
         for(Product product : itemsInSale)
-            cost += product.getCost();
+            totalPrice += product.getCost();
 
         for(Coupon coupon : coupons) {
             double discount = coupon.calculateDiscount(this);
-            cost -= discount;
+            totalPrice -= discount;
         }
-        return cost;
+        this.totalPrice = totalPrice;
     }
 
     public ArrayList<Integer> getIndexesOfCouponUsages() {

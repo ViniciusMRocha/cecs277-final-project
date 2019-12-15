@@ -1,24 +1,36 @@
 package com.factory.pastry;
 
 /**
- * A Macaroon is a type of pastry.
+ * A macaroon is a type of pastry, which is a type of product available for purchase at "Cha-cha-cha Time!"
  */
 public class Macaroon extends Pastry {
 
+    /**
+     * Initializes a new croissant object with the specified parameters.
+     *
+     * @param name The name of the macaroon
+     * @param quantity The quantity to be purchased
+     */
     Macaroon(String name, int quantity)  {
         this.name = name;
-        description = "This is a macaroon.";
         this.quantity = quantity;
+        description = "A " + name + " macaroon";
     }
 
     /**
-     * How many half-dozen macaroons have been purchased.
-     * @return how many half-dozens purchased.
+     * How many half-dozen croissants have been purchased.
+     *
+     * @param quantity The total quantity purchased
+     * @return How many half-dozens are in the quantity
      */
     private int halfDozensPurchased(int quantity) {
         return (int)(Math.floor(quantity / 6));
     }
 
+    /**
+     * Gets the cost of the macaroon(s) purchased
+     * @return The total cost of the macaroon(s)
+     */
     public double getCost() {
         double originalPrice = 2;
         double specialPrice = 1.50;
