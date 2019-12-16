@@ -22,13 +22,13 @@ public class TaroTea extends Tea implements Product {
 
         switch (size) {
             case SMALL:
-                drinkCost += 2.25 * quantity;
+                drinkCost += 3.25 * quantity;
                 break;
             case MEDIUM:
-                drinkCost += 2.75 * quantity;
+                drinkCost += 3.75 * quantity;
                 break;
             case LARGE:
-                drinkCost += 3.25 * quantity;
+                drinkCost += 4.25 * quantity;
                 break;
         }
         return drinkCost;

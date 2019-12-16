@@ -20,13 +20,13 @@ public class PumpkinSpiceMilkCoffee extends MilkCoffee implements Product {
         double drinkCost = super.getCost();
         switch (size) {
             case SMALL:
-                drinkCost +=  3.00 * quantity;
+                drinkCost +=  4.00 * quantity;
                 break;
             case MEDIUM:
-                drinkCost += 3.50 * quantity;
+                drinkCost += 4.50 * quantity;
                 break;
             case LARGE:
-                drinkCost += 4.00 * quantity;
+                drinkCost += 5.00 * quantity;
                 break;
         }
 

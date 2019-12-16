@@ -21,13 +21,13 @@ public class GreenTea extends Tea implements Product {
         double drinkCost = super.getCost();
         switch (size) {
             case SMALL:
-                drinkCost += 2.00 * quantity;
+                drinkCost += 3.00 * quantity;
                 break;
             case MEDIUM:
-                drinkCost += 2.50 * quantity;
+                drinkCost += 3.50 * quantity;
                 break;
             case LARGE:
-                drinkCost += 3.00 * quantity;
+                drinkCost += 4.00 * quantity;
                 break;
         }
         return drinkCost;

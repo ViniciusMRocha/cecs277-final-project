@@ -22,13 +22,13 @@ public class SummerMintTea extends Tea implements Product {
 
         switch (size) {
             case SMALL:
-                drinkCost += 3.00 * quantity;
+                drinkCost += 4.00 * quantity;
                 break;
             case MEDIUM:
-                drinkCost += 3.50 * quantity;
+                drinkCost += 4.50 * quantity;
                 break;
             case LARGE:
-                drinkCost += 4.00 * quantity;
+                drinkCost += 5.00 * quantity;
                 break;
         }
         return drinkCost;

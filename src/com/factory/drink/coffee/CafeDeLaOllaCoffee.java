@@ -20,13 +20,13 @@ public class CafeDeLaOllaCoffee extends Coffee implements Product {
         double drinkCost = super.getCost();
         switch (size) {
             case SMALL:
-                drinkCost += 2.25 * quantity;
+                drinkCost += 2.50 * quantity;
                 break;
             case MEDIUM:
-                drinkCost += 2.75 * quantity;
+                drinkCost += 3.00 * quantity;
                 break;
             case LARGE:
-                drinkCost += 3.25 * quantity;
+                drinkCost += 3.50 * quantity;
                 break;
         }
         return drinkCost;
