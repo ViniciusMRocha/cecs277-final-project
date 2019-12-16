@@ -49,13 +49,13 @@ public class DrinkFactory extends ProductFactory {
                     p = new SeaCreamMilkCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk);
                     switch ((Drink.Size)size) {
                         case SMALL:
-                            p.setCost(2.25);
+                            p.setCost(3.25);
                             break;
                         case MEDIUM:
-                            p.setCost(2.75);
+                            p.setCost(3.75);
                             break;
                         case LARGE:
-                            p.setCost(3.25);
+                            p.setCost(4.25);
                             break;
                     }
                     break;
@@ -64,13 +64,13 @@ public class DrinkFactory extends ProductFactory {
                     p = new HousePremiumMilkCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk);
                     switch ((Drink.Size)size) {
                         case SMALL:
-                            p.setCost(2.25);
+                            p.setCost(3.25);
                             break;
                         case MEDIUM:
-                            p.setCost(2.75);
+                            p.setCost(3.75);
                             break;
                         case LARGE:
-                            p.setCost(3.25);
+                            p.setCost(4.25);
                             break;
                     }
                     break;
@@ -79,13 +79,13 @@ public class DrinkFactory extends ProductFactory {
                     p = new PumpkinSpiceMilkCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk);
                     switch ((Drink.Size)size) {
                         case SMALL:
-                            p.setCost( 3.00);
+                            p.setCost(4.00);
                             break;
                         case MEDIUM:
-                            p.setCost(3.50);
+                            p.setCost(4.50);
                             break;
                         case LARGE:
-                            p.setCost(4.00);
+                            p.setCost(5.00);
                             break;
                     }
                     break;
@@ -128,13 +128,13 @@ public class DrinkFactory extends ProductFactory {
                     p = new CafeDeLaOllaCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk);
                     switch ((Drink.Size)size) {
                         case SMALL:
-                            p.setCost(2.25);
+                            p.setCost(2.50);
                             break;
                         case MEDIUM:
-                            p.setCost(2.75);
+                            p.setCost(3.00);
                             break;
                         case LARGE:
-                            p.setCost(3.25);
+                            p.setCost(3.50);
                             break;
                     }
                     break;
@@ -160,6 +160,21 @@ public class DrinkFactory extends ProductFactory {
                     p = new SummerMintTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
                     switch ((Drink.Size)size) {
                         case SMALL:
+                            p.setCost(4.00);
+                            break;
+                        case MEDIUM:
+                            p.setCost(4.50);
+                            break;
+                        case LARGE:
+                            p.setCost(5.00);
+                            break;
+                    }
+                    break;
+
+                case GREEN_TEA:
+                    p = new GreenTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
                             p.setCost(3.00);
                             break;
                         case MEDIUM:
@@ -171,32 +186,17 @@ public class DrinkFactory extends ProductFactory {
                     }
                     break;
 
-                case GREEN_TEA:
-                    p = new GreenTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
-                    switch ((Drink.Size)size) {
-                        case SMALL:
-                            p.setCost(2.00);
-                            break;
-                        case MEDIUM:
-                            p.setCost(2.50);
-                            break;
-                        case LARGE:
-                            p.setCost(3.00);
-                            break;
-                    }
-                    break;
-
                 case ROSE_GREEN_TEA:
                     p = new RoseGreenTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
                     switch ((Drink.Size)size) {
                         case SMALL:
-                            p.setCost(2.25);
+                            p.setCost(3.25);
                             break;
                         case MEDIUM:
-                            p.setCost(2.75);
+                            p.setCost(3.75);
                             break;
                         case LARGE:
-                            p.setCost(3.25);
+                            p.setCost(4.25);
                             break;
                     }
                     break;
@@ -205,13 +205,13 @@ public class DrinkFactory extends ProductFactory {
                     p = new JasmineGreenTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
                     switch ((Drink.Size)size) {
                         case SMALL:
-                            p.setCost(2.25);
+                            p.setCost(3.25);
                             break;
                         case MEDIUM:
-                            p.setCost(2.75);
+                            p.setCost(3.75);
                             break;
                         case LARGE:
-                            p.setCost(3.25);
+                            p.setCost(4.25);
                             break;
                     }
                     break;
@@ -220,13 +220,13 @@ public class DrinkFactory extends ProductFactory {
                     p = new TaroTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
                     switch ((Drink.Size)size) {
                         case SMALL:
-                            p.setCost(2.25);
+                            p.setCost(3.25);
                             break;
                         case MEDIUM:
-                            p.setCost(2.75);
+                            p.setCost(3.75);
                             break;
                         case LARGE:
-                            p.setCost(3.25);
+                            p.setCost(4.25);
                             break;
                     }
                     break;
