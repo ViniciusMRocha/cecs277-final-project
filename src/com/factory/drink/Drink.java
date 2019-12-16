@@ -13,7 +13,7 @@ public abstract class Drink implements Product {
     String name;
     Milk milkType;
     double cost;
-
+    int quantity;
 
     /**
      * Get the description of the drink.
@@ -22,6 +22,15 @@ public abstract class Drink implements Product {
     public String getDescription() {
         return this.description;
     }
+
+    /**
+     * Get the quantity of the drink.
+     * @return the drink quantity
+     */
+    public int getQuantity() {
+        return this.quantity;
+    }
+
     /**
      * An abstract method to determine the cost of different sub-types of pastry.
      * @return the cost

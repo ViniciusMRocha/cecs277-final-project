@@ -25,12 +25,14 @@ public class Croissant extends Pastry {
      * @return The total cost of the croissant(s)
      */
     public double getCost() {
+        double cost = 2.00;
         switch (heatState) {
             case HEATED:
-                return (quantity * 2.50);
+                cost += 0.5;
+                return (quantity * cost);
             case COLD:
             default:
-                return (quantity * 2.00);
+                return (quantity * cost);
         }
     }
 }

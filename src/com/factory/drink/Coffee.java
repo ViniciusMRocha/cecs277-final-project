@@ -15,11 +15,12 @@ public class Coffee extends Drink {
      * @param size The size of the coffee
      * @param milkType The type of milk in the coffee
      */
-    public Coffee(String name, Size size, Milk milkType) {
+    public Coffee(String name, Size size, Milk milkType, int quantity) {
         drinkType = DrinkTypes.COFFEE;
         this.name = name;
         this.size = size;
         this.milkType = milkType;
+        this.quantity = quantity;
         description = "";
     }
 
@@ -49,7 +50,6 @@ public class Coffee extends Drink {
                 drinkCost += 0.25;
                 break;
         }
-        cost = drinkCost;
         return drinkCost;
     }
 }

@@ -20,16 +20,16 @@ public class DrinkFactory extends ProductFactory {
      * TODO: Properly document the uses for each object parameter, if applicable.
      */
     @Override
-    public Drink createProduct(Object name, Object type, Object size, Object toppings, Object sweetness, Object milk) {
+    public Drink createProduct(Object name, Object type, Object size, Object toppings, Object sweetness, Object milk, Object quantity) {
         Drink p = null;
 
         switch((DrinkTypes)type) {
             case TEA:
-                p = new Tea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
+                p = new Tea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk, (int)quantity);
                 break;
 
             case COFFEE:
-                p = new Coffee((String)name, (Drink.Size)size, (Drink.Milk)milk);
+                p = new Coffee((String)name, (Drink.Size)size, (Drink.Milk)milk, (int)quantity);
                 break;
         }
 

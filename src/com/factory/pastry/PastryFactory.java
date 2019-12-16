@@ -16,7 +16,7 @@ public class PastryFactory extends ProductFactory {
 	 * @return The new Pastry object.
 	 */
 	@Override
-	public Product createProduct(Object name, Object type, Object quantity, Object heatState, Object details3, Object details4) {
+	public Product createProduct(Object name, Object type, Object quantity, Object heatState, Object details3, Object details4, Object details5) {
 	Pastry p = null;
 
 		switch ((PastryTypes) type) {

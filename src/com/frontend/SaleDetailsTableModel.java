@@ -15,7 +15,7 @@ public class SaleDetailsTableModel extends AbstractTableModel {
 
     SaleDetailsTableModel(Sale sale) {
         this.sale = sale;
-        this.columnNames = new String[]{"Item #", "Item name", "Item details", "Cost", "Quantity", "Discounted"};
+        this.columnNames = new String[]{"Item #", "Item name", "Item details", "Unit cost", "Quantity"};
     }
 
     @Override
@@ -46,10 +46,7 @@ public class SaleDetailsTableModel extends AbstractTableModel {
                 value = (rowIndex + 1);
                 break;
             case 1:
-                if(product instanceof Pastry)
-                    value = ((Pastry)product).getName();
-                else if(product instanceof Drink)
-                    value = ((Drink)product).getName();
+                value = product.getName();
                 break;
             case 2:
                 if(!product.getDescription().equals(""))
@@ -61,20 +58,7 @@ public class SaleDetailsTableModel extends AbstractTableModel {
                 value = String.format("$%.2f" , sale.getItemsInSale().get(rowIndex).getCost());
                 break;
             case 4:
-                if(product instanceof Pastry)
-                    value = ((Pastry)product).getQuantity();
-                else
-                    value = 1;
-                break;
-            case 5:
-                value = "N/A";
-                for(int indexes : sale.getIndexesOfCouponUsages()) {
-                    if(indexes == rowIndex)
-                        value = "Yes";
-                    else
-                        value = "No";
-                    break;
-                }
+                value = product.getQuantity();
                 break;
         }
         return value;

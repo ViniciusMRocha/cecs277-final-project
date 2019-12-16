@@ -18,11 +18,12 @@ public class Tea extends Drink {
      * @param sweetness The sweetness of the tea
      * @param milkType The type of milk in the tea
      */
-    public Tea(String name, Size size, Sweetness sweetness, Milk milkType) {
+    public Tea(String name, Size size, Sweetness sweetness, Milk milkType, int quantity) {
         this.name = name;
         this.size = size;
         this.sweetness = sweetness;
         this.milkType = milkType;
+        this.quantity = quantity;
         drinkType = DrinkTypes.TEA;
         description = "";
     }

@@ -163,6 +163,7 @@ public class PointOfSaleGUI extends JPanel {
         productTypeComboBox.setSelectedIndex(-1);
 
         heatCroissantCheckBox = new JCheckBox("Would you like to heat your croissant? (+$0.50)");
+        heatCroissantCheckBox.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
         //Represents the combobox that lets you choose a size.
         sizeSelectionComboBox = new JComboBox(new DefaultComboBoxModel(Drink.Size.values()));
@@ -201,6 +202,7 @@ public class PointOfSaleGUI extends JPanel {
         saleInputPanel.add(productNameComboBox);
         saleInputPanel.add(quantitySelectionSpinner);
         saleInputPanel.add(toppingsPanel);
+        saleInputPanel.add(heatCroissantCheckBox);
 
         productDetailsComboBox.addActionListener(new ProductDetailsActionListener());
 
@@ -264,6 +266,7 @@ public class PointOfSaleGUI extends JPanel {
             PastryFactory pastryFactory = new PastryFactory();
             ProductTypes finalType = (ProductTypes)productTypeComboBox.getModel().getSelectedItem();
             ArrayList<Product> items = new ArrayList<>();
+            int quantity = (int)quantitySelectionSpinner.getValue();
 
             if(finalType.equals(ProductTypes.DRINK)) {
                 String drinkName = productNameComboBox.getSelectedItem().toString();
@@ -273,14 +276,13 @@ public class PointOfSaleGUI extends JPanel {
 
                 Drink.Sweetness sweetness = (Drink.Sweetness)sweetSelectionComboBox.getModel().getSelectedItem();
                 ArrayList<DrinkToppings> toppings = getSelectedToppings(type);
-                Product drinkProduct = drinkFactory.createProduct(drinkName, type, size, toppings, sweetness, Milk);
+                Product drinkProduct = drinkFactory.createProduct(drinkName, type, size, toppings, sweetness, Milk, quantity);
                 createdSale.addToSale(drinkProduct);
                 items.add(drinkProduct);
 
             } else if(finalType.equals(ProductTypes.PASTRY)) {
                 String pastryName = productNameComboBox.getSelectedItem().toString();
                 PastryTypes type = (PastryTypes)productDetailsComboBox.getSelectedItem();
-                int quantity = (int)quantitySelectionSpinner.getValue();
                 Croissant.HeatState croissantHeated;
 
                 if(heatCroissantCheckBox.isSelected())
@@ -288,7 +290,7 @@ public class PointOfSaleGUI extends JPanel {
                 else
                     croissantHeated = Pastry.HeatState.COLD;
 
-                Product pastryProduct = pastryFactory.createProduct(pastryName, type, quantity, croissantHeated, 0, 0);
+                Product pastryProduct = pastryFactory.createProduct(pastryName, type, quantity, croissantHeated, 0, 0, 0);
                 createdSale.addToSale(pastryProduct);
                 items.add(pastryProduct);
             }
@@ -379,6 +381,7 @@ public class PointOfSaleGUI extends JPanel {
                 addToOrderButton.setEnabled(false);
                 productNameComboBox.setVisible(false);
                 quantitySelectionSpinner.setVisible(false);
+                heatCroissantCheckBox.setVisible(false);
                 return;
             }
 
@@ -390,7 +393,6 @@ public class PointOfSaleGUI extends JPanel {
                     productNameComboBox.setModel(new DefaultComboBoxModel(CoffeeTypes.values()));
                     for (JCheckBox toppingCheckBox : coffeeToppingsCheckBoxes)
                         toppingsPanel.add(toppingCheckBox);
-
                 } else if (productDetailsComboBox.getSelectedItem().equals(DrinkTypes.TEA)) {
                     sweetSelectionComboBox.setVisible(true);
                     productNameComboBox.setModel(new DefaultComboBoxModel(TeaTypes.values()));
@@ -412,11 +414,12 @@ public class PointOfSaleGUI extends JPanel {
                 toppingsPanel.setVisible(false);
                 productNameComboBox.setVisible(true);
                 quantitySelectionSpinner.setVisible(true);
-
                 addToOrderButton.setEnabled(true);
+                heatCroissantCheckBox.setVisible(false);
 
                 if(productDetailsComboBox.getSelectedItem().equals(PastryTypes.CROISSANT)) {
                     productNameComboBox.setModel(new DefaultComboBoxModel(CroissantTypes.values()));
+                    heatCroissantCheckBox.setVisible(true);
                 } else if(productDetailsComboBox.getSelectedItem().equals(PastryTypes.COOKIE)) {
                     productNameComboBox.setModel(new DefaultComboBoxModel(CookieTypes.values()));
                 } else if(productDetailsComboBox.getSelectedItem().equals(PastryTypes.MACAROON)) {
