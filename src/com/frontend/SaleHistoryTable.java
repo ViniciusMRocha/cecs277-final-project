@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.util.ArrayList;
 
 /**
- * The SaleHistoryTable creates a table of
+ * The SaleHistoryTable creates a table of past sales
  */
 public class SaleHistoryTable extends JTable {
     public SaleHistoryTable(ArrayList<Sale> sales) {

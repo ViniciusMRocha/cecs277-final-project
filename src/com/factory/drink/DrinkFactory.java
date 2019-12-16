@@ -14,10 +14,17 @@ import java.util.ArrayList;
  * the user's specifications.
  */
 public class DrinkFactory extends ProductFactory {
-
     /**
-     * The createProduct(Object, Object) method initializes a new Drink object given a set of parameters.
-     * TODO: Properly document the uses for each object parameter, if applicable.
+     * Creates a drink object given the following parameters
+     *
+     * @param name Object
+     * @param type Object
+     * @param size Object
+     * @param toppings Object
+     * @param sweetness Object
+     * @param milk Object
+     * @param quantity Object
+     * @return Drink
      */
     @Override
     public Drink createProduct(Object name, Object type, Object size, Object toppings, Object sweetness, Object milk, Object quantity) {

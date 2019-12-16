@@ -143,7 +143,7 @@ public class PointOfSaleGUI extends JPanel {
 
     /**
      * Initializes the first tab of the program for creating a new sale.
-     * @return The JPanel that is placed on the first tab of the tabbedPane
+     * @return JPanel
      */
     private JPanel initializeSalePanel() {
         saleInputPanel = new JPanel();
@@ -309,8 +309,8 @@ public class PointOfSaleGUI extends JPanel {
 
     /**
      * Gets an ArrayList of toppings from the JCheckBoxes that the user selected.
-     * @param type What type of Drink the user is purchasing.
-     * @return An ArrayList of DrinkToppings that the user selected.
+     * @param type DrinkTypes
+     * @return ArrayList
      */
     private ArrayList<DrinkToppings> getSelectedToppings(DrinkTypes type) {
         ArrayList<DrinkToppings> toppingsSelected = new ArrayList<>();
@@ -361,15 +361,14 @@ public class PointOfSaleGUI extends JPanel {
     /**
      * The ProductDetailsActionListener waits until the user has selected what type of Drink they want to purchase.
      * (Either coffee or tea). And updates the panel to provide options for the user to finish the sale. (Toppings, drink name,
-     * sweetness, milk type, etc)
+     * sweetness, milk type, quantity etc)
      *
      * This also needs to be updated for pastries.
      */
     class ProductDetailsActionListener implements ActionListener {
         /**
-         * Invoked when an action occurs.
-         *
-         * @param e the event to be processed
+         * Method to get the product details for when a button is clicked
+         * @param e ActionEvent
          */
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -439,8 +438,7 @@ public class PointOfSaleGUI extends JPanel {
         private Object lastSelectedItem;
         /**
          * The actionPereformed(ActionEvent) method is executed when the ActionListener is called.
-         *
-         * @param e the event to be processed
+         * @param e ActionEvent
          */
         @Override
         public void actionPerformed(ActionEvent e) {

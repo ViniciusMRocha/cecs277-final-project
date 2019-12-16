@@ -10,6 +10,10 @@ import com.factory.drink.Drink;
 public abstract class Toppings extends Drink {
 	protected Drink base;
 
+	/**
+	 * Wraps a Drink object into a new Toppings object.
+	 * @param base Drink
+	 */
 	public Toppings(Drink base) {
 		super();
 		this.base = base;
@@ -17,7 +21,7 @@ public abstract class Toppings extends Drink {
 
 	/**
 	 * Returns the description of the new product, including all of it's other decorations and it's base class name
-	 * @return the description of the object
+	 * @return String
 	 */
 	public abstract String getDescription();
 }

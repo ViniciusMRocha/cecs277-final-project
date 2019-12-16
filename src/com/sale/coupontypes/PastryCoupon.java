@@ -5,12 +5,24 @@ import com.factory.Product;
 import com.sale.Coupon;
 import com.sale.Sale;
 
+
+/**
+ * PastryCoupon creates coupons that can be applied to parties in a customer's order
+ */
 public class PastryCoupon extends Coupon {
 
+    /**
+     * Creates a pastry coupon
+     */
     public PastryCoupon() {
         super(CouponTypes.PASTRY_COUPON.getCouponName(), CouponTypes.PASTRY_COUPON.getCouponDescription());
     }
 
+    /**
+     * Calculates the discount that is going to be applied to the item
+     * @param sale Sale
+     * @return double
+     */
     @Override
     protected double calculateDiscount(Sale sale) {
 

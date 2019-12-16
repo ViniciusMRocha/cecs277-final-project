@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Creates the panel for processing the payment
+ */
 public class PaymentPanel extends JPanel {
 
     private Sale createdSale;
@@ -31,6 +34,10 @@ public class PaymentPanel extends JPanel {
         }
     }
 
+    /**
+     * Method that takes in a sale and creates the panel
+     * @param createdSale Sale
+     */
     public PaymentPanel(Sale createdSale) {
         this.createdSale = createdSale;
         this.setLayout(new BorderLayout());
@@ -78,6 +85,10 @@ public class PaymentPanel extends JPanel {
         this.add(paymentInformationPanel, BorderLayout.NORTH);
     }
 
+    /**
+     * Sets the total amount due for the sale
+     * @param sale Sale
+     */
     public void setTotalDueLabel(Sale sale) {
         totalDueLabel.setText("Total due: " + sale.getFormattedTotalPrice());
     }
@@ -90,12 +101,13 @@ public class PaymentPanel extends JPanel {
         changeDueLabel.setText("Change due: " + String.format("$%.2f", changeDue));
     }
 
+    /**
+     * Class that implements when the Pay Balance Button gets clicked
+     */
     class PayBalanceButtonActionListener implements ActionListener {
-
         /**
-         * Invoked when an action occurs.
-         *
-         * @param e the event to be processed
+         * process the payment and gives the change or returns error message if amount is not enough
+         * @param e ActionEvent
          */
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -107,12 +119,15 @@ public class PaymentPanel extends JPanel {
 
         }
     }
+
+    /**
+     * Class that implements when CheckBoxes gets selected
+     */
     class CheckBoxActionListener implements ActionListener {
 
         /**
-         * Invoked when an action occurs.
-         *
-         * @param e the event to be processed
+         * Handles for when the discount checkboxes are selected to apply the coupons accordantly
+         * @param e ActionEvent
          */
         @Override
         public void actionPerformed(ActionEvent e) {

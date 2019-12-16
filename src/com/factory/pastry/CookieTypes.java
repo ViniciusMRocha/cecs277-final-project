@@ -10,7 +10,7 @@ public enum CookieTypes {
 
     /**
      * Defines a new enum with the given cookie name
-     * @param cookieName The name of the cookie pastry
+     * @param cookieName String
      */
     CookieTypes(String cookieName) {
         this.cookieName = cookieName;
@@ -18,7 +18,7 @@ public enum CookieTypes {
 
     /**
      * Prints out the value of the enum to a String
-     * @return The value of a CookieTypes enum
+     * @return String
      */
     @Override
     public String toString() {

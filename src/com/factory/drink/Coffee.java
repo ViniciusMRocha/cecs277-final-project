@@ -10,10 +10,10 @@ public class Coffee extends Drink {
 
     /**
      * Creates a new Coffee object with the specified parameters.
-     *
-     * @param name The name of the coffee
-     * @param size The size of the coffee
-     * @param milkType The type of milk in the coffee
+     * @param name String
+     * @param size String
+     * @param milkType String
+     * @param quantity String
      */
     public Coffee(String name, Size size, Milk milkType, int quantity) {
         drinkType = DrinkTypes.COFFEE;
@@ -26,7 +26,7 @@ public class Coffee extends Drink {
 
     /**
      * Gets the cost of coffee.
-     * @return the total cost.
+     * @return double
      */
     public double getCost() {
         double drinkCost = 0.0;

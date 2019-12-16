@@ -12,11 +12,11 @@ public class Tea extends Drink {
 
     /**
      * Initializes a new Tea object with the specified parameters.
-     *
-     * @param name The name of the Tea
-     * @param size The size of the Tea
-     * @param sweetness The sweetness of the tea
-     * @param milkType The type of milk in the tea
+     * @param name String
+     * @param size String
+     * @param sweetness Sweetness
+     * @param milkType Milk
+     * @param quantity int
      */
     public Tea(String name, Size size, Sweetness sweetness, Milk milkType, int quantity) {
         this.name = name;
@@ -30,8 +30,7 @@ public class Tea extends Drink {
 
     /**
      * Gets the cost of the tea.
-     *
-     * @return the total cost.
+     * @return double
      */
     public double getCost() {
         double drinkCost = 0.0;

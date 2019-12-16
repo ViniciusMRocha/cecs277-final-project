@@ -10,7 +10,7 @@ public enum PastryTypes {
 
     /**
      * Defines a new enum with the given pastry type
-     * @param pastryName The name of the type of pastry
+     * @param pastryName String
      */
     PastryTypes(String pastryName) {
         this.pastryName = pastryName;
@@ -18,7 +18,7 @@ public enum PastryTypes {
 
     /**
      * Prints out the value of the enum to a String
-     * @return The value of a PastryTypes enum
+     * @return String
      */
     @Override
     public String toString() {

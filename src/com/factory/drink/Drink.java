@@ -17,7 +17,7 @@ public abstract class Drink implements Product {
 
     /**
      * Get the description of the drink.
-     * @return the drink description
+     * @return String
      */
     public String getDescription() {
         return this.description;
@@ -25,7 +25,7 @@ public abstract class Drink implements Product {
 
     /**
      * Get the quantity of the drink.
-     * @return the drink quantity
+     * @return integer
      */
     public int getQuantity() {
         return this.quantity;
@@ -33,18 +33,22 @@ public abstract class Drink implements Product {
 
     /**
      * An abstract method to determine the cost of different sub-types of pastry.
-     * @return the cost
+     * @return double
      */
     public abstract double getCost();
 
     /**
      * Gets the name of the drink.
-     * @return The drink's name
+     * @return String
      */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set cost for drinks
+     * @param cost double
+     */
     public void setCost(double cost) {
         this.cost = cost;
     }
@@ -58,8 +62,8 @@ public abstract class Drink implements Product {
         private String sizeName;
 
         /**
-         * Defines a new Size enum with the given sizeName.
-         * @param sizeName The size of the drink
+         * Defines a new Size enum by passing sizeName as a String.
+         * @param sizeName String
          */
         Size(String sizeName) {
             this.sizeName = sizeName;
@@ -67,7 +71,7 @@ public abstract class Drink implements Product {
 
         /**
          * Prints out the value of an enum to a String
-         * @return The value of a Size enum
+         * @return String
          */
         @Override
         public String toString() {
@@ -83,8 +87,8 @@ public abstract class Drink implements Product {
         private String description;
 
         /**
-         * Defines a new Sweetness enum that represents the sweetness of a Drink.
-         * @param description The description of the sweetness
+         * Defines a new Sweetness enum by passing the sweetness of a Drink as a String .
+         * @param description String
          */
         Sweetness(String description) {
             this.description = description;
@@ -92,7 +96,7 @@ public abstract class Drink implements Product {
 
         /**
          * Gets the description of the enum type
-         * @return The description
+         * @return String
          */
         public String getDescription() {
             return description;
@@ -100,7 +104,7 @@ public abstract class Drink implements Product {
 
         /**
          * Prints out the value of an enum to a String.
-         * @return The value of a Sweetness enum
+         * @return String
          */
         @Override
         public String toString() {
@@ -117,8 +121,8 @@ public abstract class Drink implements Product {
         private String milkDescription;
 
         /**
-         * Defines a type of Milk enum that represents the milkiness of a Drink.
-         * @param milkDescription The description of the milkiness
+         * Defines a type of Milk enum by passing the milkiness of a Drink as String.
+         * @param milkDescription String
          */
         Milk(String milkDescription) {
             this.milkDescription = milkDescription;
@@ -126,7 +130,7 @@ public abstract class Drink implements Product {
 
         /**
          * Prints out the value of an enum to a String
-         * @return The value of a Milk enum
+         * @return String
          */
         @Override
         public String toString() {

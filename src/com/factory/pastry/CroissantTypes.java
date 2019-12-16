@@ -11,7 +11,7 @@ public enum CroissantTypes {
 
     /**
      * Defines a new enum with the given croissant name
-     * @param croissantName The name of the croissant pastry
+     * @param croissantName String
      */
     CroissantTypes(String croissantName) {
         this.croissantName = croissantName;
@@ -19,7 +19,7 @@ public enum CroissantTypes {
 
     /**
      * Prints out the value of the enum to a String
-     * @return The value of a CroissantTypes enum
+     * @return String
      */
     @Override
     public String toString() {
