@@ -9,6 +9,7 @@ public abstract class Pastry implements Product {
     protected String name;
     protected String description;
     protected int quantity;
+    protected HeatState HeatState;
 
     /**
      * Get the description of the pastry.

@@ -22,9 +22,18 @@ public abstract class Croissant extends Pastry {
         description = "A delicious, fresh croissant with ";
     }
 
-    /**
-     * Gets the cost of the croissant(s) purchased
-     * @return The total cost of the croissant(s)
-     */
-    public abstract double getCost();
+    @Override
+    public double getCost() {
+        double pastryCost = 0.0;
+        switch (HeatState) {
+            case HEATED:
+                pastryCost += 0.5;
+                break;
+            case COLD:
+                pastryCost += 0.0;
+                break;
+        }
+
+        return pastryCost;
+    }
 }
