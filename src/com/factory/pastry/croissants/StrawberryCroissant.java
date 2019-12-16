@@ -16,6 +16,8 @@ public class StrawberryCroissant extends Croissant implements Product {
 
     @Override
     public double getCost() {
-        return 3.25;
+        double pastryCost = super.getCost();
+        pastryCost += 3.25 * quantity;
+        return pastryCost;
     }
 }

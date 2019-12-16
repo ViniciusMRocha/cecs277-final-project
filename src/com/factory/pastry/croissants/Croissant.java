@@ -19,21 +19,18 @@ public abstract class Croissant extends Pastry {
         this.name = name;
         this.quantity = quantity;
         this.heatState = heatState;
+        System.out.println("heat state: " + heatState);
         description = "A delicious, fresh croissant with ";
     }
 
-    @Override
     public double getCost() {
         double pastryCost = 0.0;
-        switch (HeatState) {
+        switch (heatState) {
             case HEATED:
+                System.out.println("I'm hot");
                 pastryCost += 0.5;
                 break;
-            case COLD:
-                pastryCost += 0.0;
-                break;
         }
-
         return pastryCost;
     }
 }

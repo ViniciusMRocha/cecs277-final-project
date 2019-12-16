@@ -14,4 +14,10 @@ public class PlainCroissant extends Croissant implements Product {
         description = "plain";
     }
 
+    @Override
+    public double getCost() {
+        double pastryCost = super.getCost();
+        pastryCost += (1.50 * quantity);
+        return pastryCost;
+    }
 }
