@@ -11,9 +11,9 @@ public abstract class Croissant extends Pastry {
     /**
      * Initializes a new croissant object with the specified parameters.
      *
-     * @param name The name of the croissant
-     * @param quantity The quantity to be purchased
-     * @param heatState The HeatState of the Croissant
+     * @param name String
+     * @param quantity int
+     * @param heatState heatState
      */
     protected Croissant(String name, int quantity, HeatState heatState) {
         this.name = name;
@@ -23,6 +23,10 @@ public abstract class Croissant extends Pastry {
         description = "A delicious, fresh croissant with ";
     }
 
+    /**
+     * Gets the cost for the pastry
+     * @return double
+     */
     public double getCost() {
         double pastryCost = 0.0;
         switch (heatState) {

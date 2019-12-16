@@ -12,7 +12,7 @@ public enum DrinkTypes {
 
     /**
      * Defines a new enum with the given drink type
-     * @param drinkName The name of the type of drink
+     * @param drinkName String
      */
     DrinkTypes(String drinkName) {
         this.drinkName = drinkName;
@@ -20,7 +20,7 @@ public enum DrinkTypes {
 
     /**
      * Prints out the value of the enum to a String
-     * @return The value of a DrinkTypes enum
+     * @return String
      */
     @Override
     public String toString() {

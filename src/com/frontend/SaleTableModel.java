@@ -11,6 +11,10 @@ public class SaleTableModel extends AbstractTableModel {
     private ArrayList<Sale> sales;
     private String[] columnNames;
 
+    /**
+     * Created the sale table model from a array of sales
+     * @param sales Sale
+     */
     public SaleTableModel(ArrayList<Sale> sales) {
         this.sales = sales;
         String[] columnNames = {"Receipt #", "Coupons used", "Items in sale", "Total price"};
@@ -19,32 +23,57 @@ public class SaleTableModel extends AbstractTableModel {
 
     /**
      * Returns the Product at a specified row
-     * @param row The row to return the Product object
-     * @return the Product
+     * @param row int
+     * @return Sale
      */
     public Sale getSaleAt(int row) {
         return sales.get(row);
     }
 
+    /**
+     * gets the total count for items in a sale
+     * @return int
+     */
     @Override
     public int getRowCount() {
         return sales.size();
     }
 
+    /**
+     * gets the column count for the sale
+     * @return int
+     */
     @Override
     public int getColumnCount() {
         return 4;
     }
 
+    /**
+     * checks if the cell is editable. We set it to false
+     * @param row int
+     * @param column int
+     * @return boolean
+     */
     @Override
     public boolean isCellEditable(int row, int column) {
         return false;
     }
 
+    /**
+     * Prints the column name
+     * @param col int
+     * @return String
+     */
     public String getColumnName(int col) {
         return columnNames[col];
     }
 
+    /**
+     * Gets the value of a certain cell with a given row and column
+     * @param rowIndex int
+     * @param columnIndex int
+     * @return Object
+     */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
 
@@ -67,6 +96,11 @@ public class SaleTableModel extends AbstractTableModel {
         return value;
     }
 
+    /**
+     * Gets the class of the a certain column
+     * @param columnIndex int
+     * @return String
+     */
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return String.class;

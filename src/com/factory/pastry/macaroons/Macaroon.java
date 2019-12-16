@@ -10,8 +10,8 @@ public class Macaroon extends Pastry {
     /**
      * Initializes a new croissant object with the specified parameters.
      *
-     * @param name The name of the macaroon
-     * @param quantity The quantity to be purchased
+     * @param name String
+     * @param quantity int
      */
     public Macaroon(String name, int quantity)  {
         this.name = name;
@@ -21,17 +21,16 @@ public class Macaroon extends Pastry {
 
     /**
      * How many half-dozen croissants have been purchased.
-     *
-     * @param quantity The total quantity purchased
-     * @return How many half-dozens are in the quantity
+     * @param quantity int
+     * @return int
      */
     private int halfDozensPurchased(int quantity) {
         return (int)(Math.floor(quantity / 6));
     }
-
+    
     /**
      * Gets the cost of the macaroon(s) purchased
-     * @return The total cost of the macaroon(s)
+     * @return double
      */
     public double getCost() {
         double originalPrice = 2;

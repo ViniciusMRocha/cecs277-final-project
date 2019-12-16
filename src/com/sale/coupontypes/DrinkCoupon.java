@@ -5,11 +5,22 @@ import com.factory.drink.Drink;
 import com.sale.Coupon;
 import com.sale.Sale;
 
+/**
+ * Created a drink coupon
+ */
 public class DrinkCoupon extends Coupon {
+    /**
+     * Constructor that creates a DrinkCoupon object
+     */
     public DrinkCoupon() {
         super(CouponTypes.DRINK_COUPON.getCouponName(), CouponTypes.DRINK_COUPON.getCouponDescription());
     }
 
+    /**
+     * Calculate the discount applied by the coupon
+     * @param sale Sale
+     * @return double
+     */
     @Override
     protected double calculateDiscount(Sale sale) {
         Drink drinkToSubsidize = getHighestPricedDrink(sale);
@@ -17,6 +28,11 @@ public class DrinkCoupon extends Coupon {
         return (drinkToSubsidize.getCost()) * 0.5;
     }
 
+    /**
+     * Gets the highers priced drink to apply the coupon
+     * @param sale Sale
+     * @return Drink
+     */
     private Drink getHighestPricedDrink(Sale sale) {
         Drink drink = null;
         double drinkPrice = 0.0;

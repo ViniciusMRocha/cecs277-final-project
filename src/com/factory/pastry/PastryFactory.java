@@ -21,8 +21,14 @@ public class PastryFactory extends ProductFactory {
 
 	/**
 	 * The createProduct(Object, Object) method initializes a new Pastry object given a set of parameters.
-	 * @param type The type of Pastry to be created.
-	 * @return The new Pastry object.
+	 * @param name Object
+	 * @param type Object
+	 * @param quantity Object
+	 * @param heatState Object
+	 * @param details3 Object
+	 * @param details4 Object
+	 * @param details5 Object
+	 * @return Pastry
 	 */
 	@Override
 	public Product createProduct(Object name, Object type, Object quantity, Object heatState, Object details3, Object details4, Object details5) {
