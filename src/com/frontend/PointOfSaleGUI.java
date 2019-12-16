@@ -99,8 +99,12 @@ public class PointOfSaleGUI extends JPanel {
             Sale newSale = new Sale();
             SaleDetailsTableModel sdtm = new SaleDetailsTableModel(newSale);
             saleDetails.updateTableModel(sdtm);
+            paymentPanel.getProcessPaymentButton().setEnabled(true);
             saleDetails.setSale(newSale);
-            saleDetails.updateTotalCostLabel(); // TODO: Add this
+            paymentPanel.getChangeDueLabel().setText("Change due: ");
+            paymentPanel.getTaxLabel().setText("Tax: ");
+            paymentPanel.getTotalAndTaxLabel().setText("Total with tax: ");
+            saleDetails.updateTotalCostLabel();
             tabbedPane.setEnabledAt(0, true);
             tabbedPane.setEnabledAt(1, false);
         });
@@ -197,7 +201,7 @@ public class PointOfSaleGUI extends JPanel {
         productTypeComboBox.setEditable(false);
         productTypeComboBox.setSelectedIndex(-1);
 
-        heatCroissantCheckBox = new JCheckBox("Would you like to heat your croissant? (+$0.50)");
+        heatCroissantCheckBox = new JCheckBox("Would you like to heat your croissant? (+$0.25)");
         heatCroissantCheckBox.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
         //Represents the combobox that lets you choose a size.

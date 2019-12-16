@@ -45,6 +45,7 @@ public class DrinkCoupon extends Coupon {
                 }
             }
         }
+        System.out.println("most expensive drink: " + drink);
         sale.addDiscountedItemIndex(sale.getItemsInSale().indexOf(drink));
         return drink;
     }

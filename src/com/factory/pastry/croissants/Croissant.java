@@ -31,8 +31,7 @@ public abstract class Croissant extends Pastry {
         double pastryCost = 0.0;
         switch (heatState) {
             case HEATED:
-                System.out.println("I'm hot");
-                pastryCost += 0.5;
+                pastryCost += 0.25 * quantity;
                 break;
         }
         return pastryCost;

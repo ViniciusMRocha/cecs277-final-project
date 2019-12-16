@@ -19,6 +19,8 @@ public class PaymentPanel extends JPanel {
     private SaleHistoryTable dailySalesTable;
     private JLabel totalDueLabel;
     private JLabel changeDueLabel;
+    private JLabel taxLabel;
+    private JLabel totalAndTaxLabel;
     private ArrayList<JCheckBox> couponCheckBoxes;
     private JSpinner paymentInputField;
     private SaleDetailsWindow saleDetailsWindow;
@@ -58,6 +60,12 @@ public class PaymentPanel extends JPanel {
         changeDueLabel = new JLabel("Change due: ");
         changeDueLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
+        taxLabel = new JLabel("Tax: ");
+        taxLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+
+        totalAndTaxLabel = new JLabel("Change due: ");
+        totalAndTaxLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+
         JPanel inputFieldPanel = new JPanel();
 
         paymentInputField = new JSpinner();
@@ -74,6 +82,8 @@ public class PaymentPanel extends JPanel {
 
         inputFieldPanel.add(totalDueLabel);
         inputFieldPanel.add(changeDueLabel);
+        inputFieldPanel.add(taxLabel);
+        inputFieldPanel.add(totalAndTaxLabel);
         inputFieldPanel.add(couponSelectionPanel);
         inputFieldPanel.add(paymentInputField);
         inputFieldPanel.add(processPaymentButton);
@@ -94,6 +104,25 @@ public class PaymentPanel extends JPanel {
     private void updateChangeLabel() {
         double changeDue = (double)paymentInputField.getValue() - createdSale.getTotalPrice();
         changeDueLabel.setText("Change due: " + String.format("$%.2f", changeDue));
+        taxLabel.setText("Tax: " + String.format("$%.2f", createdSale.getTotalPrice() * 0.10));
+        totalAndTaxLabel.setText("Total with tax: " + String.format("$%.2f", createdSale.getTotalPrice() * 1.1));
+    }
+
+
+    public JLabel getTotalDueLabel() {
+        return totalDueLabel;
+    }
+
+    public JLabel getTaxLabel() {
+        return taxLabel;
+    }
+
+    public JLabel getChangeDueLabel() {
+        return changeDueLabel;
+    }
+
+    public JLabel getTotalAndTaxLabel() {
+        return totalAndTaxLabel;
     }
 
     class PayBalanceButtonActionListener implements ActionListener {
@@ -116,7 +145,6 @@ public class PaymentPanel extends JPanel {
                 dailySalesTable.addSaleToArrayList(saleDetailsWindow.getSale());
                 SaleTableModel newTableModel = new SaleTableModel(dailySalesTable.getSales());
                 dailySalesTable.updateTableModel(newTableModel);
-
             }
         }
     }
@@ -138,8 +166,12 @@ public class PaymentPanel extends JPanel {
                     couponsSelected.add(CouponTypes.getCouponFromEnumValue(selectedCoupons));
                 }
             }
-            createdSale = new Sale(createdSale.getItemsInSale(), couponsSelected);
-            setTotalDueLabel(createdSale);
+            saleDetailsWindow.setSale(new Sale(createdSale.getItemsInSale(), couponsSelected));
+            setTotalDueLabel(saleDetailsWindow.getSale());
         }
+    }
+
+    public JButton getProcessPaymentButton() {
+        return processPaymentButton;
     }
 }
