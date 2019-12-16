@@ -2,18 +2,23 @@ package com.factory.pastry.cookies;
 
 import com.factory.Product;
 
+/**
+ * A NutChocolateChipCookie is a type of pastry, which is a type of product available for purchase at "Cha-cha-cha Time!"
+ */
 public class NutChocolateChipCookie extends Cookie implements Product {
     /**
-     * Initializes a new chocolate chip cookie object with the specified parameters.
-     *
-     * @param name The name of the cookie
-     * @param quantity The quantity to be purchased
+     * Initializes a new NutChocolateChipCookie object with the specified parameters.
+     * @param name String
+     * @param quantity String
      */
     public NutChocolateChipCookie(String name, int quantity) {
         super(name, quantity);
         this.description = "nutty chocolate chip";
     }
-
+    /**
+     * Gets the cost for the pastry
+     * @return double
+     */
     @Override
     public double getCost() {
         normalPrice = 2.00;

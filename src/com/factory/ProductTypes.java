@@ -10,7 +10,7 @@ public enum ProductTypes {
 
     /**
      * Defines a new enum with the given product type
-     * @param productName The name of the type of product
+     * @param productName String
      */
     ProductTypes(String productName) {
         this.productName = productName;
@@ -18,7 +18,7 @@ public enum ProductTypes {
 
     /**
      * Prints out the value of the enum to a String
-     * @return The value of a ProductTypes enum
+     * @return String
      */
     @Override
     public String toString() {

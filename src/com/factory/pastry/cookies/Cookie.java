@@ -10,6 +10,11 @@ public abstract class Cookie extends Pastry {
     protected double trioPrice;
     protected double normalPrice;
 
+    /**
+     * Created a cookine object
+     * @param name string
+     * @param quantity int
+     */
     protected Cookie(String name, int quantity) {
         this.name = name;
         description = "";
@@ -18,8 +23,8 @@ public abstract class Cookie extends Pastry {
     /**
      * How many sets-of-three cookies have been purchased.
      *
-     * @param quantity The total quantity purchased
-     * @return How many sets of three are in the quantity
+     * @param quantity int
+     * @return int
      */
     protected int setsOfThreePurchased(int quantity) {
         return (int) (Math.floor(quantity / 3));
@@ -27,7 +32,7 @@ public abstract class Cookie extends Pastry {
 
     /**
      * Gets the cost of the Cookie(s) purchased
-     * @return The total cost of the cookies
+     * @return int
      */
     public abstract double getCost();
 }

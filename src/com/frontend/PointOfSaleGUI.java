@@ -180,7 +180,7 @@ public class PointOfSaleGUI extends JPanel {
 
     /**
      * Initializes the first tab of the program for creating a new sale.
-     * @return The JPanel that is placed on the first tab of the tabbedPane
+     * @return JPanel
      */
     private JPanel initializeSalePanel() {
         saleInputPanel = new JPanel();
@@ -350,8 +350,8 @@ public class PointOfSaleGUI extends JPanel {
 
     /**
      * Gets an ArrayList of toppings from the JCheckBoxes that the user selected.
-     * @param type What type of Drink the user is purchasing.
-     * @return An ArrayList of DrinkToppings that the user selected.
+     * @param type DrinkTypes
+     * @return ArrayList
      */
     private ArrayList<DrinkToppings> getSelectedToppings(DrinkTypes type) {
         ArrayList<DrinkToppings> toppingsSelected = new ArrayList<>();
@@ -410,7 +410,7 @@ public class PointOfSaleGUI extends JPanel {
         /**
          * Invoked when an action occurs.
          *
-         * @param e the event to be processed
+         * @param e ActionEvent
          */
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -483,8 +483,7 @@ public class PointOfSaleGUI extends JPanel {
         private Object lastSelectedItem;
         /**
          * The actionPereformed(ActionEvent) method is executed when the ActionListener is called.
-         *
-         * @param e the event to be processed
+         * @param e ActionEvent
          */
         @Override
         public void actionPerformed(ActionEvent e) {

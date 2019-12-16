@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Creates a payment panel where we can see the sale total amount due
+ */
 public class PaymentPanel extends JPanel {
 
     private Sale createdSale;

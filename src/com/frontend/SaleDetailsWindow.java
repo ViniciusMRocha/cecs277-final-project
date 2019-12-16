@@ -6,12 +6,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Collection;
 
+/**
+ * Creates a Sale Details Window
+ */
 class SaleDetailsWindow extends JPanel {
 
     private JTable orderDetails;
     private JLabel totalCostLabel;
     private Sale sale;
 
+    /**
+     * Creates a Sale Details Window friom a passed sale
+     * @param sale Sale
+     */
     SaleDetailsWindow(Sale sale) {
         super(new BorderLayout());
         this.sale = sale;
@@ -30,24 +37,42 @@ class SaleDetailsWindow extends JPanel {
         add(panel2);
     }
 
+    /**
+     * Get the order from a JTable
+     * @return JTables
+     */
     JTable getOrderDetails() {
         return orderDetails;
     }
 
+    /**
+     * Updates the table model
+     * @param tableModel SaleDetailsTableModel
+     */
     void updateTableModel(SaleDetailsTableModel tableModel) {
         System.out.println("Updated table model!");
         orderDetails.setModel(tableModel);
         orderDetails.repaint();
     }
 
+    /**
+     * Sets a passed sale to the current sale
+     * @param sale Sale
+     */
     public void setSale(Sale sale) {
         this.sale = sale;
     }
 
+    /**
+     * Updates the total cost display value
+     */
     void updateTotalCostLabel() {
         totalCostLabel.setText("Order details - Subtotal: " + sale.getFormattedTotalPrice());
     }
 
+    /**
+     * Resets the window for a new sale to be entered
+     */
     void resetWindow() {
         Sale newSale = new Sale();
         sale = newSale;
@@ -56,6 +81,10 @@ class SaleDetailsWindow extends JPanel {
         updateTotalCostLabel();
     }
 
+    /**
+     * Gets the current sale
+     * @return Sale
+     */
     public Sale getSale() {
         return sale;
     }

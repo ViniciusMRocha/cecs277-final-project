@@ -5,11 +5,11 @@ import com.factory.drink.coffee.Coffee;
 public abstract class MilkCoffee extends Coffee {
 
     /**
-     * Creates a new Coffee object with the specified parameters.
+     * Creates a new MilkCoffee object with the specified parameters.
      *
-     * @param name     The name of the coffee
-     * @param size     The size of the coffee
-     * @param milkType The type of milk in the coffee
+     * @param name      String
+     * @param size      Size
+     * @param milkType  Milk
      */
     public MilkCoffee(String name, Size size, Milk milkType) {
         super(name, size, milkType);

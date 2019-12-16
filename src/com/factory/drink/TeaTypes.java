@@ -14,7 +14,7 @@ public enum TeaTypes {
 
     /**
      * Defines a new enum with the given tea name
-     * @param teaName The name of the tea drink
+     * @param teaName String
      */
     TeaTypes(String teaName) {
         this.teaName = teaName;
@@ -22,7 +22,7 @@ public enum TeaTypes {
 
     /**
      * Prints out the value of the enum to a String
-     * @return The value of a TeaTypes enum
+     * @return String
      */
     @Override
     public String toString() {

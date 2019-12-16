@@ -28,7 +28,15 @@ public class DrinkFactory extends ProductFactory {
 
     /**
      * The createProduct(Object, Object) method initializes a new Drink object given a set of parameters.
-     * TODO: Properly document the uses for each object parameter, if applicable.
+     *
+     * @param name Object
+     * @param type Object
+     * @param size Object
+     * @param toppings Object
+     * @param sweetness Object
+     * @param milk Object
+     * @param details2 Object
+     * @return Drink
      */
     @Override
     public Drink createProduct(Object name, Object type, Object size, Object toppings, Object sweetness, Object milk, Object details2) {

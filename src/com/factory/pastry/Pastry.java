@@ -14,7 +14,7 @@ public abstract class Pastry implements Product {
 
     /**
      * Get the description of the pastry.
-     * @return the pastry description
+     * @return String
      */
     public String getDescription() {
         return this.description;
@@ -22,7 +22,7 @@ public abstract class Pastry implements Product {
 
     /**
      * Gets the description of the pastry.
-     * @return The pastry's description
+     * @return String
      */
     public String getName() {
         return name;
@@ -30,13 +30,13 @@ public abstract class Pastry implements Product {
 
     /**
      * An abstract method to determine the cost of different sub-types of pastry.
-     * @return the cost of the pastry
+     * @return double
      */
     public abstract double getCost();
 
     /**
      * Gets the quantity of pastries purchased.
-     * @return the quantity of pastries purchased
+     * @return int
      */
     public int getQuantity() {
         return quantity;
@@ -52,7 +52,7 @@ public abstract class Pastry implements Product {
 
         /**
          * Defines a new enum with the given description.
-         * @param description The description of the heat state of the pastry
+         * @param description String
          */
         HeatState(String description) {
             this.description = description;
@@ -60,7 +60,7 @@ public abstract class Pastry implements Product {
 
         /**
          * Prints out the value of the enum to a String
-         * @return The value of a HeatState enum
+         * @return String
          */
         @Override
         public String toString() {

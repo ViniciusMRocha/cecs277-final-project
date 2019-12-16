@@ -12,9 +12,9 @@ public abstract class Coffee extends Drink {
     /**
      * Creates a new Coffee object with the specified parameters.
      *
-     * @param name The name of the coffee
-     * @param size The size of the coffee
-     * @param milkType The type of milk in the coffee
+     * @param name      String
+     * @param size      Size
+     * @param milkType  Milk
      */
     public Coffee(String name, Size size, Milk milkType) {
         drinkType = DrinkTypes.COFFEE;

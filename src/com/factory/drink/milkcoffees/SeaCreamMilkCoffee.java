@@ -4,17 +4,20 @@ import com.factory.Product;
 
 public class SeaCreamMilkCoffee extends MilkCoffee implements Product {
     /**
-     * Creates a new Coffee object with the specified parameters.
-     *
-     * @param name     The name of the coffee
-     * @param size     The size of the coffee
-     * @param milkType The type of milk in the coffee
+     * Creates a new SeaCreamMilkCoffee object with the specified parameters.
+     * @param name      String
+     * @param size      Size
+     * @param milkType  Milk
      */
     public SeaCreamMilkCoffee(String name, Size size, Milk milkType) {
         super(name, size, milkType);
         description = "sea cream";
     }
 
+    /**
+     * Gets the cost for the Drink
+     * @return double
+     */
     @Override
     public double getCost() {
         return super.getCost() + cost;

@@ -9,7 +9,7 @@ public enum MilkCoffeeTypes {
 
     /**
      * Defines a new enum with the given drink type
-     * @param drinkName The name of the type of drink
+     * @param drinkName String
      */
     MilkCoffeeTypes(String drinkName) {
         this.drinkName = drinkName;
@@ -17,7 +17,7 @@ public enum MilkCoffeeTypes {
 
     /**
      * Prints out the value of the enum to a String
-     * @return The value of a DrinkTypes enum
+     * @return String
      */
     @Override
     public String toString() {
