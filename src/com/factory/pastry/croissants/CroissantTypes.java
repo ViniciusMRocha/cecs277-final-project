@@ -1,11 +1,11 @@
-package com.factory.pastry;
+package com.factory.pastry.croissants;
 
 /**
  * Describes the different types of Croissants available for purchase at "Cha-cha-cha Time!"
  */
 public enum CroissantTypes {
     PLAIN("Plain croissant"),
-    VARIETY("Variety croissant");
+    STRAWBERRY("Strawberry croissant");
 
     private String croissantName;
 

@@ -1,10 +1,8 @@
 package com.factory;
 
-/**
- * Describes the different types of pastries available for purchase at "Cha-cha-cha Time!"
- */
 public enum PastryTypes {
-    CROISSANT("Croissant"), COOKIE("Cookie"), MACAROON("Macaroon");
+
+    MACAROON("Macaroon"), CROISSANT("Croissant"), COOKIE("Cookie");
 
     private String pastryName;
 
@@ -18,7 +16,7 @@ public enum PastryTypes {
 
     /**
      * Prints out the value of the enum to a String
-     * @return The value of a PastryTypes enum
+     * @return The value of a AvailablePastryTypes enum
      */
     @Override
     public String toString() {

@@ -6,9 +6,9 @@ import com.factory.Product;
  * An abstract representation of a Pastry, which is also a type of Product sold at "Cha-cha-cha Time!"
  */
 public abstract class Pastry implements Product {
-    String name;
-    String description;
-    int quantity;
+    protected String name;
+    protected String description;
+    protected int quantity;
 
     /**
      * Get the description of the pastry.

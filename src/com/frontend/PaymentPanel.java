@@ -91,7 +91,6 @@ public class PaymentPanel extends JPanel {
     }
 
     class PayBalanceButtonActionListener implements ActionListener {
-
         /**
          * Invoked when an action occurs.
          *
@@ -100,11 +99,13 @@ public class PaymentPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             double paymentAmountInput = (double)paymentInputField.getValue();
+            ((JTabbedPane)getParent()).setEnabledAt(2, true);
             if(paymentAmountInput < createdSale.getTotalPrice())
                 JOptionPane.showMessageDialog(null, "That isn't enough money to cover the total cost!");
-            else
+            else {
                 updateChangeLabel();
 
+            }
         }
     }
     class CheckBoxActionListener implements ActionListener {

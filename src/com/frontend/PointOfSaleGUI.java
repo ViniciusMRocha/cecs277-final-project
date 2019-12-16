@@ -1,15 +1,17 @@
 package com.frontend;
 
 import com.decorator.toppings.drinktoppings.DrinkToppings;
-import com.factory.DrinkTypes;
-import com.factory.PastryTypes;
-import com.factory.Product;
-import com.factory.ProductTypes;
-import com.factory.drink.CoffeeTypes;
+import com.factory.*;
 import com.factory.drink.Drink;
 import com.factory.drink.DrinkFactory;
 import com.factory.drink.TeaTypes;
+import com.factory.drink.coffee.CoffeeTypes;
+import com.factory.drink.milkcoffees.MilkCoffeeTypes;
 import com.factory.pastry.*;
+import com.factory.pastry.cookies.CookieTypes;
+import com.factory.pastry.croissants.Croissant;
+import com.factory.pastry.croissants.CroissantTypes;
+import com.factory.pastry.macaroons.MacaroonTypes;
 import com.sale.Sale;
 
 import javax.swing.*;
@@ -62,7 +64,6 @@ public class PointOfSaleGUI extends JPanel {
         tabbedPane.addTab("1) Create or modify a sale", salePanel);
 
         paymentPanel = new PaymentPanel(createdSale);
-
         tabbedPane.add("2) Finalize sale", paymentPanel);
 
         JPanel saleHistoryPanel = new JPanel(new BorderLayout());
@@ -154,10 +155,8 @@ public class PointOfSaleGUI extends JPanel {
         toppingsPanel.setLayout(new GridLayout(3,2));
 
         saleInputPanel.setBorder(BorderFactory.createTitledBorder("Select a product to add to your order"));
-        //saleInputPanel.setPreferredSize(new Dimension(550, 250));
-        //saleInputPanel.setMaximumSize(saleInputPanel.getPreferredSize());
         saleInputPanel.setLayout(new BoxLayout(saleInputPanel, BoxLayout.PAGE_AXIS));
-        //Represents the combobox that lets you choose Drink, or Pastry.
+
         productTypeComboBox = new JComboBox(new DefaultComboBoxModel(ProductTypes.values()));
         productTypeComboBox.setEditable(false);
         productTypeComboBox.setSelectedIndex(-1);
@@ -175,8 +174,6 @@ public class PointOfSaleGUI extends JPanel {
         sweetSelectionComboBox = new JComboBox(new DefaultComboBoxModel(Drink.Sweetness.values()));
 
         //The drinkaName combobox displays the specific names of all products. (e.g. "Hazelnut Latte", "Milk Tea")
-
-
         productNameComboBox = new JComboBox();
         productDetailsComboBox = new JComboBox();
         quantitySelectionSpinner = new JSpinner();
@@ -270,19 +267,25 @@ public class PointOfSaleGUI extends JPanel {
 
             if(finalType.equals(ProductTypes.DRINK)) {
                 String drinkName = productNameComboBox.getSelectedItem().toString();
-                DrinkTypes type = (DrinkTypes)productDetailsComboBox.getSelectedItem();
+                ArrayList<DrinkToppings> toppings;
+                if(productNameComboBox.getSelectedItem() instanceof TeaTypes)
+                    toppings = getSelectedToppings(DrinkTypes.TEA);
+                else
+                    toppings = getSelectedToppings(DrinkTypes.COFFEE);
+
+                Object type = productNameComboBox.getSelectedItem();
                 Drink.Size size = (Drink.Size)sizeSelectionComboBox.getModel().getSelectedItem();
                 Drink.Milk Milk = (Drink.Milk)milkSelectionComboBox.getModel().getSelectedItem();
 
                 Drink.Sweetness sweetness = (Drink.Sweetness)sweetSelectionComboBox.getModel().getSelectedItem();
-                ArrayList<DrinkToppings> toppings = getSelectedToppings(type);
+
                 Product drinkProduct = drinkFactory.createProduct(drinkName, type, size, toppings, sweetness, Milk, quantity);
                 createdSale.addToSale(drinkProduct);
                 items.add(drinkProduct);
 
             } else if(finalType.equals(ProductTypes.PASTRY)) {
                 String pastryName = productNameComboBox.getSelectedItem().toString();
-                PastryTypes type = (PastryTypes)productDetailsComboBox.getSelectedItem();
+                Object type = productNameComboBox.getSelectedItem();
                 Croissant.HeatState croissantHeated;
 
                 if(heatCroissantCheckBox.isSelected())
@@ -295,8 +298,8 @@ public class PointOfSaleGUI extends JPanel {
                 items.add(pastryProduct);
             }
 
-            SaleDetailsTableModel tableModel2 = new SaleDetailsTableModel(createdSale);
-            saleDetails.updateTableModel(tableModel2);
+            SaleDetailsTableModel updatedTableModel = new SaleDetailsTableModel(createdSale);
+            saleDetails.updateTableModel(updatedTableModel);
         });
         saleInputPanel.add(buttonPanel);
 
@@ -314,7 +317,7 @@ public class PointOfSaleGUI extends JPanel {
      */
     private ArrayList<DrinkToppings> getSelectedToppings(DrinkTypes type) {
         ArrayList<DrinkToppings> toppingsSelected = new ArrayList<>();
-        if(type.equals(DrinkTypes.COFFEE)) {
+        if(type.equals(DrinkTypes.COFFEE) || type.equals(DrinkTypes.MILK_COFFEE)) {
             for(JCheckBox checkBox : coffeeToppingsCheckBoxes) {
                 if(checkBox.isSelected())
                     toppingsSelected.add(DrinkToppings.getEnumValueFromString(checkBox.getText()));
@@ -391,6 +394,10 @@ public class PointOfSaleGUI extends JPanel {
 
                 if (productDetailsComboBox.getSelectedItem().equals(DrinkTypes.COFFEE)) {
                     productNameComboBox.setModel(new DefaultComboBoxModel(CoffeeTypes.values()));
+                    for (JCheckBox toppingCheckBox : coffeeToppingsCheckBoxes)
+                        toppingsPanel.add(toppingCheckBox);
+                } else if (productDetailsComboBox.getSelectedItem().equals(DrinkTypes.MILK_COFFEE)) {
+                    productNameComboBox.setModel(new DefaultComboBoxModel(MilkCoffeeTypes.values()));
                     for (JCheckBox toppingCheckBox : coffeeToppingsCheckBoxes)
                         toppingsPanel.add(toppingCheckBox);
                 } else if (productDetailsComboBox.getSelectedItem().equals(DrinkTypes.TEA)) {

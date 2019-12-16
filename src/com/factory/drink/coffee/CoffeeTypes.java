@@ -1,12 +1,13 @@
-package com.factory;
-
+package com.factory.drink.coffee;
 /**
  * Describes the different types of drinks available for purchase at "Cha-cha-cha Time!"
  */
-public enum DrinkTypes {
-    MILK_COFFEE("Milk coffee"),
-    COFFEE("Coffee"),
-    TEA("Tea");
+public enum CoffeeTypes {
+    CHA_CHA_CHA_REGULAR("Cha-Cha-Cha regular"),
+    CHA_CHA_CHA_DECAF("Cha-cha-cha decaf"),
+    HAZELNUT_HAPPINESS("Hazelnut happiness"),
+    CAFE_DE_LA_OLLA("Cafe de la Olla");
+
 
     private String drinkName;
 
@@ -14,7 +15,7 @@ public enum DrinkTypes {
      * Defines a new enum with the given drink type
      * @param drinkName The name of the type of drink
      */
-    DrinkTypes(String drinkName) {
+    CoffeeTypes(String drinkName) {
         this.drinkName = drinkName;
     }
 

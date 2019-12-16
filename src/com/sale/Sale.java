@@ -69,10 +69,6 @@ public class Sale {
         this.totalPrice = totalPrice;
     }
 
-    public ArrayList<Integer> getIndexesOfCouponUsages() {
-        return indexesOfCouponUsages;
-    }
-
     public double getTotalPrice() {
         return totalPrice;
     }

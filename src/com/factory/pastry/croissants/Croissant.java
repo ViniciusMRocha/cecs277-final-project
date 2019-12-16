@@ -1,9 +1,11 @@
-package com.factory.pastry;
+package com.factory.pastry.croissants;
+
+import com.factory.pastry.Pastry;
 
 /**
  * A croissant is a type of pastry, which is a type of product available for purchase at "Cha-cha-cha Time!"
  */
-public class Croissant extends Pastry {
+public abstract class Croissant extends Pastry {
     private HeatState heatState;
 
     /**
@@ -13,7 +15,7 @@ public class Croissant extends Pastry {
      * @param quantity The quantity to be purchased
      * @param heatState The HeatState of the Croissant
      */
-    Croissant(String name, int quantity, HeatState heatState) {
+    protected Croissant(String name, int quantity, HeatState heatState) {
         this.name = name;
         this.quantity = quantity;
         this.heatState = heatState;
@@ -24,15 +26,5 @@ public class Croissant extends Pastry {
      * Gets the cost of the croissant(s) purchased
      * @return The total cost of the croissant(s)
      */
-    public double getCost() {
-        double cost = 2.00;
-        switch (heatState) {
-            case HEATED:
-                cost += 0.5;
-                return (quantity * cost);
-            case COLD:
-            default:
-                return (quantity * cost);
-        }
-    }
+    public abstract double getCost();
 }

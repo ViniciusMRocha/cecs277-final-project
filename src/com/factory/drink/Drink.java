@@ -7,13 +7,13 @@ import com.factory.Product;
  * An abstract representation of a Drink, which is also a type of Product sold at "Cha-cha-cha Time!"
  */
 public abstract class Drink implements Product {
-    DrinkTypes drinkType;
-    String description = "Unknown Drink";
-    Size size;
-    String name;
-    Milk milkType;
-    double cost;
-    int quantity;
+    protected DrinkTypes drinkType;
+    protected String description = "Unknown Drink";
+    protected Size size;
+    protected String name;
+    protected Milk milkType;
+    protected double cost;
+    protected int quantity;
 
     /**
      * Get the description of the drink.

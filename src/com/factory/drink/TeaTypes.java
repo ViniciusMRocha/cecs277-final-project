@@ -6,7 +6,9 @@ package com.factory.drink;
 public enum TeaTypes {
     JASMINE_GREEN_TEA("Jasmine Green Tea"),
     SUMMER_MINT_TEA("Summer Mint Tea"),
-    MILK_TEA("Milk Tea");
+    TARO_TEA("Taro Tea"),
+    GREEN_TEA("Green Tea"),
+    ROSE_GREEN_TEA("Rose Green Tea");
 
     private String teaName;
 

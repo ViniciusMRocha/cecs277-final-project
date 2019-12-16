@@ -1,22 +1,17 @@
-package com.factory.pastry;
+package com.factory.pastry.cookies;
+
+import com.factory.pastry.Pastry;
 
 /**
  * A Cookie is a type of pastry, which is a type of product available for purchase at "Cha-cha-cha Time!"
  */
-public class Cookie extends Pastry {
+public abstract class Cookie extends Pastry {
 
-    /**
-     * Initializes a new Cookie object with the specified parameters.
-     *
-     * @param name The name of the cookie
-     * @param quantity The quantity to be purchased
-     */
-    Cookie(String name, int quantity) {
+    protected Cookie(String name, int quantity) {
         this.name = name;
-        description = "A mouth-watering treat!";
+        description = "";
         this.quantity = quantity;
     }
-
     /**
      * How many sets-of-three cookies have been purchased.
      *
