@@ -20,6 +20,8 @@ public class PaymentPanel extends JPanel {
     private JSpinner paymentInputField;
     private SaleDetailsWindow saleDetailsWindow;
 
+    private JButton processPaymentButton;
+
     /**
      * Initializes ArrayLists for the coupon options.
      */
@@ -59,7 +61,7 @@ public class PaymentPanel extends JPanel {
         SpinnerNumberModel snm = new SpinnerNumberModel(0.0, 0.0, 9999.0, 0.01);
         paymentInputField.setModel(snm);
 
-        JButton processPaymentButton = new JButton("Pay balance");
+        processPaymentButton = new JButton("Pay balance");
         processPaymentButton.addActionListener(new PayBalanceButtonActionListener());
         processPaymentButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         JPanel paymentInformationPanel = new JPanel();
@@ -106,10 +108,12 @@ public class PaymentPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "That isn't enough money to cover the total cost!");
             else {
                 updateChangeLabel();
+                processPaymentButton.setEnabled(false);
                 saleDetailsWindow.getSale().setReceiptNumber();
                 dailySalesTable.addSaleToArrayList(saleDetailsWindow.getSale());
                 SaleTableModel newTableModel = new SaleTableModel(dailySalesTable.getSales());
                 dailySalesTable.updateTableModel(newTableModel);
+
             }
         }
     }

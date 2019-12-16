@@ -18,6 +18,9 @@ public class NutChocolateChipCookie extends Cookie implements Product {
     public double getCost() {
         normalPrice = 2.00;
         trioPrice = 5.00;
-        return normalPrice;
+        if (quantity < 3) return (quantity * normalPrice);
+        int cookiesInSetsOfThree = setsOfThreePurchased(quantity) * 3;
+        int remainingCookies = quantity - (cookiesInSetsOfThree);
+        return (remainingCookies * normalPrice) + (cookiesInSetsOfThree * trioPrice);
     }
 }

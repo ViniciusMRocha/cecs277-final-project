@@ -100,6 +100,7 @@ public class PointOfSaleGUI extends JPanel {
             SaleDetailsTableModel sdtm = new SaleDetailsTableModel(newSale);
             saleDetails.updateTableModel(sdtm);
             saleDetails.setSale(newSale);
+            saleDetails.updateTotalCostLabel(); // TODO: Add this
             tabbedPane.setEnabledAt(0, true);
             tabbedPane.setEnabledAt(1, false);
         });
@@ -125,8 +126,6 @@ public class PointOfSaleGUI extends JPanel {
         });
 
         JButton findSaleButton = new JButton("Get order by receipt number");
-        findSaleButton.setEnabled(false);
-
 
         findSaleButton.addActionListener(e -> {
             int receiptNumber;

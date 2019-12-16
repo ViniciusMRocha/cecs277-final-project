@@ -20,9 +20,7 @@ public class OatmealCookie extends Cookie implements Product {
         trioPrice = 2.50 / 3;
         if (quantity < 3) return (quantity * normalPrice);
         int cookiesInSetsOfThree = setsOfThreePurchased(quantity) * 3;
-        System.out.println("Sets: " + cookiesInSetsOfThree);
-        int remainingCookies = quantity % (cookiesInSetsOfThree);
-        System.out.println("remaining:" + remainingCookies);
+        int remainingCookies = quantity - (cookiesInSetsOfThree);
         return (remainingCookies * normalPrice) + (cookiesInSetsOfThree * trioPrice);
     }
 }

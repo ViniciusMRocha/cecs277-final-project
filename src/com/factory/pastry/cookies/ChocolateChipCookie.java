@@ -18,11 +18,10 @@ public class ChocolateChipCookie extends Cookie implements Product {
     public double getCost() {
         normalPrice = 1.50;
         trioPrice = 3.00 / 3;
+
         if (quantity < 3) return (quantity * normalPrice);
         int cookiesInSetsOfThree = setsOfThreePurchased(quantity) * 3;
-        System.out.println("Sets: " + cookiesInSetsOfThree);
-        int remainingCookies = quantity % (cookiesInSetsOfThree);
-        System.out.println("remaining:" + remainingCookies);
+        int remainingCookies = quantity - (cookiesInSetsOfThree);
         return (remainingCookies * normalPrice) + (cookiesInSetsOfThree * trioPrice);
     }
 }

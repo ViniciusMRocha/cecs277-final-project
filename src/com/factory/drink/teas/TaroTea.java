@@ -18,19 +18,6 @@ public class TaroTea extends Tea implements Product {
 
     @Override
     public double getCost() {
-        double drinkCost = super.getCost();
-
-        switch (size) {
-            case SMALL:
-                drinkCost += 2.25 * quantity;
-                break;
-            case MEDIUM:
-                drinkCost += 2.75 * quantity;
-                break;
-            case LARGE:
-                drinkCost += 3.25 * quantity;
-                break;
-        }
-        return drinkCost;
+        return super.getCost() + cost;
     }
 }

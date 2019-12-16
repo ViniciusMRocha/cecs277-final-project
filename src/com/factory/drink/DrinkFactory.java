@@ -39,14 +39,47 @@ public class DrinkFactory extends ProductFactory {
             switch ((MilkCoffeeTypes)type) {
                 case SEA_CREAM:
                     p = new SeaCreamMilkCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(2.25);
+                            break;
+                        case MEDIUM:
+                            p.setCost(2.75);
+                            break;
+                        case LARGE:
+                            p.setCost(3.25);
+                            break;
+                    }
                     break;
 
                 case HOUSE_PREMIUM:
                     p = new HousePremiumMilkCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(2.25);
+                            break;
+                        case MEDIUM:
+                            p.setCost(2.75);
+                            break;
+                        case LARGE:
+                            p.setCost(3.25);
+                            break;
+                    }
                     break;
 
                 case PUMPKIN_SPICE:
                     p = new PumpkinSpiceMilkCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost( 3.00);
+                            break;
+                        case MEDIUM:
+                            p.setCost(3.50);
+                            break;
+                        case LARGE:
+                            p.setCost(4.00);
+                            break;
+                    }
                     break;
             }
         } else if(type instanceof CoffeeTypes) {
@@ -55,40 +88,139 @@ public class DrinkFactory extends ProductFactory {
             switch ((CoffeeTypes)type) {
                 case CHA_CHA_CHA_REGULAR:
                     p = new ChaChaChaRegular((String)name, (Drink.Size)size, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(2.00);
+                            break;
+                        case MEDIUM:
+                            p.setCost(2.50);
+                            break;
+                        case LARGE:
+                            p.setCost(3.00);
+                            break;
+                    }
                     break;
 
                 case CHA_CHA_CHA_DECAF:
                     p = new ChaChaChaDecaf((String)name, (Drink.Size)size, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(2.00);
+                            break;
+                        case MEDIUM:
+                            p.setCost(2.50);
+                            break;
+                        case LARGE:
+                            p.setCost(3.00);
+                            break;
+                    }
                     break;
 
                 case CAFE_DE_LA_OLLA:
                     p = new CafeDeLaOllaCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(2.25);
+                            break;
+                        case MEDIUM:
+                            p.setCost(2.75);
+                            break;
+                        case LARGE:
+                            p.setCost(3.25);
+                            break;
+                    }
                     break;
 
                 case HAZELNUT_HAPPINESS:
                     p = new HazelnutHappinessCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(2.25);
+                            break;
+                        case MEDIUM:
+                            p.setCost(2.75);
+                            break;
+                        case LARGE:
+                            p.setCost(3.25);
+                            break;
+                    }
                     break;
             }
         } else if(type instanceof TeaTypes) {
             switch ((TeaTypes)type) {
                 case SUMMER_MINT_TEA:
                     p = new SummerMintTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(3.00);
+                            break;
+                        case MEDIUM:
+                            p.setCost(3.50);
+                            break;
+                        case LARGE:
+                            p.setCost(4.00);
+                            break;
+                    }
                     break;
 
                 case GREEN_TEA:
                     p = new GreenTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(2.00);
+                            break;
+                        case MEDIUM:
+                            p.setCost(2.50);
+                            break;
+                        case LARGE:
+                            p.setCost(3.00);
+                            break;
+                    }
                     break;
 
                 case ROSE_GREEN_TEA:
                     p = new RoseGreenTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(2.25);
+                            break;
+                        case MEDIUM:
+                            p.setCost(2.75);
+                            break;
+                        case LARGE:
+                            p.setCost(3.25);
+                            break;
+                    }
                     break;
 
                 case JASMINE_GREEN_TEA:
                     p = new JasmineGreenTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(2.25);
+                            break;
+                        case MEDIUM:
+                            p.setCost(2.75);
+                            break;
+                        case LARGE:
+                            p.setCost(3.25);
+                            break;
+                    }
                     break;
 
                 case TARO_TEA:
                     p = new TaroTea((String)name, (Drink.Size)size, (Tea.Sweetness)sweetness, (Drink.Milk)milk);
+                    switch ((Drink.Size)size) {
+                        case SMALL:
+                            p.setCost(2.25);
+                            break;
+                        case MEDIUM:
+                            p.setCost(2.75);
+                            break;
+                        case LARGE:
+                            p.setCost(3.25);
+                            break;
+                    }
                     break;
             }
         }
@@ -128,6 +260,7 @@ public class DrinkFactory extends ProductFactory {
                     break;
             }
         }
+        
         return p;
     }
 }

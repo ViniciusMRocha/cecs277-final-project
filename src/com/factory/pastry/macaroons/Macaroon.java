@@ -34,12 +34,12 @@ public class Macaroon extends Pastry {
      * @return The total cost of the macaroon(s)
      */
     public double getCost() {
-        double originalPrice = 2;
+        double originalPrice = 2.00;
         double specialPrice = 1.50;
 
         if(quantity < 6) return (quantity * originalPrice);
         int macaroonsInSets = halfDozensPurchased(quantity) * 6;
-        int remainingMacaroons = quantity % (macaroonsInSets);
+        int remainingMacaroons = quantity - (macaroonsInSets);
         return (remainingMacaroons * originalPrice) + (macaroonsInSets * specialPrice);
     }
 }
