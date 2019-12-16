@@ -16,19 +16,26 @@ public class SummerMintTea extends Tea implements Product {
         description = "summer mint tea";
     }
 
+    private double drinkPrice;
+    public void setCost(double newPrice) {
+        drinkPrice = newPrice;
+    }
+    public double getCost() {
+        return drinkPrice;
+    }
+
     @Override
     public double getCost() {
         double drinkCost = super.getCost();
-
         switch (size) {
             case SMALL:
-                drinkCost += 4.00 * quantity;
+                drinkCost += drinkPrice * quantity;
                 break;
             case MEDIUM:
-                drinkCost += 4.50 * quantity;
+                drinkCost += drinkPrice * quantity;
                 break;
             case LARGE:
-                drinkCost += 5.00 * quantity;
+                drinkCost += drinkPrice * quantity;
                 break;
         }
         return drinkCost;

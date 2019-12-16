@@ -15,18 +15,26 @@ public class SeaCreamMilkCoffee extends MilkCoffee implements Product {
         description = "sea cream";
     }
 
+    private double drinkPrice;
+    public void setCost(double newPrice) {
+        drinkPrice = newPrice;
+    }
+    public double getCost() {
+        return drinkPrice;
+    }
+
     @Override
     public double getCost() {
         double drinkCost = super.getCost();
         switch (size) {
             case SMALL:
-                drinkCost += 3.25 * quantity;
+                drinkCost += drinkPrice * quantity;
                 break;
             case MEDIUM:
-                drinkCost += 3.75 * quantity;
+                drinkCost += drinkPrice * quantity;
                 break;
             case LARGE:
-                drinkCost += 4.25 * quantity;
+                drinkCost += drinkPrice * quantity;
                 break;
         }
         return drinkCost;

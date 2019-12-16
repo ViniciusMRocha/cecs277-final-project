@@ -15,18 +15,26 @@ public class CafeDeLaOllaCoffee extends Coffee implements Product {
         description = "Cafe de la Olla with ";
     }
 
+    private double drinkPrice;
+    public void setCost(double newPrice) {
+        drinkPrice = newPrice;
+    }
+    public double getCost() {
+        return drinkPrice;
+    }
+
     @Override
     public double getCost() {
         double drinkCost = super.getCost();
         switch (size) {
             case SMALL:
-                drinkCost += 2.50 * quantity;
+                drinkCost += drinkPrice * quantity;
                 break;
             case MEDIUM:
-                drinkCost += 3.00 * quantity;
+                drinkCost += drinkPrice * quantity;
                 break;
             case LARGE:
-                drinkCost += 3.50 * quantity;
+                drinkCost += drinkPrice * quantity;
                 break;
         }
         return drinkCost;

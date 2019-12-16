@@ -17,7 +17,7 @@ public abstract class Drink implements Product {
 
     /**
      * Get the description of the drink.
-     * @return the drink description
+     * @return String
      */
     public String getDescription() {
         return this.description;
@@ -25,7 +25,7 @@ public abstract class Drink implements Product {
 
     /**
      * Get the quantity of the drink.
-     * @return the drink quantity
+     * @return Int
      */
     public int getQuantity() {
         return this.quantity;
@@ -33,13 +33,13 @@ public abstract class Drink implements Product {
 
     /**
      * An abstract method to determine the cost of different sub-types of pastry.
-     * @return the cost
+     * @return Double
      */
     public abstract double getCost();
 
     /**
      * Gets the name of the drink.
-     * @return The drink's name
+     * @return String
      */
     public String getName() {
         return name;
@@ -67,7 +67,7 @@ public abstract class Drink implements Product {
 
         /**
          * Prints out the value of an enum to a String
-         * @return The value of a Size enum
+         * @return String
          */
         @Override
         public String toString() {
