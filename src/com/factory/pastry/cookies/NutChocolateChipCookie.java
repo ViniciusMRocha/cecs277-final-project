@@ -16,6 +16,8 @@ public class NutChocolateChipCookie extends Cookie implements Product {
 
     @Override
     public double getCost() {
-        return 2.00;
+        normalPrice = 2.00;
+        trioPrice = 5.00;
+        return normalPrice;
     }
 }

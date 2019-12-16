@@ -14,7 +14,6 @@ public class SaleDetailsTableModel extends AbstractTableModel {
 
     SaleDetailsTableModel(Sale sale) {
         this.sale = sale;
-        System.out.println("Sale: " + sale.printItems());
         this.columnNames = new String[]{"Item #", "Item name", "Item details", "Price", "Quantity"};
     }
 

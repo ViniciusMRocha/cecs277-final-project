@@ -9,6 +9,7 @@ public abstract class Pastry implements Product {
     protected String name;
     protected String description;
     protected int quantity;
+    protected double cost;
     protected HeatState HeatState;
 
     /**

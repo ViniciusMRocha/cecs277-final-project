@@ -7,6 +7,9 @@ import com.factory.pastry.Pastry;
  */
 public abstract class Cookie extends Pastry {
 
+    protected double trioPrice;
+    protected double normalPrice;
+
     protected Cookie(String name, int quantity) {
         this.name = name;
         description = "";
@@ -18,7 +21,7 @@ public abstract class Cookie extends Pastry {
      * @param quantity The total quantity purchased
      * @return How many sets of three are in the quantity
      */
-    private int setsOfThreePurchased(int quantity) {
+    protected int setsOfThreePurchased(int quantity) {
         return (int) (Math.floor(quantity / 3));
     }
 
@@ -26,13 +29,5 @@ public abstract class Cookie extends Pastry {
      * Gets the cost of the Cookie(s) purchased
      * @return The total cost of the cookies
      */
-    public double getCost() {
-        double originalPrice = 1.50;
-        double specialPrice = 1.00;
-
-        if (quantity < 3) return (quantity * originalPrice);
-        int cookiesInSetsOfThree = setsOfThreePurchased(quantity) * 3;
-        int remainingCookies = quantity % (cookiesInSetsOfThree);
-        return (remainingCookies * originalPrice) + (cookiesInSetsOfThree * specialPrice);
-    }
+    public abstract double getCost();
 }

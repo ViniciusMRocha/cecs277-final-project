@@ -451,7 +451,6 @@ public class PointOfSaleGUI extends JPanel {
                 sizeSelectionComboBox.setVisible(true);
                 milkSelectionComboBox.setVisible(true);
                 addToOrderButton.setEnabled(true);
-                quantitySelectionSpinner.setVisible(true);
             } else if(productTypeComboBox.getModel().getSelectedItem().equals(ProductTypes.PASTRY)) {
                 //This area is where thee Pastry implementation will happen.
                 sizeSelectionComboBox.setVisible(false);
