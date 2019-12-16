@@ -102,10 +102,10 @@ public class PaymentPanel extends JPanel {
      * This method updates the change label with the appropriate amount of change given for the transaction
      */
     private void updateChangeLabel() {
-        double changeDue = (double)paymentInputField.getValue() - createdSale.getTotalPrice();
+        double changeDue = (double)paymentInputField.getValue() - saleDetailsWindow.getSale().getTotalPrice();
         changeDueLabel.setText("Change due: " + String.format("$%.2f", changeDue));
-        taxLabel.setText("Tax: " + String.format("$%.2f", createdSale.getTotalPrice() * 0.10));
-        totalAndTaxLabel.setText("Total with tax: " + String.format("$%.2f", createdSale.getTotalPrice() * 1.1));
+        taxLabel.setText("Tax: " + String.format("$%.2f", saleDetailsWindow.getSale().getTotalPrice() * 0.10));
+        totalAndTaxLabel.setText("Total with tax: " + String.format("$%.2f", saleDetailsWindow.getSale().getTotalPrice() * 1.1));
     }
 
 
@@ -166,7 +166,7 @@ public class PaymentPanel extends JPanel {
                     couponsSelected.add(CouponTypes.getCouponFromEnumValue(selectedCoupons));
                 }
             }
-            saleDetailsWindow.setSale(new Sale(createdSale.getItemsInSale(), couponsSelected));
+            saleDetailsWindow.setSale(new Sale(saleDetailsWindow.getSale().getItemsInSale(), couponsSelected));
             setTotalDueLabel(saleDetailsWindow.getSale());
         }
     }
