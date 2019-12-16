@@ -46,6 +46,8 @@ public class PointOfSaleGUI extends JPanel {
     private JCheckBox heatCroissantCheckBox;
     private Sale createdSale;
 
+    private JPanel saleInputPanel;
+
     /**
      * Initialize and setup all components to be placed onto the GUI.
      */
@@ -144,7 +146,13 @@ public class PointOfSaleGUI extends JPanel {
      * @return The JPanel that is placed on the first tab of the tabbedPane
      */
     private JPanel initializeSalePanel() {
-        JPanel saleInputPanel = new JPanel();
+        saleInputPanel = new JPanel();
+
+        toppingsPanel = new JPanel();
+        toppingsPanel.setVisible(false);
+        toppingsPanel.setBorder(BorderFactory.createTitledBorder("Available toppings"));
+        toppingsPanel.setLayout(new GridLayout(3,2));
+
         saleInputPanel.setBorder(BorderFactory.createTitledBorder("Select a product to add to your order"));
         //saleInputPanel.setPreferredSize(new Dimension(550, 250));
         //saleInputPanel.setMaximumSize(saleInputPanel.getPreferredSize());
@@ -166,11 +174,14 @@ public class PointOfSaleGUI extends JPanel {
         sweetSelectionComboBox = new JComboBox(new DefaultComboBoxModel(Drink.Sweetness.values()));
 
         //The drinkaName combobox displays the specific names of all products. (e.g. "Hazelnut Latte", "Milk Tea")
+
+
         productNameComboBox = new JComboBox();
         productDetailsComboBox = new JComboBox();
         quantitySelectionSpinner = new JSpinner();
-        SpinnerNumberModel snm = new SpinnerNumberModel(0, 0, 10000, 1);
+        SpinnerNumberModel snm = new SpinnerNumberModel(1, 1, 5000, 1);
         quantitySelectionSpinner.setModel(snm);
+
         //Set them to invisible until they're needed
         quantitySelectionSpinner.setVisible(false);
         productNameComboBox.setVisible(false);
@@ -180,9 +191,7 @@ public class PointOfSaleGUI extends JPanel {
         productDetailsComboBox.setVisible(false);
         heatCroissantCheckBox.setVisible(false);
 
-
         productTypeComboBox.addActionListener(new ProductTypeActionListener());
-
 
         saleInputPanel.add(productTypeComboBox);
         saleInputPanel.add(productDetailsComboBox);
@@ -191,16 +200,9 @@ public class PointOfSaleGUI extends JPanel {
         saleInputPanel.add(sweetSelectionComboBox);
         saleInputPanel.add(productNameComboBox);
         saleInputPanel.add(quantitySelectionSpinner);
-
-        toppingsPanel = new JPanel();
-        toppingsPanel.setVisible(false);
-        toppingsPanel.setBorder(BorderFactory.createTitledBorder("Available toppings"));
-        toppingsPanel.setLayout(new GridLayout(3,2));
-
-        productDetailsComboBox.addActionListener(new ProductDetailsActionListener());
-
         saleInputPanel.add(toppingsPanel);
 
+        productDetailsComboBox.addActionListener(new ProductDetailsActionListener());
 
         //This is the Panel for the JTable that displays the items you are purchasing (on the sale creation tab)
         SaleDetailsWindow saleDetails = new SaleDetailsWindow();
@@ -229,6 +231,7 @@ public class PointOfSaleGUI extends JPanel {
         proceedToPaymentButton = new JButton("Proceed to payment");
         proceedToPaymentButton.addActionListener(e -> {
             tabbedPane.setEnabledAt(1, true);
+            tabbedPane.setEnabledAt(0, false);
             tabbedPane.setSelectedIndex(1);
             paymentPanel.setTotalDueLabel(createdSale);
         });
@@ -361,7 +364,6 @@ public class PointOfSaleGUI extends JPanel {
      * This also needs to be updated for pastries.
      */
     class ProductDetailsActionListener implements ActionListener {
-
         /**
          * Invoked when an action occurs.
          *
@@ -376,43 +378,42 @@ public class PointOfSaleGUI extends JPanel {
                 toppingsPanel.setVisible(false);
                 addToOrderButton.setEnabled(false);
                 productNameComboBox.setVisible(false);
+                quantitySelectionSpinner.setVisible(false);
                 return;
             }
 
             if (productTypeComboBox.getModel().getSelectedItem().equals(ProductTypes.DRINK)) {
-                toppingsPanel.removeAll();
                 sweetSelectionComboBox.setVisible(false);
+                toppingsPanel.removeAll();
+
                 if (productDetailsComboBox.getSelectedItem().equals(DrinkTypes.COFFEE)) {
                     productNameComboBox.setModel(new DefaultComboBoxModel(CoffeeTypes.values()));
-                    for (JCheckBox toppingCheckBox : coffeeToppingsCheckBoxes) {
+                    for (JCheckBox toppingCheckBox : coffeeToppingsCheckBoxes)
                         toppingsPanel.add(toppingCheckBox);
-                    }
+
                 } else if (productDetailsComboBox.getSelectedItem().equals(DrinkTypes.TEA)) {
                     sweetSelectionComboBox.setVisible(true);
                     productNameComboBox.setModel(new DefaultComboBoxModel(TeaTypes.values()));
-                    for (JCheckBox toppingCheckBox : teaToppingsCheckBoxes) {
+                    for (JCheckBox toppingCheckBox : teaToppingsCheckBoxes)
                         toppingsPanel.add(toppingCheckBox);
-                    }
                 }
 
-                productNameComboBox.revalidate();
-                productNameComboBox.repaint();
-                toppingsPanel.revalidate();
-                toppingsPanel.repaint();
                 productNameComboBox.setVisible(true);
                 toppingsPanel.setVisible(true);
                 sizeSelectionComboBox.setVisible(true);
                 milkSelectionComboBox.setVisible(true);
                 addToOrderButton.setEnabled(true);
+                quantitySelectionSpinner.setVisible(true);
             } else if(productTypeComboBox.getModel().getSelectedItem().equals(ProductTypes.PASTRY)) {
                 //This area is where thee Pastry implementation will happen.
                 sizeSelectionComboBox.setVisible(false);
                 milkSelectionComboBox.setVisible(false);
                 sweetSelectionComboBox.setVisible(false);
                 toppingsPanel.setVisible(false);
-
                 productNameComboBox.setVisible(true);
                 quantitySelectionSpinner.setVisible(true);
+
+                addToOrderButton.setEnabled(true);
 
                 if(productDetailsComboBox.getSelectedItem().equals(PastryTypes.CROISSANT)) {
                     productNameComboBox.setModel(new DefaultComboBoxModel(CroissantTypes.values()));
@@ -421,7 +422,6 @@ public class PointOfSaleGUI extends JPanel {
                 } else if(productDetailsComboBox.getSelectedItem().equals(PastryTypes.MACAROON)) {
                     productNameComboBox.setModel(new DefaultComboBoxModel(MacaroonTypes.values()));
                 }
-                addToOrderButton.setEnabled(true);
             }
         }
     }
@@ -432,6 +432,8 @@ public class PointOfSaleGUI extends JPanel {
      * Depending on what they chose, new components become visible for the user to finish their transaction.
      */
     class ProductTypeActionListener implements ActionListener {
+
+        private Object lastSelectedItem;
         /**
          * The actionPereformed(ActionEvent) method is executed when the ActionListener is called.
          *
@@ -439,6 +441,9 @@ public class PointOfSaleGUI extends JPanel {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
+            if((lastSelectedItem != null) && (lastSelectedItem.equals(productTypeComboBox.getSelectedItem())))
+                return;
+
             if(productTypeComboBox.getSelectedItem().equals(ProductTypes.DRINK)) {
                 productDetailsComboBox.setModel(new DefaultComboBoxModel(DrinkTypes.values()));
                 productDetailsComboBox.setSelectedIndex(-1);
@@ -447,8 +452,8 @@ public class PointOfSaleGUI extends JPanel {
                 productDetailsComboBox.setModel(new DefaultComboBoxModel(PastryTypes.values()));
                 productDetailsComboBox.setSelectedIndex(-1);
                 productDetailsComboBox.setVisible(true);
-
             }
+            lastSelectedItem = productTypeComboBox.getSelectedItem();
         }
     }
 }

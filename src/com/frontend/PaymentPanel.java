@@ -14,6 +14,7 @@ public class PaymentPanel extends JPanel {
 
     private Sale createdSale;
     private JLabel totalDueLabel;
+    private JLabel changeDueLabel;
     private ArrayList<JCheckBox> couponCheckBoxes;
     private JSpinner paymentInputField;
 
@@ -29,6 +30,7 @@ public class PaymentPanel extends JPanel {
             couponCheckBoxes.add(couponCheckBox);
         }
     }
+
     public PaymentPanel(Sale createdSale) {
         this.createdSale = createdSale;
         this.setLayout(new BorderLayout());
@@ -43,8 +45,10 @@ public class PaymentPanel extends JPanel {
 
         totalDueLabel = new JLabel("Total due: ");
         totalDueLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        JLabel changeLabel = new JLabel("Change");
-        changeLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+
+        changeDueLabel = new JLabel("Change due: ");
+        changeDueLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        //changeDueLabel.setVisible(false);
 
         JPanel inputFieldPanel = new JPanel();
 
@@ -63,14 +67,13 @@ public class PaymentPanel extends JPanel {
         inputFieldPanel.setBorder(BorderFactory.createTitledBorder("Finalize payment"));
 
         inputFieldPanel.add(totalDueLabel);
+        inputFieldPanel.add(changeDueLabel);
         inputFieldPanel.add(couponSelectionPanel);
         inputFieldPanel.add(paymentInputField);
         inputFieldPanel.add(processPaymentButton);
-        inputFieldPanel.add(changeLabel);
 
         paymentInformationPanel.setLayout(new BorderLayout());
         paymentInformationPanel.add(inputFieldPanel, BorderLayout.NORTH);
-        paymentInformationPanel.add(changeLabel, BorderLayout.SOUTH);
 
         this.add(paymentInformationPanel, BorderLayout.NORTH);
     }
@@ -79,6 +82,13 @@ public class PaymentPanel extends JPanel {
         totalDueLabel.setText("Total due: " + sale.getFormattedTotalPrice());
     }
 
+    /**
+     * This method updates the change label with the appropriate amount of change given for the transaction
+     */
+    private void updateChangeLabel() {
+        double changeDue = (double)paymentInputField.getValue() - createdSale.getTotalPrice();
+        changeDueLabel.setText("Change due: " + String.format("$%.2f", changeDue));
+    }
 
     class PayBalanceButtonActionListener implements ActionListener {
 
@@ -92,10 +102,9 @@ public class PaymentPanel extends JPanel {
             double paymentAmountInput = (double)paymentInputField.getValue();
             if(paymentAmountInput < createdSale.getTotalPrice())
                 JOptionPane.showMessageDialog(null, "That isn't enough money to cover the total cost!");
-            else {
-                double change = paymentAmountInput - createdSale.getTotalPrice();
-                JOptionPane.showMessageDialog(null, "Change: $" + change);
-            }
+            else
+                updateChangeLabel();
+
         }
     }
     class CheckBoxActionListener implements ActionListener {
