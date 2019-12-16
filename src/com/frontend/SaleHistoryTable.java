@@ -10,8 +10,10 @@ import java.util.ArrayList;
  * The SaleHistoryTable creates a table of
  */
 public class SaleHistoryTable extends JTable {
+
+    private ArrayList<Sale> sales;
     public SaleHistoryTable(ArrayList<Sale> sales) {
-        super();
+        this.sales = sales;
         this.getTableHeader().setReorderingAllowed(false);
         SaleTableModel tableModel = new SaleTableModel(sales);
         this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -19,7 +21,18 @@ public class SaleHistoryTable extends JTable {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment( JLabel.CENTER );
         this.setDefaultRenderer(String.class, centerRenderer);
+    }
 
+    public void addSaleToArrayList(Sale sale) {
+        sales.add(sale);
+    }
+    public ArrayList<Sale> getSales() {
+        return sales;
+    }
+
+    void updateTableModel(SaleTableModel tableModel) {
+        setModel(tableModel);
+        repaint();
     }
 }
 

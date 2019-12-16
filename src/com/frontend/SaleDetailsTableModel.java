@@ -1,12 +1,11 @@
 package com.frontend;
 
+import com.decorator.toppings.drinktoppings.Toppings;
 import com.factory.Product;
-import com.factory.drink.Drink;
 import com.factory.pastry.Pastry;
 import com.sale.Sale;
 
 import javax.swing.table.AbstractTableModel;
-import java.awt.event.ActionListener;
 
 public class SaleDetailsTableModel extends AbstractTableModel {
 
@@ -15,7 +14,12 @@ public class SaleDetailsTableModel extends AbstractTableModel {
 
     SaleDetailsTableModel(Sale sale) {
         this.sale = sale;
-        this.columnNames = new String[]{"Item #", "Item name", "Item details", "Unit cost", "Quantity"};
+        System.out.println("Sale: " + sale.printItems());
+        this.columnNames = new String[]{"Item #", "Item name", "Item details", "Price", "Quantity"};
+    }
+
+    public void setSale(Sale sale) {
+        this.sale = sale;
     }
 
     @Override
@@ -58,7 +62,10 @@ public class SaleDetailsTableModel extends AbstractTableModel {
                 value = String.format("$%.2f" , sale.getItemsInSale().get(rowIndex).getCost());
                 break;
             case 4:
-                value = product.getQuantity();
+                if(product instanceof Pastry)
+                    value = product.getQuantity();
+                else
+                    value = 1;
                 break;
         }
         return value;

@@ -10,23 +10,26 @@ public class GreenTea extends Tea implements Product {
      * @param size      The size of the tea
      * @param sweetness The sweetness of the tea
      * @param milkType  The type of milk in the tea
-     * @param quantity The quantity purchased
      */
-    public GreenTea(String name, Size size, Sweetness sweetness, Milk milkType, int quantity) {
-        super(name, size, sweetness, milkType, quantity);
+    public GreenTea(String name, Size size, Sweetness sweetness, Milk milkType) {
+        super(name, size, sweetness, milkType);
         description = "green tea";
     }
 
     @Override
     public double getCost() {
+        double drinkCost = super.getCost();
         switch (size) {
             case SMALL:
-                return 2.00;
+                drinkCost += 2.00 * quantity;
+                break;
             case MEDIUM:
-                return 2.50;
+                drinkCost += 2.50 * quantity;
+                break;
             case LARGE:
-                return 3.00;
+                drinkCost += 3.00 * quantity;
+                break;
         }
-        return 0.0;
+        return drinkCost;
     }
 }

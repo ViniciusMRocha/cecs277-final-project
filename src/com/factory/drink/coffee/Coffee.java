@@ -15,20 +15,19 @@ public abstract class Coffee extends Drink {
      * @param name The name of the coffee
      * @param size The size of the coffee
      * @param milkType The type of milk in the coffee
-     * @param quantity The amount of coffee products to buy
      */
-    public Coffee(String name, Size size, Milk milkType, int quantity) {
+    public Coffee(String name, Size size, Milk milkType) {
         drinkType = DrinkTypes.COFFEE;
         this.name = name;
         this.size = size;
         this.milkType = milkType;
-        this.quantity = quantity;
+        this.quantity = 1;
         description = "";
     }
 
     /**
      * Gets the cost of coffee.
-     * @return the total cost.
+     * @return double
      */
     public double getCost() {
         double drinkCost = 0.0;

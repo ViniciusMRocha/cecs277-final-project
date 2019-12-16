@@ -43,8 +43,6 @@ public class PastryFactory extends ProductFactory {
 				break;
 		}
 	} else if(type instanceof CroissantTypes) {
-		System.out.println("Hi!!!");
-
 		switch ((CroissantTypes)type) {
 			case PLAIN:
 				p = new PlainCroissant((String)name, (int)quantity, (Croissant.HeatState) heatState);

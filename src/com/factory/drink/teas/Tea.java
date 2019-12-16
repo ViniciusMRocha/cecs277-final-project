@@ -16,14 +16,13 @@ public abstract class Tea extends Drink {
      * @param size The size of the tea
      * @param sweetness The sweetness of the tea
      * @param milkType The type of milk in the tea
-     * @param quantity The quantity purchased
      */
-    protected Tea(String name, Size size, Sweetness sweetness, Milk milkType, int quantity) {
+    protected Tea(String name, Size size, Sweetness sweetness, Milk milkType) {
         this.name = name;
         this.size = size;
         this.sweetness = sweetness;
         this.milkType = milkType;
-        this.quantity = quantity;
+        this.quantity = 1;
         drinkType = DrinkTypes.TEA;
         description = "";
     }
@@ -35,20 +34,6 @@ public abstract class Tea extends Drink {
      */
     public double getCost() {
         double drinkCost = 0.0;
-        switch (size) {
-            case SMALL:
-                drinkCost += 1.50;
-                break;
-
-            case MEDIUM:
-                drinkCost += 2.00;
-                break;
-
-            case LARGE:
-                drinkCost += 3.00;
-                break;
-        }
-
         switch (milkType) {
             case HALF_AND_HALF:
                 drinkCost += 0.25;
@@ -58,7 +43,6 @@ public abstract class Tea extends Drink {
                 drinkCost += 0.50;
                 break;
         }
-        cost = drinkCost;
         return drinkCost;
     }
 }

@@ -10,9 +10,8 @@ public abstract class MilkCoffee extends Coffee {
      * @param name     The name of the coffee
      * @param size     The size of the coffee
      * @param milkType The type of milk in the coffee
-     * @param quantity The amount of coffee products to buy
      */
-    public MilkCoffee(String name, Size size, Milk milkType, int quantity) {
-        super(name, size, milkType, quantity);
+    public MilkCoffee(String name, Size size, Milk milkType) {
+        super(name, size, milkType);
     }
 }

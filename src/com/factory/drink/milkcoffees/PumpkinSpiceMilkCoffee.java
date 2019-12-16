@@ -9,23 +9,27 @@ public class PumpkinSpiceMilkCoffee extends MilkCoffee implements Product {
      * @param name     The name of the coffee
      * @param size     The size of the coffee
      * @param milkType The type of milk in the coffee
-     * @param quantity The amount of coffee products to buy
      */
-    public PumpkinSpiceMilkCoffee(String name, Size size, Milk milkType, int quantity) {
-        super(name, size, milkType, quantity);
+    public PumpkinSpiceMilkCoffee(String name, Size size, Milk milkType) {
+        super(name, size, milkType);
         description = "pumpkin spice";
     }
 
     @Override
     public double getCost() {
+        double drinkCost = super.getCost();
         switch (size) {
             case SMALL:
-                return 3.00;
+                drinkCost +=  3.00 * quantity;
+                break;
             case MEDIUM:
-                return 3.50;
+                drinkCost += 3.50 * quantity;
+                break;
             case LARGE:
-                return 4.00;
+                drinkCost += 4.00 * quantity;
+                break;
         }
-        return cost;
+
+        return drinkCost;
     }
 }

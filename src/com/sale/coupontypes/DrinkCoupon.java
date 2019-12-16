@@ -21,6 +21,7 @@ public class DrinkCoupon extends Coupon {
         Drink drink = null;
         double drinkPrice = 0.0;
         for(Product item : sale.getItemsInSale()) {
+            System.out.println("item : " + item);
             if(item instanceof Drink) {
                 if(item.getCost() > drinkPrice) {
                     drink = (Drink)item;
