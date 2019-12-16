@@ -1,10 +1,10 @@
-package com.factory.pastry;
+package com.factory.pastry.macaroons;
 
 /**
  * Describes the different types of Croissants available for purchase at "Cha-cha-cha Time!"
  */
 public enum MacaroonTypes {
-    VARIETY("Variety macaroon");
+    MACAROON("Macaroon");
 
     private String macaroonName;
 

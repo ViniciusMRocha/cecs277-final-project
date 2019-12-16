@@ -1,10 +1,10 @@
 package com.factory;
 
-/**
- * Describes the different types of pastries available for purchase at "Cha-cha-cha Time!"
- */
 public enum PastryTypes {
-    CROISSANT("Croissant"), COOKIE("Cookie"), MACAROON("Macaroon");
+
+    MACAROON("Macaroon"),
+    CROISSANT("Croissant"),
+    COOKIE("Cookie");
 
     private String pastryName;
 

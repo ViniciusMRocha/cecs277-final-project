@@ -4,6 +4,7 @@ import com.sale.Sale;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collection;
 
 /**
  * Creates a sale detail window where the user can add products and view their subtotal
@@ -12,18 +13,20 @@ class SaleDetailsWindow extends JPanel {
 
     private JTable orderDetails;
     private JLabel totalCostLabel;
-    private Sale createdSale;
+    private Sale sale;
+
 
     /**
      * Constructor for the sale window
+     * @param sale Sale
      */
-    SaleDetailsWindow() {
+    SaleDetailsWindow(Sale sale) {
         super(new BorderLayout());
-        createdSale = new Sale();
+        this.sale = sale;
         orderDetails = new JTable();
-
+        System.out.println("Here");
         JPanel panel2 = new JPanel(new BorderLayout());
-        totalCostLabel = new JLabel("Order details - Subtotal: " + createdSale.getTotalPrice());
+        totalCostLabel = new JLabel("Order details - Subtotal: " + sale.getTotalPrice());
         totalCostLabel.setHorizontalAlignment(SwingConstants.CENTER);
         orderDetails.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -56,7 +59,14 @@ class SaleDetailsWindow extends JPanel {
      * Updates the running subtotal
      */
     void updateTotalCostLabel() {
-        totalCostLabel.setText("Order details - Subtotal: " + createdSale.getFormattedTotalPrice());
+        totalCostLabel.setText("Order details - Subtotal: " + sale.getFormattedTotalPrice());
+    }
+
+    void resetWindow() {
+
+        SaleDetailsTableModel sdtm = new SaleDetailsTableModel(sale);
+        updateTableModel(sdtm);
+        updateTotalCostLabel();
     }
 
     /**
@@ -64,6 +74,6 @@ class SaleDetailsWindow extends JPanel {
      * @return Sale
      */
     public Sale getCreatedSale() {
-        return createdSale;
+        return sale;
     }
 }

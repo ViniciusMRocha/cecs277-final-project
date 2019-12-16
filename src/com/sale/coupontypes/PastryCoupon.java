@@ -1,6 +1,6 @@
 package com.sale.coupontypes;
 
-import com.factory.pastry.Cookie;
+import com.factory.pastry.cookies.Cookie;
 import com.factory.Product;
 import com.sale.Coupon;
 import com.sale.Sale;

@@ -19,6 +19,10 @@ public abstract class Toppings extends Drink {
 		this.base = base;
 	}
 
+	public Drink getBase() {
+		return base;
+	}
+
 	/**
 	 * Returns the description of the new product, including all of it's other decorations and it's base class name
 	 * @return String

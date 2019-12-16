@@ -1,4 +1,6 @@
-package com.factory.pastry;
+package com.factory.pastry.macaroons;
+
+import com.factory.pastry.Pastry;
 
 /**
  * A macaroon is a type of pastry, which is a type of product available for purchase at "Cha-cha-cha Time!"
@@ -6,19 +8,18 @@ package com.factory.pastry;
 public class Macaroon extends Pastry {
 
     /**
-     * Initializes a new croissant object with the specified parameters.
+     * Initializes a new Macaroon object with the specified parameters.
      * @param name String
      * @param quantity int
      */
-    Macaroon(String name, int quantity)  {
+    public Macaroon(String name, int quantity)  {
         this.name = name;
         this.quantity = quantity;
         description = "A " + name + " macaroon";
     }
 
     /**
-     * How many half-dozen croissants have been purchased.
-     *
+     * How many half-dozen Macaroon have been purchased.
      * @param quantity int
      * @return int
      */

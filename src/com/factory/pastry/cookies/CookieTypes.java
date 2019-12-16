@@ -1,10 +1,12 @@
-package com.factory.pastry;
+package com.factory.pastry.cookies;
 
 /**
  * Describes the different types of Cookies available for purchase at "Cha-cha-cha Time!"
  */
 public enum CookieTypes {
-    OATMEAL("Oatmeal cookie");
+    OATMEAL("Oatmeal cookie"),
+    CHOCOLATE_CHIP("Chocolate chip"),
+    NUT_CHOCOLATE_CHIP("Nut chocolate chip");
 
     private String cookieName;
 
