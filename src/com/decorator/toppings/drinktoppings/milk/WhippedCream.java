@@ -9,7 +9,7 @@ import com.factory.drink.Drink;
 public class WhippedCream extends Toppings {
     /**
      * Wraps a Drink object into a new WhippedCream object.
-     * @param base The base Drink to wrap around
+     * @param base Drink
      */
     public WhippedCream(Drink base) {
         super(base);
