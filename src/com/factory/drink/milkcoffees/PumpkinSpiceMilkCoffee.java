@@ -18,14 +18,19 @@ public class PumpkinSpiceMilkCoffee extends MilkCoffee implements Product {
 
     @Override
     public double getCost() {
+        double drinkCost = super.getCost();
         switch (size) {
             case SMALL:
-                return 3.00;
+                drinkCost +=  3.00 * quantity;
+                break;
             case MEDIUM:
-                return 3.50;
+                drinkCost += 3.50 * quantity;
+                break;
             case LARGE:
-                return 4.00;
+                drinkCost += 4.00 * quantity;
+                break;
         }
-        return cost;
+
+        return drinkCost;
     }
 }

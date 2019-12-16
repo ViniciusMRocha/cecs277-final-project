@@ -4,20 +4,21 @@ import com.sale.Sale;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collection;
 
 class SaleDetailsWindow extends JPanel {
 
     private JTable orderDetails;
     private JLabel totalCostLabel;
-    private Sale createdSale;
+    private Sale sale;
 
-    SaleDetailsWindow() {
+    SaleDetailsWindow(Sale sale) {
         super(new BorderLayout());
-        createdSale = new Sale();
+        this.sale = sale;
         orderDetails = new JTable();
-
+        System.out.println("Here");
         JPanel panel2 = new JPanel(new BorderLayout());
-        totalCostLabel = new JLabel("Order details - Subtotal: " + createdSale.getTotalPrice());
+        totalCostLabel = new JLabel("Order details - Subtotal: " + sale.getTotalPrice());
         totalCostLabel.setHorizontalAlignment(SwingConstants.CENTER);
         orderDetails.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -39,10 +40,17 @@ class SaleDetailsWindow extends JPanel {
     }
 
     void updateTotalCostLabel() {
-        totalCostLabel.setText("Order details - Subtotal: " + createdSale.getFormattedTotalPrice());
+        totalCostLabel.setText("Order details - Subtotal: " + sale.getFormattedTotalPrice());
     }
 
-    public Sale getCreatedSale() {
-        return createdSale;
+    void resetWindow() {
+
+        SaleDetailsTableModel sdtm = new SaleDetailsTableModel(sale);
+        updateTableModel(sdtm);
+        updateTotalCostLabel();
+    }
+
+    public Sale getSale() {
+        return sale;
     }
 }

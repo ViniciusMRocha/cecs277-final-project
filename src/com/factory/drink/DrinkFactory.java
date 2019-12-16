@@ -10,10 +10,7 @@ import com.decorator.toppings.drinktoppings.jellies.LycheeJelly;
 import com.decorator.toppings.drinktoppings.jellies.PassionFruitJelly;
 import com.decorator.toppings.drinktoppings.milk.WhippedCream;
 import com.factory.ProductFactory;
-import com.factory.drink.coffee.CafeDeLaOllaCoffee;
-import com.factory.drink.coffee.ChaChaChaDecaf;
-import com.factory.drink.coffee.ChaChaChaRegular;
-import com.factory.drink.coffee.CoffeeTypes;
+import com.factory.drink.coffee.*;
 import com.factory.drink.milkcoffees.HousePremiumMilkCoffee;
 import com.factory.drink.milkcoffees.MilkCoffeeTypes;
 import com.factory.drink.milkcoffees.PumpkinSpiceMilkCoffee;
@@ -67,6 +64,10 @@ public class DrinkFactory extends ProductFactory {
 
                 case CAFE_DE_LA_OLLA:
                     p = new CafeDeLaOllaCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk, (int)quantity);
+                    break;
+
+                case HAZELNUT_HAPPINESS:
+                    p = new HazelnutHappinessCoffee((String)name, (Drink.Size)size, (Drink.Milk)milk, (int)quantity);
                     break;
             }
         } else if(type instanceof TeaTypes) {

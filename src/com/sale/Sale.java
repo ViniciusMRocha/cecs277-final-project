@@ -7,46 +7,42 @@ import java.util.ArrayList;
 public class Sale {
     private ArrayList<Product> itemsInSale;
     private double totalPrice;
-    private ArrayList<Coupon> coupons;
-    private static int totalOrders = 0;
+    private ArrayList<Coupon> couponsInSale;
+    private static int totalOrders;
     private int receiptNumber;
     private ArrayList<Integer> indexesOfCouponUsages;
 
-    public Sale(ArrayList<Product> itemsInSale, ArrayList<Coupon> coupons) {
-        indexesOfCouponUsages = new ArrayList<>();
-        this.itemsInSale = itemsInSale;
-        if(coupons == null) this.coupons = new ArrayList<>();
-        else this.coupons = coupons;
-        calculateTotalCost();
-        totalOrders++;
-        receiptNumber = totalOrders;
-    }
-
     public Sale() {
         itemsInSale = new ArrayList<>();
-        coupons = new ArrayList<>();
+        couponsInSale = new ArrayList<>();
         totalPrice = 0.0;
         indexesOfCouponUsages = new ArrayList<>();
+        receiptNumber = ++totalOrders;
+        System.out.println("Receipt num:" + receiptNumber + "\nTotal orders num: " + totalOrders);
+
+        calculateTotalCost();
     }
 
     public void addToSale(Product itemToAdd) {
         this.itemsInSale.add(itemToAdd);
         calculateTotalCost();
-        totalOrders++;
-        receiptNumber = totalOrders;
     }
 
-    public void addCouponToSale(Coupon coupon) {
-        this.coupons.add(coupon);
-        calculateTotalCost();
+    public void setItemsInSale(ArrayList<Product> itemsInSale) {
+        this.itemsInSale = itemsInSale;
     }
 
+    public void setCouponsInSale(ArrayList<Coupon> couponsInSale) {
+        this.couponsInSale = couponsInSale;
+    }
 
     public void removeFromSale(int itemIndex) {
         this.itemsInSale.remove(itemIndex);
         calculateTotalCost();
-        totalOrders++;
-        receiptNumber = totalOrders;
+    }
+
+    public void setReceiptNumber() {
+        System.out.println("Receipt num:" + receiptNumber + "\nTotal orders num: " + totalOrders);
     }
 
     public int getReceiptNumber() {
@@ -62,7 +58,7 @@ public class Sale {
         for(Product product : itemsInSale)
             totalPrice += product.getCost();
 
-        for(Coupon coupon : coupons) {
+        for(Coupon coupon : couponsInSale) {
             double discount = coupon.calculateDiscount(this);
             totalPrice -= discount;
         }
@@ -78,7 +74,7 @@ public class Sale {
     }
 
     public int couponsUsed() {
-        return coupons.size();
+        return couponsInSale.size();
     }
 
     public ArrayList<Product> getItemsInSale() {
@@ -100,7 +96,7 @@ public class Sale {
     public String toString() {
         String output = "";
 
-        for(Coupon coupon : coupons) {
+        for(Coupon coupon : couponsInSale) {
             output += "\n-------------------- NEW COUPON --------------------\n";
             output += coupon;
         }

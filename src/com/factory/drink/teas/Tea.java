@@ -35,20 +35,6 @@ public abstract class Tea extends Drink {
      */
     public double getCost() {
         double drinkCost = 0.0;
-        switch (size) {
-            case SMALL:
-                drinkCost += 1.50;
-                break;
-
-            case MEDIUM:
-                drinkCost += 2.00;
-                break;
-
-            case LARGE:
-                drinkCost += 3.00;
-                break;
-        }
-
         switch (milkType) {
             case HALF_AND_HALF:
                 drinkCost += 0.25;
@@ -58,7 +44,6 @@ public abstract class Tea extends Drink {
                 drinkCost += 0.50;
                 break;
         }
-        cost = drinkCost;
         return drinkCost;
     }
 }

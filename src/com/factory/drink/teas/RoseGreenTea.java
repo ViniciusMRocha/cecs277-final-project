@@ -19,14 +19,19 @@ public class RoseGreenTea extends Tea implements Product {
 
     @Override
     public double getCost() {
+        double drinkCost = super.getCost();
+
         switch (size) {
             case SMALL:
-                return 2.25;
+                drinkCost += 2.25 * quantity;
+                break;
             case MEDIUM:
-                return 2.75;
+                drinkCost += 2.75 * quantity;
+                break;
             case LARGE:
-                return 3.25;
+                drinkCost += 3.25 * quantity;
+                break;
         }
-        return 0.0;
+        return drinkCost;
     }
 }

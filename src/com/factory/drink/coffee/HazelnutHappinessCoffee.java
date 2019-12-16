@@ -1,20 +1,19 @@
-package com.factory.drink.teas;
+package com.factory.drink.coffee;
 
 import com.factory.Product;
 
-public class GreenTea extends Tea implements Product {
+public class HazelnutHappinessCoffee extends Coffee implements Product {
     /**
      * Initializes a new Tea object with the specified parameters.
      *
      * @param name      The name of the tea
      * @param size      The size of the tea
-     * @param sweetness The sweetness of the tea
      * @param milkType  The type of milk in the tea
      * @param quantity The quantity purchased
      */
-    public GreenTea(String name, Size size, Sweetness sweetness, Milk milkType, int quantity) {
-        super(name, size, sweetness, milkType, quantity);
-        description = "green tea";
+    public HazelnutHappinessCoffee(String name, Size size, Milk milkType, int quantity) {
+        super(name, size, milkType, quantity);
+        description = "Hazelnut happiness with ";
     }
 
     @Override
@@ -22,13 +21,13 @@ public class GreenTea extends Tea implements Product {
         double drinkCost = super.getCost();
         switch (size) {
             case SMALL:
-                drinkCost += 2.00 * quantity;
+                drinkCost += 2.25 * quantity;
                 break;
             case MEDIUM:
-                drinkCost += 2.50 * quantity;
+                drinkCost += 2.75 * quantity;
                 break;
             case LARGE:
-                drinkCost += 3.00 * quantity;
+                drinkCost += 3.25 * quantity;
                 break;
         }
         return drinkCost;

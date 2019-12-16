@@ -40,6 +40,7 @@ public class PointOfSaleGUI extends JPanel {
     private JButton proceedToPaymentButton;
 
     private PaymentPanel paymentPanel;
+    private SaleDetailsWindow saleDetails;
 
     private JComboBox productNameComboBox;
     private JTabbedPane tabbedPane;
@@ -63,7 +64,11 @@ public class PointOfSaleGUI extends JPanel {
         tabbedPane = new JTabbedPane();
         tabbedPane.addTab("1) Create or modify a sale", salePanel);
 
-        paymentPanel = new PaymentPanel(createdSale);
+        ArrayList<Sale> dailySales = new ArrayList<>();
+
+        SaleHistoryTable existingOrders = new SaleHistoryTable(dailySales); //Create a new table, and populate the table with the dailySales
+
+        paymentPanel = new PaymentPanel(createdSale, existingOrders, saleDetails);
         tabbedPane.add("2) Finalize sale", paymentPanel);
 
         JPanel saleHistoryPanel = new JPanel(new BorderLayout());
@@ -71,23 +76,31 @@ public class PointOfSaleGUI extends JPanel {
 
         tabbedPane.setPreferredSize(new Dimension(550, 500));
         tabbedPane.setEnabledAt(1, false);
-        tabbedPane.setEnabledAt(2, false);
         //Creates a panel for the buttons on the Order History tab
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBorder(BorderFactory.createTitledBorder("Options"));
 
         //The orderFrame is the window that pops up when the user views their order in the Order History tab
         JFrame orderFrame = new JFrame();
-        SaleDetailsWindow orderDetailsPanel = new SaleDetailsWindow();
+        SaleDetailsWindow orderDetailsPanel = new SaleDetailsWindow(new Sale());
         orderFrame.add(orderDetailsPanel);
         orderFrame.setVisible(false); //Set it to invisible until it's called by the View button
         orderFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); //Disposes the frame when it's closed, instead of closing the entire program.
 
-        //Represents all the example sales in the Part 2 PDF
-        ArrayList<Sale> sales = new ArrayList<>();
-        JTable existingOrders = new SaleHistoryTable(sales); //Create a new table, and populate the table with the sales
+        //Represents all the example dailySales in the Part 2 PDF
 
         JButton viewButton = new JButton("View selected order");
+        JButton makeNewSaleButton = new JButton("Make a new sale");
+
+        makeNewSaleButton.addActionListener(e -> {
+            //createdSale = new Sale();
+            saleDetails.resetWindow();
+            saleDetails.repaint();
+            tabbedPane.setEnabledAt(0, true);
+            tabbedPane.setEnabledAt(1, false);
+            tabbedPane.setSelectedIndex(0);
+        });
+
         viewButton.setEnabled(false);
 
         /**
@@ -108,8 +121,28 @@ public class PointOfSaleGUI extends JPanel {
             orderFrame.setVisible(true);
         });
 
-        JButton editButton = new JButton("Edit selected order");
-        editButton.setEnabled(false);
+        JButton findSaleButton = new JButton("Get order by receipt number");
+        findSaleButton.setEnabled(false);
+
+
+        findSaleButton.addActionListener(e -> {
+            int receiptNumber;
+            try {
+                 receiptNumber = Integer.parseInt(JOptionPane.showInputDialog("Please enter the receipt number for the sale"));
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(null, "The number you entered wasn't valid!");
+                return;
+            }
+            for(Sale sale : dailySales) {
+                if(receiptNumber == sale.getReceiptNumber()) {
+                    SaleDetailsTableModel model = new SaleDetailsTableModel(sale);
+                    orderDetailsPanel.updateTableModel(model);
+                    orderFrame.pack();
+                    orderFrame.setVisible(true);
+                    return;
+                }
+            }
+        });
 
         /**
          * This ActionListener gets the Selection Model from the table of existing orders, and fires whenever the user
@@ -120,15 +153,16 @@ public class PointOfSaleGUI extends JPanel {
          */
         existingOrders.getSelectionModel().addListSelectionListener(e -> {
             if(existingOrders.getSelectedRow() == -1) {
-                editButton.setEnabled(false);
+                findSaleButton.setEnabled(false);
                 viewButton.setEnabled(false);
             } else {
-                editButton.setEnabled(true);
+                findSaleButton.setEnabled(true);
                 viewButton.setEnabled(true);
             }
         });
 
-        buttonPanel.add(editButton, BorderLayout.EAST);
+        buttonPanel.add(findSaleButton, BorderLayout.EAST);
+        buttonPanel.add(makeNewSaleButton, BorderLayout.EAST);
         buttonPanel.add(viewButton, BorderLayout.WEST);
         saleHistoryPanel.add(buttonPanel, BorderLayout.SOUTH);
 
@@ -204,8 +238,8 @@ public class PointOfSaleGUI extends JPanel {
         productDetailsComboBox.addActionListener(new ProductDetailsActionListener());
 
         //This is the Panel for the JTable that displays the items you are purchasing (on the sale creation tab)
-        SaleDetailsWindow saleDetails = new SaleDetailsWindow();
-        createdSale = saleDetails.getCreatedSale();
+        saleDetails = new SaleDetailsWindow(new Sale());
+        createdSale = saleDetails.getSale();
 
         SaleDetailsTableModel saleDetailsTableModel = new SaleDetailsTableModel(createdSale);
         saleDetails.updateTableModel(saleDetailsTableModel);
@@ -265,6 +299,7 @@ public class PointOfSaleGUI extends JPanel {
             ArrayList<Product> items = new ArrayList<>();
             int quantity = (int)quantitySelectionSpinner.getValue();
 
+
             if(finalType.equals(ProductTypes.DRINK)) {
                 String drinkName = productNameComboBox.getSelectedItem().toString();
                 ArrayList<DrinkToppings> toppings;
@@ -280,6 +315,7 @@ public class PointOfSaleGUI extends JPanel {
                 Drink.Sweetness sweetness = (Drink.Sweetness)sweetSelectionComboBox.getModel().getSelectedItem();
 
                 Product drinkProduct = drinkFactory.createProduct(drinkName, type, size, toppings, sweetness, Milk, quantity);
+
                 createdSale.addToSale(drinkProduct);
                 items.add(drinkProduct);
 

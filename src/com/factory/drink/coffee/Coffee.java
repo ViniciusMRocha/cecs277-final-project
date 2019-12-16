@@ -28,7 +28,7 @@ public abstract class Coffee extends Drink {
 
     /**
      * Gets the cost of coffee.
-     * @return the total cost.
+     * @return double
      */
     public double getCost() {
         double drinkCost = 0.0;

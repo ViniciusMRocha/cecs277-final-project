@@ -1,7 +1,6 @@
 package com.factory.drink.coffee;
 
 import com.factory.Product;
-import com.factory.drink.teas.Tea;
 
 public class ChaChaChaRegular extends Coffee implements Product {
     /**
@@ -19,14 +18,18 @@ public class ChaChaChaRegular extends Coffee implements Product {
 
     @Override
     public double getCost() {
+        double drinkCost = super.getCost();
         switch (size) {
             case SMALL:
-                return 2.00;
+                drinkCost += 2.00 * quantity;
+                break;
             case MEDIUM:
-                return 2.50;
+                drinkCost += 2.50 * quantity;
+                break;
             case LARGE:
-                return 3.00;
+                drinkCost += 3.00 * quantity;
+                break;
         }
-        return 0.0;
+        return drinkCost;
     }
 }

@@ -13,10 +13,12 @@ import java.util.ArrayList;
 public class PaymentPanel extends JPanel {
 
     private Sale createdSale;
+    private SaleHistoryTable dailySalesTable;
     private JLabel totalDueLabel;
     private JLabel changeDueLabel;
     private ArrayList<JCheckBox> couponCheckBoxes;
     private JSpinner paymentInputField;
+    private SaleDetailsWindow saleDetailsWindow;
 
     /**
      * Initializes ArrayLists for the coupon options.
@@ -31,8 +33,10 @@ public class PaymentPanel extends JPanel {
         }
     }
 
-    public PaymentPanel(Sale createdSale) {
+    public PaymentPanel(Sale createdSale, SaleHistoryTable dailySalesTable, SaleDetailsWindow saleDetailsWindow) {
         this.createdSale = createdSale;
+        this.saleDetailsWindow = saleDetailsWindow;
+        this.dailySalesTable = dailySalesTable;
         this.setLayout(new BorderLayout());
         initializeCheckBoxArrayLists();
 
@@ -48,15 +52,12 @@ public class PaymentPanel extends JPanel {
 
         changeDueLabel = new JLabel("Change due: ");
         changeDueLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        //changeDueLabel.setVisible(false);
 
         JPanel inputFieldPanel = new JPanel();
 
         paymentInputField = new JSpinner();
         SpinnerNumberModel snm = new SpinnerNumberModel(0.0, 0.0, 9999.0, 0.01);
-        //JSpinner.NumberEditor spinnerEditor = new JSpinner.NumberEditor(paymentInputField, "0.00");
         paymentInputField.setModel(snm);
-        //paymentInputField.setEditor(spinnerEditor);
 
         JButton processPaymentButton = new JButton("Pay balance");
         processPaymentButton.addActionListener(new PayBalanceButtonActionListener());
@@ -104,7 +105,10 @@ public class PaymentPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "That isn't enough money to cover the total cost!");
             else {
                 updateChangeLabel();
-
+                createdSale.setReceiptNumber();
+                dailySalesTable.getSales().add(createdSale);
+                SaleTableModel newTableModel = new SaleTableModel(dailySalesTable.getSales());
+                dailySalesTable.updateTableModel(newTableModel);
             }
         }
     }
@@ -126,7 +130,7 @@ public class PaymentPanel extends JPanel {
                     couponsSelected.add(CouponTypes.getCouponFromEnumValue(selectedCoupons));
                 }
             }
-            createdSale = new Sale(createdSale.getItemsInSale(), couponsSelected);
+            createdSale.setCouponsInSale(couponsSelected);
             setTotalDueLabel(createdSale);
         }
     }
