@@ -92,8 +92,10 @@ public class PaymentPanel extends JPanel {
             double paymentAmountInput = (double)paymentInputField.getValue();
             if(paymentAmountInput < createdSale.getTotalPrice())
                 JOptionPane.showMessageDialog(null, "That isn't enough money to cover the total cost!");
-            else
-                JOptionPane.showMessageDialog(null, "This is where you'd display the change given.");
+            else {
+                double change = paymentAmountInput - createdSale.getTotalPrice();
+                JOptionPane.showMessageDialog(null, "Change: $" + change);
+            }
         }
     }
     class CheckBoxActionListener implements ActionListener {
